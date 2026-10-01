@@ -81,6 +81,7 @@
     ['.piko-pal', 'piko'],
     ['#dangoButton', 'roll'],
     ['.nemu-btn', 'chime'],
+    ['#eggButton', 'chime'],
     ['.acorn', 'acorn'],
     ['.craft-tabs [role="tab"], .log-dot, .cycle-step', 'tap'],
     ['#questChip, [data-open-quest]', 'open'],

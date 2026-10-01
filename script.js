@@ -147,7 +147,7 @@ window.addEventListener('scroll', () => {
 // =========================================================
 const revealGroups = [
   '.timeline-item', '.skill-group', '.case-card', '.project-card--calm',
-  '.project-card--kids', '.character-card', '.cert-badge', '.note-card',
+  '.project-card--kids', '.character-card', '.cert-row', '.note-card',
   '.section-lead', '.about-grid'
 ];
 const io = new IntersectionObserver((entries) => {
@@ -323,6 +323,102 @@ nemuButtons.forEach(btn => {
     nemuSparkle(btn.dataset.scarf);
   });
 });
+
+// たまご(ピコとくく): 8段階で育つ。見えている間は自動で育ち、つつくと1段階すすむ
+const eggStage = document.getElementById('eggStage');
+const eggButton = document.getElementById('eggButton');
+const eggLabel = document.getElementById('eggLabel');
+const eggDots = eggStage ? [...document.querySelectorAll('.egg-dots li')] : [];
+const EGG_LABELS = eggDots.map(li => li.title);
+const EGG_LAST = eggDots.length - 1;
+const EGG_STEP_MS = 1300;   // 1段階すすむ間隔
+const EGG_HOLD_MS = 2600;   // おとなになったら、少し見せてから はじめに戻る
+let eggStep = 0;
+let eggTimer = 0;
+let eggVisible = false;
+function setEggStep(n) {
+  if (!eggStage) return;
+  eggStep = n;
+  eggStage.dataset.step = String(n);
+  eggDots.forEach((li, i) => {
+    li.classList.toggle('is-done', i < n);
+    li.classList.toggle('is-current', i === n);
+  });
+  eggLabel.textContent = EGG_LABELS[n] || '';
+  // ひびが入るまでは ぐらぐら、生まれる瞬間は ぱっと光る
+  const cls = n >= 1 && n <= 3 ? 'is-wobble' : n === 4 ? 'is-burst' : '';
+  eggStage.classList.remove('is-wobble', 'is-burst');
+  if (cls && !reduceMotion) { void eggStage.offsetWidth; eggStage.classList.add(cls); }
+}
+function eggNext() {
+  setEggStep(eggStep >= EGG_LAST ? 0 : eggStep + 1);
+  if (eggStep === EGG_LAST) eggStage.dispatchEvent(new CustomEvent('egg-grown', { bubbles: true }));
+}
+function eggSchedule(delay) {
+  clearTimeout(eggTimer);
+  if (!eggVisible || reduceMotion) return;
+  eggTimer = setTimeout(() => { eggNext(); eggSchedule(eggStep === EGG_LAST ? EGG_HOLD_MS : EGG_STEP_MS); }, delay);
+}
+if (eggStage) {
+  setEggStep(0);
+  eggStage.addEventListener('animationend', () => eggStage.classList.remove('is-wobble', 'is-burst'));
+  eggButton.addEventListener('click', () => {
+    eggNext();
+    eggSchedule(4000); // 自分で育てている間は、自動を少し待つ
+  });
+  new IntersectionObserver(entries => {
+    eggVisible = entries[0].isIntersecting;
+    if (eggVisible) eggSchedule(900); else clearTimeout(eggTimer);
+  }, { threshold: 0.5 }).observe(eggButton);
+}
+
+// スマホの Cast: 前後ボタン・ドット・枚数で、左右に動かせることを見せる
+const castList = document.getElementById('castList');
+const castPager = document.getElementById('castPager');
+if (castList && castPager) {
+  const cards = [...castList.querySelectorAll('.character-card')];
+  const dotsBox = document.getElementById('castDots');
+  const count = document.getElementById('castCount');
+  const [prevBtn, nextBtn] = castPager.querySelectorAll('.cast-arrow');
+  cards.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `${c.querySelector('h3').textContent}へ`);
+    b.addEventListener('click', () => goCast(i));
+    dotsBox.appendChild(b);
+  });
+  const dotBtns = [...dotsBox.children];
+  let castIndex = 0;
+  const goCast = i => {
+    const c = cards[Math.max(0, Math.min(cards.length - 1, i))];
+    castList.scrollTo({ left: c.offsetLeft - (castList.clientWidth - c.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+  };
+  const updateCast = () => {
+    const mid = castList.scrollLeft + castList.clientWidth / 2;
+    let best = 0, bestD = Infinity;
+    cards.forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bestD) { bestD = d; best = i; } });
+    castIndex = best;
+    dotBtns.forEach((b, i) => b.classList.toggle('is-current', i === best));
+    count.textContent = `${best + 1} / ${cards.length}`;
+    prevBtn.disabled = best === 0;
+    nextBtn.disabled = best === cards.length - 1;
+    castList.classList.toggle('is-end', best === cards.length - 1);
+  };
+  castList.addEventListener('scroll', () => requestAnimationFrame(updateCast), { passive: true });
+  prevBtn.addEventListener('click', () => goCast(castIndex - 1));
+  nextBtn.addEventListener('click', () => goCast(castIndex + 1));
+  updateCast();
+  // はじめて見えたときだけ、少し左へずれて戻る動きで「横に動くよ」と伝える
+  if (!reduceMotion) {
+    const nudgeIO = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting || !window.matchMedia('(max-width: 760px)').matches) return;
+      castList.classList.add('is-nudge');
+      castList.addEventListener('animationend', () => castList.classList.remove('is-nudge'), { once: true });
+      nudgeIO.disconnect();
+    }, { threshold: 0.6 });
+    nudgeIO.observe(castList);
+  }
+}
 
 // Cast: さわらなくても、カードが画面にしっかり入ったら「さわった」ときの動きを見せる
 // (自動で動いたときは、実績や効果音には数えない)

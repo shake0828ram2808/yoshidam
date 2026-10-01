@@ -15,6 +15,7 @@ const ACHIEVEMENTS = [
   { id: 'piko',      icon: '🫧', name: 'ピコと仲間達と なかよし', desc: 'ピコと仲間達の3匹を全部つついた' },
   { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
   { id: 'nemu',      icon: '🧣', name: 'おきがえ',           desc: 'ねむひつじのスカーフを切り替えた' },
+  { id: 'egg',       icon: '🥚', name: 'たまごを育てた',     desc: '自分でつついて、たまごを おとなまで育てた' },
   { id: 'night',     icon: '🌙', name: 'おやすみなさい',     desc: '夜まで、ページの最後まで読んだ' },
   { id: 'explorer',  icon: '🧭', name: 'ぜんぶ見た',         desc: 'すべてのセクションを訪れた' },
   { id: 'acorn1',    icon: '🌰', name: 'はじめての どんぐり', desc: 'かくれた どんぐりを1つ見つけた' },
@@ -285,6 +286,17 @@ document.getElementById('dangoButton')?.addEventListener('click', () => {
 document.querySelectorAll('.nemu-btn').forEach(b => b.addEventListener('click', () => {
   if (b.dataset.scarf === 'blue') unlock('nemu');
 }));
+
+// たまご: 自分でつついて、おとなまで育てた(自動で育ったときは数えない)
+{
+  let pokedToAdult = 0;
+  document.getElementById('eggButton')?.addEventListener('click', () => {
+    pokedToAdult += 1;
+    const step = Number(document.getElementById('eggStage').dataset.step);
+    if (step === 0) pokedToAdult = 0;               // 一周して はじめに戻った
+    if (step === 7 && pokedToAdult >= 3) unlock('egg'); // 少なくとも何回かは自分で育てた
+  });
+}
 
 // ひみつのコマンド ↑↑↓↓←→←→BA
 {

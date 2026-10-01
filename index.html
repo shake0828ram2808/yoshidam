@@ -498,7 +498,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
       <h2 class="section-title">Cast</h2>
       <p class="section-lead">アプリに登場するキャラクターたちです。さわってみてください。</p>
 
-      <div class="character-list">
+      <div class="character-list" id="castList">
         <article class="character-card" data-tilt>
           <button type="button" class="character-visual character-visual--piko" id="pikoButton" aria-label="ピコをつつく">
             <!-- ピコのSVG(pikotto/shared/piko.js の buildPikoSVG と同じ見た目) -->
@@ -591,6 +591,35 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
             <img class="nemu-moon" src="assets/images/characters/nemu_moon_sleep.png" alt="月の上で眠る ねむひつじ" width="320" height="304" loading="lazy">
           </div>
         </article>
+
+        <article class="character-card character-card--egg" data-tilt>
+          <!-- 「ピコとくく」の緑のたまご。8段階で育つ。見えている間は自動で育ち、つつくと1段階すすむ -->
+          <button type="button" class="character-visual character-visual--egg" id="eggButton" aria-label="たまごを育てる(つつくと次へ)">
+            <span class="egg-stage" id="eggStage" data-step="0">
+              <img class="egg-frame" data-step="0" src="assets/images/characters/egg/egg_green.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="1" src="assets/images/characters/egg/egg_green_crack1.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="2" src="assets/images/characters/egg/egg_green_crack2.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="3" src="assets/images/characters/egg/egg_green_hatch.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="4" src="assets/images/characters/egg/char_green_newborn.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="5" src="assets/images/characters/egg/char_green_baby.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="6" src="assets/images/characters/egg/char_green_child.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="7" src="assets/images/characters/egg/char_green_adult.png" alt="" loading="lazy">
+            </span>
+          </button>
+          <h3>たまご</h3>
+          <p>「ピコとくく」で育てる、緑のたまご。九九の「れんしゅう」で段をクリアするたびに、ひびが入って生まれ、少しずつ大きくなっていきます。</p>
+          <div class="egg-progress">
+            <ol class="egg-dots" aria-hidden="true"><li data-step="0" title="たまご"></li><li data-step="1" title="ひびが入る"></li><li data-step="2" title="もう少し"></li><li data-step="3" title="うまれる!"></li><li data-step="4" title="うまれたて"></li><li data-step="5" title="あかちゃん"></li><li data-step="6" title="こども"></li><li data-step="7" title="おとな"></li></ol>
+            <p class="egg-label" id="eggLabel" aria-live="polite">たまご</p>
+          </div>
+        </article>
+      </div>
+      <!-- スマホのみ: カルーセルの操作(前へ・どこにいるか・次へ) -->
+      <div class="cast-pager" id="castPager">
+        <button type="button" class="cast-arrow" data-dir="-1" aria-label="前のキャラクター"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="cast-dots" id="castDots"></div>
+        <span class="cast-count" id="castCount" aria-live="polite">1 / 4</span>
+        <button type="button" class="cast-arrow" data-dir="1" aria-label="次のキャラクター"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
     </div>
   </section>
@@ -600,19 +629,33 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
     <div class="section-inner">
       <p class="section-kicker">05</p>
       <h2 class="section-title">Certs</h2>
-      <!-- ▼ 資格はダミーです。実際の取得状況に差し替えてください -->
-      <div class="cert-list" data-todo="資格の取得状況">
-        <div class="cert-badge">
-          <span class="cert-state is-done">取得</span>
-          <h3>AWS Certified Solutions Architect – Associate</h3>
-          <p>取得年:2025</p>
-        </div>
-        <div class="cert-badge">
-          <span class="cert-state">学習中</span>
-          <h3>AWS Certified Developer – Associate</h3>
-          <p>学習中</p>
-        </div>
-      </div>
+      <ul class="cert-rows">
+        <li class="cert-row">
+          <span class="cert-year">2015</span>
+          <span class="cert-name">基本情報技術者試験</span>
+          <span class="cert-org">国家試験</span>
+        </li>
+        <li class="cert-row">
+          <span class="cert-year">2016</span>
+          <span class="cert-name">応用情報技術者試験</span>
+          <span class="cert-org">国家試験</span>
+        </li>
+        <li class="cert-row">
+          <span class="cert-year">2018</span>
+          <span class="cert-name">プロジェクトマネージャ試験</span>
+          <span class="cert-org">国家試験</span>
+        </li>
+        <li class="cert-row">
+          <span class="cert-year">2019</span>
+          <span class="cert-name">ICT支援員</span>
+          <span class="cert-org">教育ICT</span>
+        </li>
+        <li class="cert-row">
+          <span class="cert-year">2026</span>
+          <span class="cert-name">AWS Certified AI Practitioner</span>
+          <span class="cert-org">AWS</span>
+        </li>
+      </ul>
     </div>
   </section>
 
