@@ -706,6 +706,28 @@ if (meteorCanvas && !reduceMotion) {
 }
 
 // =========================================================
+// セクションの背景に、大きな白抜きの番号(スクロールで少しだけ ゆっくり動く)
+// =========================================================
+const sectionNums = [];
+document.querySelectorAll('.section-kicker').forEach(k => {
+  const num = document.createElement('span');
+  num.className = 'section-num';
+  num.setAttribute('aria-hidden', 'true');
+  num.textContent = k.textContent.trim();
+  k.parentElement.prepend(num);
+  sectionNums.push(num);
+});
+if (!reduceMotion) {
+  scrollHooks.push((y, vh) => {
+    sectionNums.forEach(n => {
+      const r = n.parentElement.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      n.style.setProperty('--num-y', `${((r.top - vh * 0.3) * -0.12).toFixed(1)}px`);
+    });
+  });
+}
+
+// =========================================================
 // 見出しを1文字ずつ出す
 // =========================================================
 document.querySelectorAll('.section-title, [data-split]').forEach(el => {

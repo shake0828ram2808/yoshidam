@@ -2749,3 +2749,79 @@ code{
   /* 最後まで来たら「次へ」は ふわっと消える */
   .dock-next.is-gone{ opacity: 0; transform: translateY(10px) scale(.92); pointer-events: none; }
 }
+
+/* =========================================================
+   仕上げ(1): タイポグラフィと質感
+========================================================= */
+/* 日本語の見出しは約物を詰めて、引き締める */
+h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
+.hero-title{ letter-spacing: .04em; line-height: 1.22; }
+
+/* セクションの見出し: 番号 + 細い線、大きく太いタイトル、背景に大きな白抜きの番号 */
+.section-inner{ position: relative; }
+.section-kicker{
+  display:inline-flex; align-items:center; gap: 12px;
+  font-size: .78rem;
+  letter-spacing: .24em;
+}
+.section-kicker::after{
+  content:"";
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.section-title{
+  font-size: clamp(2.4rem, 5.4vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  margin-bottom: 18px;
+}
+.section-num{
+  position:absolute;
+  right: 0; top: -0.28em;
+  z-index: 0;
+  font-family: var(--font-head);
+  font-weight: 900;
+  font-size: clamp(7rem, 17vw, 15rem);
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(243,237,228,.09);
+  pointer-events: none;
+  user-select: none;
+  transform: translateY(var(--num-y, 0px));
+  will-change: transform;
+}
+.section-inner > *:not(.section-num):not(.acorn){ position: relative; z-index: 1; }
+@media (max-width: 600px){
+  .section-num{ font-size: 6.5rem; top: -.18em; right: -6px; }
+}
+/* About の中の小見出しも、少し大きく */
+.about-subhead{ font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-weight: 900; }
+
+/* Skills: 縦のリストをやめて、タグの並びに(短く・見渡しやすく) */
+.skill-group{ padding: 20px 20px 22px; }
+.skill-group ul{ display:flex; flex-wrap: wrap; gap: 6px; }
+.skill-group li{
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(243,237,228,.03);
+  font-size: .8rem;
+  color: var(--text);
+  line-height: 1.5;
+  transition: border-color .25s, background .25s;
+}
+.skill-group li:hover{ border-color: rgba(201,123,99,.6); background: var(--accent-soft); }
+
+/* 太陽は本文の後ろを通るので、まぶしすぎないように */
+.sky-sun{ opacity: .62 !important; box-shadow: 0 0 50px 14px rgba(246,195,106,.22), 0 0 120px 40px rgba(246,195,106,.08); }
+
+/* 空に、ごく細かい粒子の質感(フィルムのような手ざわり)を重ねる */
+.sky::after{
+  content:"";
+  position:absolute; inset: -50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .06;
+  pointer-events: none;
+}
