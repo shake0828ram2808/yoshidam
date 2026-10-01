@@ -2244,7 +2244,7 @@ code{
   }
   .dock-next-label{ opacity: .8; }
   .dock-next-name{ font-weight: 700; }
-  .dock-next.is-last svg{ transform: rotate(180deg); }
+  
   /* 下のナビの分だけ、ページの最後とお知らせを上げる */
   body{ padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
   .toast-stack{ bottom: calc(76px + env(safe-area-inset-bottom)); }
@@ -2719,4 +2719,33 @@ code{
   border-radius: 999px;
   border: 1px dashed var(--line-strong);
   color: var(--text-muted);
+}
+
+/* スマホ: 「先頭へ」は左下、「次へ」は右下。どちらも下のナビのすぐ上に浮かぶ */
+.dock-top{ display: none; }
+@media (max-width: 900px){
+  .dock-top{
+    position: fixed; z-index: 96;
+    left: 14px;
+    bottom: calc(72px + env(safe-area-inset-bottom));
+    display:inline-flex; align-items:center; gap: 4px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(24,22,26,.88);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    color: var(--text);
+    font-size: .76rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,.35);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity .45s var(--ease), transform .45s var(--ease);
+  }
+  .dock-top.is-shown{ opacity: 1; transform: none; pointer-events: auto; }
+  html.nav-open .dock-top{ opacity: 0; pointer-events: none; }
+  /* 最後まで来たら「次へ」は ふわっと消える */
+  .dock-next.is-gone{ opacity: 0; transform: translateY(10px) scale(.92); pointer-events: none; }
 }

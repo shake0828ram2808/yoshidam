@@ -1073,17 +1073,23 @@ if (dock) {
       // 今のチップが真ん中に来るように、横にすべらせる
       dockChips.scrollTo({ left: cur.offsetLeft - (dockChips.clientWidth - cur.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
     }
+    // 最後のセクションでは「次へ」は役目を終えるので、ふわっと消す
     const next = sections[idx + 1];
-    dockNext.classList.toggle('is-last', !next);
-    dockNextName.textContent = next ? (next.dataset.label || next.id) : (sections[0].dataset.label || 'Top');
-    dockNext.querySelector('.dock-next-label').textContent = next ? '次へ' : '先頭へ';
-    dockNext.setAttribute('aria-label', next ? `次のセクション ${next.dataset.label} へ` : 'ページの先頭へ');
+    dockNext.classList.toggle('is-gone', !next);
+    dockNext.tabIndex = next ? 0 : -1;
+    if (next) {
+      dockNextName.textContent = next.dataset.label || next.id;
+      dockNext.setAttribute('aria-label', `次のセクション ${next.dataset.label} へ`);
+    }
   };
   scrollHooks.push(updateDock);
+  // 「先頭へ」は、少しスクロールしたら左下に いつも出しておく
+  const dockTop = document.getElementById('dockTop');
+  scrollHooks.push((y, vh) => dockTop?.classList.toggle('is-shown', y > vh * 0.6));
+  dockTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
   dockNext.addEventListener('click', () => {
     const idx = sections.findIndex(s => s.id === currentId);
-    const next = sections[idx + 1] || sections[0];
-    next.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    sections[idx + 1]?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
   });
 }
 
