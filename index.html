@@ -524,14 +524,14 @@
           <!-- 「ピコとくく」の緑のたまご。8段階で育つ。見えている間は自動で育ち、つつくと1段階すすむ -->
           <button type="button" class="character-visual character-visual--egg" id="eggButton" aria-label="たまごを育てる(つつくと次へ)">
             <span class="egg-stage" id="eggStage" data-step="0">
-              <img class="egg-frame" data-step="0" src="assets/images/characters/egg/egg_green.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="1" src="assets/images/characters/egg/egg_green_crack1.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="2" src="assets/images/characters/egg/egg_green_crack2.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="3" src="assets/images/characters/egg/egg_green_hatch.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="4" src="assets/images/characters/egg/char_green_newborn.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="5" src="assets/images/characters/egg/char_green_baby.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="6" src="assets/images/characters/egg/char_green_child.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="7" src="assets/images/characters/egg/char_green_adult.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="0" width="71" height="89" src="assets/images/characters/egg/egg_green.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="1" width="69" height="89" src="assets/images/characters/egg/egg_green_crack1.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="2" width="70" height="88" src="assets/images/characters/egg/egg_green_crack2.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="3" width="118" height="96" src="assets/images/characters/egg/egg_green_hatch.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="4" width="64" height="68" src="assets/images/characters/egg/char_green_newborn.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="5" width="70" height="59" src="assets/images/characters/egg/char_green_baby.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="6" width="78" height="97" src="assets/images/characters/egg/char_green_child.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="7" width="126" height="110" src="assets/images/characters/egg/char_green_adult.png" alt="" loading="lazy">
             </span>
           </button>
           <h3>たまご</h3>
@@ -540,7 +540,7 @@
             <ol class="egg-dots" aria-hidden="true"><li data-step="0" title="たまご"></li><li data-step="1" title="ひびが入る"></li><li data-step="2" title="もう少し"></li><li data-step="3" title="うまれる!"></li><li data-step="4" title="うまれたて"></li><li data-step="5" title="あかちゃん"></li><li data-step="6" title="こども"></li><li data-step="7" title="おとな"></li></ol>
             <p class="egg-label" id="eggLabel" aria-live="polite">たまご</p>
           </div>
-          <div class="egg-others" aria-label="ほかの色のたまご"><img class="egg-other" src="assets/images/characters/egg/egg_pink_intact.png" alt="ピンクのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_blue_intact.png" alt="あおのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_purple_intact.png" alt="むらさきのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_orange_intact.png" alt="オレンジのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_silver_intact.png" alt="ぎんのたまご" loading="lazy"></div>
+          <div class="egg-others" aria-label="ほかの色のたまご"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_pink_intact.png" alt="ピンクのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_blue_intact.png" alt="あおのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_purple_intact.png" alt="むらさきのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_orange_intact.png" alt="オレンジのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_silver_intact.png" alt="ぎんのたまご" loading="lazy"></div>
         </article>
       </div>
       <!-- スマホのみ: カルーセルの操作(前へ・どこにいるか・次へ) -->
@@ -687,22 +687,22 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
     <div class="section-inner">
       <p class="section-kicker">05</p>
       <h2 class="section-title">Notes</h2>
-      <p class="section-lead">開発の工夫やキャリアについて、noteで書いています。</p>
+      <p class="section-lead">業務や個人開発での工夫を、noteで書いていく予定です。公開したら、ここから読めるようにします。</p>
       <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:-4px;top:-46px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
+      <!-- ▼ 記事を公開したら、各カードを <a href="記事のURL" class="note-card"> に置き換えてください -->
       <div class="notes-list" data-todo="note記事のURL・タイトル">
-        <!-- ▼ 記事リンクはダミーです。公開後に差し替えてください -->
-        <a href="#" class="note-card">
-          <div><h3>モノレポ移行で変わった、チームの開発体験</h3><p>複数リポジトリの分断をどう解消したか</p></div>
-          <span class="note-arrow" aria-hidden="true">→</span>
-        </a>
-        <a href="#" class="note-card">
-          <div><h3>npmからpnpmへ。移行の記録</h3><p>手順・ハマった点・効果測定まで</p></div>
-          <span class="note-arrow" aria-hidden="true">→</span>
-        </a>
-        <a href="#" class="note-card">
-          <div><h3>AI駆動開発、はじめの一歩</h3><p>チームにClaude Codeを導入して分かったこと</p></div>
-          <span class="note-arrow" aria-hidden="true">→</span>
-        </a>
+        <div class="note-card is-upcoming">
+          <div><h3>レガシーシステムを統合する、マイグレーションの進め方</h3><p>乱立したサービスを1つにまとめてきた手順と判断</p></div>
+          <span class="note-soon">準備中</span>
+        </div>
+        <div class="note-card is-upcoming">
+          <div><h3>AI駆動開発を、再現できる手順にする</h3><p>Claude Code / GitHub Copilot を使った開発フロー</p></div>
+          <span class="note-soon">準備中</span>
+        </div>
+        <div class="note-card is-upcoming">
+          <div><h3>子どもと一緒に、アプリをつくる</h3><p>個人開発で iOS アプリを配信するまで</p></div>
+          <span class="note-soon">準備中</span>
+        </div>
       </div>
     </div>
   </section>

@@ -557,22 +557,10 @@ html.nav-open{ overflow: hidden; }
   border: 1px solid var(--line);
   box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px var(--line);
 }
-.about-lead{ font-size: 1.02rem; margin: 0 0 16px; }
-.about-tags{
-  list-style:none; margin:0; padding:0;
-  display:flex; flex-wrap: wrap; gap: 8px;
-}
-.about-tags li{
-  font-size: .78rem;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: #E3A48F;
-}
+
 
 @media (max-width: 560px){
   .about-grid{ grid-template-columns: 1fr; text-align:center; justify-items:center; }
-  .about-tags{ justify-content:center; }
 }
 
 .timeline{
@@ -1067,9 +1055,9 @@ button.character-visual:active{ transform: scale(.95); }
 .character-visual--nemu{ background: #FBF7EF; }
 .nemu-img{
   position:absolute;
-  /* 顔(画像の横50%・縦53%あたり)が円の中央に来るように置く */
-  width: 300%; max-width: none;
-  left: -100%; top: -30%;
+  /* 画像は ひつじのまわりだけに切り出してある。顔が円の中央に来るように置く */
+  width: 123%; max-width: none;
+  left: -12.1%; top: -6.6%;
   transition: opacity .6s var(--ease);
 }
 .nemu-img--blue{ opacity: 0; }
@@ -1113,37 +1101,6 @@ button.character-visual:active{ transform: scale(.95); }
 
 @media (max-width: 860px){
   .character-list{ grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
-}
-
-/* =========================================================
-   Certifications
-========================================================= */
-.cert-list{
-  display:grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-.cert-badge{
-  padding: 26px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: var(--bg-elevated);
-}
-.cert-state{
-  display:inline-block;
-  font-size: .72rem;
-  padding: 2px 10px;
-  margin-bottom: 10px;
-  border-radius: 999px;
-  border: 1px dashed var(--line-strong);
-  color: var(--text-muted);
-}
-.cert-state.is-done{ border-style: solid; border-color: transparent; background: rgba(243,210,122,.14); color: var(--moon); }
-.cert-badge h3{ font-size: 1rem; margin-bottom: 8px; }
-.cert-badge p{ color: var(--text-muted); font-size: 0.88rem; margin: 0 0 14px; }
-
-@media (max-width: 600px){
-  .cert-list{ grid-template-columns: 1fr; }
 }
 
 /* =========================================================
@@ -2750,3 +2707,16 @@ code{
 
 /* 流れ星を描くキャンバス(空のレイヤーの中・星の上) */
 .sky-meteor{ position:absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* Notes: まだ公開していない記事(リンクにしない) */
+.note-card.is-upcoming{ cursor: default; }
+.note-card.is-upcoming:hover{ background: var(--bg); }
+.note-card.is-upcoming h3{ color: var(--text-muted); }
+.note-soon{
+  flex-shrink: 0;
+  font-size: .7rem; line-height: 1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px dashed var(--line-strong);
+  color: var(--text-muted);
+}
