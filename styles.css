@@ -2287,7 +2287,7 @@ code{
   }
   .dock-next-label{ opacity: .8; }
   .dock-next-name{ font-weight: 700; }
-  .section-dock.is-last .dock-next svg{ transform: rotate(180deg); }
+  .dock-next.is-last svg{ transform: rotate(180deg); }
   /* 下のナビの分だけ、ページの最後とお知らせを上げる */
   body{ padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
   .toast-stack{ bottom: calc(76px + env(safe-area-inset-bottom)); }
@@ -2699,4 +2699,51 @@ code{
 @media (max-width: 760px){
   .character-card--egg .egg-others{ gap: 14px 20px; }
   .character-card--egg .egg-other{ width: 54px; }
+}
+
+/* =========================================================
+   About の中の小見出し(Career・Skills・Certs)
+========================================================= */
+.about-subhead{
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: .02em;
+}
+.about-subhead span{
+  display:block;
+  font-family: var(--font-round);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  color: var(--accent);
+  margin-bottom: 2px;
+}
+.about .about-grid{ margin-top: 24px; }
+/* About の中の続き(Skills・Certs)は、上の余白を詰めて ひとまとまりに見せる */
+.section[data-group="hero"] + .section[data-group="hero"]{ padding-top: 24px; }
+.section.about, .section.skills{ padding-bottom: 56px; }
+
+/* Apps: App Store へのボタンが1つだけのとき */
+.kids-actions .kids-btn--only{ grid-column: 1 / -1; justify-self: start; padding: 9px 18px; }
+
+/* スマホ: 次へボタンは、下のナビのすぐ上・右端に浮かべる(PCでは出さない) */
+.dock-next{ display: none !important; }
+@media (max-width: 900px){
+  .dock-next{
+    display: inline-flex !important;
+    position: fixed; z-index: 96;
+    right: 14px;
+    bottom: calc(72px + env(safe-area-inset-bottom));
+    padding: 8px 14px;
+    background: rgba(24,22,26,.88);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(243,210,122,.35);
+    box-shadow: 0 8px 20px rgba(0,0,0,.35);
+    transition: transform .4s var(--ease), opacity .3s;
+  }
+  html.nav-open .dock-next{ transform: translateY(260%); opacity: 0; }
+  .dock-chips{ padding: 0 12px; }
+  .toast-stack{ bottom: calc(124px + env(safe-area-inset-bottom)); }
 }

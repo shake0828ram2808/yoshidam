@@ -477,7 +477,7 @@ if (castList && castPager) {
 // ページ内の目印ごとの「時間の進み具合(0〜1)」
 const SKY_ANCHORS = [
   ['hero', 0], ['about', 0.16], ['skills', 0.30], ['certifications', 0.38],
-  ['projects', 0.56], ['kidsZone', 0.70], ['craft', 0.78], ['characters', 0.86],
+  ['projects', 0.56], ['kidsZone', 0.70], ['characters', 0.78], ['craft', 0.86],
   ['notes', 0.95], ['contact', 1],
 ];
 // 時間の進み具合ごとの空の色。文字が読めるよう、どれも暗めにしてある
@@ -895,7 +895,8 @@ const CROSS = '<svg class="spin-open" viewBox="0 0 24 24" width="16" height="16"
 
 function foldSummary(el) {
   if (el.matches('.timeline')) {
-    const years = [...el.querySelectorAll('.timeline-year')].map(y => y.textContent.trim());
+    // 年の数字だけを読む(横の小さな期間の文字は含めない)
+    const years = [...el.querySelectorAll('.timeline-year')].map(y => y.firstChild.textContent.trim());
     return `${years[0]} 〜 ${years[years.length - 1]}・${years.length}件`;
   }
   if (el.matches('.skills-grid')) {
@@ -1005,7 +1006,7 @@ if (dock) {
       dockChips.scrollTo({ left: cur.offsetLeft - (dockChips.clientWidth - cur.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
     }
     const next = sections[idx + 1];
-    dock.classList.toggle('is-last', !next);
+    dockNext.classList.toggle('is-last', !next);
     dockNextName.textContent = next ? (next.dataset.label || next.id) : (sections[0].dataset.label || 'Top');
     dockNext.querySelector('.dock-next-label').textContent = next ? '次へ' : '先頭へ';
     dockNext.setAttribute('aria-label', next ? `次のセクション ${next.dataset.label} へ` : 'ページの先頭へ');

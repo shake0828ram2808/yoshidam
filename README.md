@@ -54,7 +54,7 @@
 ## スマホの読みやすさ(script.js / styles.css)
 
 - **下のナビ**(`#sectionDock`, 900px以下): セクションのチップを横に並べ、今いる場所を色で示して真ん中へすべらせる。
-  右の「次へ ○○」で次のセクションへ移動(最後は「先頭へ」)。
+  「次へ ○○」(`#dockNext`)は、下のナビのすぐ上・右端に浮かぶボタンで、次のセクションへ移動(最後は「先頭へ」)。
 - **折りたたみ**(760px以下): `data-fold="ボタンの文言"` を付けた要素は、JS が「開閉ボタン + 中身」に包む。
   zutsurun の ExpandRow と同じ手ざわり(行のどこを押しても開閉、丸ボタンは1秒で1回転して ⌄⇔✕、高さは0.36秒でなめらかに)。
   PCでは折りたたまず、いつも全部見せる。ボタンの下の小さな要約は `foldSummary()` で作る。
@@ -62,7 +62,7 @@
 
 ## メニューの構成
 
-About・Certs・Apps・Focus・Cast・Notes・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。
-- About は、ヒーロー・経歴(`#about`)・スキル(`#skills`)のまとまり。経歴とスキルの section には `data-group="hero"` を付け、
+About・Apps・Cast・Focus・Notes・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。
+- About(01)は、ヒーロー・経歴(`#about`)・スキル(`#skills`)・資格(`#certifications`)のまとまり。これらの section には `data-group="hero"` を付け、
   メニューでは About の一部として扱う。
 - Works(業務での工夫)は note の記事を書いてから戻す予定。HTML は git の履歴(コミット 08ff222 まで)に残っている。
