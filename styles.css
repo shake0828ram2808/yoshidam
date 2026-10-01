@@ -1980,3 +1980,56 @@ code{
   }
   .log-item:first-child .log-card, .log-item:last-child .log-card{ transform: none; }
 }
+
+/* =========================================================
+   子ども向けアプリ: 目玉の横長カード・2つのボタン
+========================================================= */
+.kids-lead{
+  position: relative;
+  margin: -20px 0 28px;
+  font-size: .9rem;
+  color: var(--kids-ink-muted);
+}
+.kids-actions{
+  margin-top: auto;
+  display:flex; flex-wrap: wrap; gap: 8px;
+}
+.kids-actions .kids-btn{ margin-top: 0; }
+/* App Store へのリンクは、白地にふちどりの控えめな形 */
+.kids-btn--store{
+  background: #fff;
+  color: var(--kids-ink);
+  border: 2px solid #EADCC8;
+  box-shadow: 0 4px 0 #EADCC8;
+}
+.kids-btn--store:hover{ box-shadow: 0 6px 0 #EADCC8; }
+.kids-btn--store:active{ box-shadow: 0 1px 0 #EADCC8; }
+
+/* 目玉(だんごむしのぼうけん)は2列ぶんの横長 */
+.project-card--wide{
+  grid-column: span 2;
+  flex-direction: row;
+  align-items: center;
+  gap: 28px;
+}
+.project-card--wide .phone--kids{
+  flex-shrink: 0;
+  width: 34%;
+  margin: 0;
+}
+.project-card--wide h4{ font-size: 1.3rem; }
+
+@media (max-width: 860px){
+  .project-card--wide{ grid-column: auto; flex-direction: column; align-items: stretch; gap: 0; }
+  .project-card--wide .phone--kids{ width: 44%; margin: 0 auto 22px; }
+}
+/* 2つ並べても1行に収まるよう、カード内のボタンは少し小さく */
+.kids-actions .kids-btn{ padding: 8px 13px; font-size: .8rem; }
+.project-card--wide .kids-actions .kids-btn{ padding: 10px 20px; font-size: .86rem; }
+@media (min-width: 861px){
+  .project-card--wide .phone--kids{ width: 26%; }
+}
+/* フォントの違いで折り返さないよう、2つのボタンは半分ずつの幅に固定する */
+.kids-actions{ display: grid; grid-template-columns: 1fr 1fr; }
+.kids-actions .kids-btn{ justify-content: center; white-space: nowrap; padding: 8px 6px; font-size: .78rem; }
+.project-card--wide .kids-actions{ grid-template-columns: auto auto; justify-content: start; }
