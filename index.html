@@ -63,6 +63,12 @@
     <a href="#contact">Contact</a>
     <span class="nav-indicator" aria-hidden="true"></span>
   </nav>
+  <!-- 冒険の記録(どんぐりの数と探索度)。押すと実績の一覧が開く -->
+  <button type="button" class="quest-chip" id="questChip" aria-haspopup="dialog" aria-controls="questPanel">
+    <span class="quest-ring" aria-hidden="true"><svg viewBox="0 0 36 36"><circle class="quest-ring-bg" cx="18" cy="18" r="15.5"/><circle class="quest-ring-fg" id="questRing" cx="18" cy="18" r="15.5" pathLength="100"/></svg><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></span>
+    <span class="quest-count"><span id="questAcorns">0</span><small>/5</small></span>
+    <span class="visually-hidden">冒険の記録を開く(探索度 <span id="questPercentSr">0</span>%)</span>
+  </button>
   <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
     <span></span><span></span><span></span>
   </button>
@@ -114,6 +120,7 @@
         <a href="#about" class="btn btn--ghost">30秒で経歴を見る</a>
       </div>
     </div>
+    <button type="button" class="acorn" data-acorn="hero" aria-label="かくれた どんぐり" style="left:7%;bottom:16%;--rot:-18deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
     <a href="#about" class="scroll-hint" id="scrollHint" aria-label="下へスクロール">
       <span class="scroll-hint-text">scroll</span><span class="scroll-hint-line"></span>
     </a>
@@ -181,6 +188,7 @@
     <div class="section-inner">
       <p class="section-kicker">02</p>
       <h2 class="section-title">Skills</h2>
+      <button type="button" class="acorn" data-acorn="skills" aria-label="かくれた どんぐり" style="right:2%;top:-8px;--rot:14deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
       <div class="skills-grid" data-todo="技術スタック">
         <!-- ▼ スキルはダミーです。実際の技術スタックに差し替えてください -->
         <div class="skill-group">
@@ -279,6 +287,7 @@
             <p>リポジトリごとに CLAUDE.md で設計方針・編集ルール・確認手順を書き、方針決定は自分、確定した実装はAIに任せる、という役割分担で開発している。</p>
           </details>
           <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
+          <button type="button" class="acorn" data-acorn="works" aria-label="かくれた どんぐり" style="right:18px;bottom:16px;--rot:-8deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
         </article>
 
       </div>
@@ -330,6 +339,7 @@
         <img class="deco deco--ladybug" src="assets/images/characters/ladybug.png" alt="" width="90" height="101" style="--depth:.6">
         <img class="deco deco--star" src="assets/images/characters/star.png" alt="" width="90" height="88" style="--depth:.4">
       </div>
+      <button type="button" class="acorn" data-acorn="kids" aria-label="かくれた どんぐり" style="left:12%;bottom:36px;--rot:22deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
       <svg class="kids-wave kids-wave--bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L0,30 C 240,70 480,64 720,40 C 960,16 1200,20 1440,46 L1440,0 Z"/></svg>
       <div class="section-inner">
         <h3 class="projects-subhead projects-subhead--kids" data-split="bounce">子どもと楽しむアプリ</h3>
@@ -471,6 +481,7 @@
       <p class="section-kicker">07</p>
       <h2 class="section-title">Notes</h2>
       <p class="section-lead">開発の工夫やキャリアについて、noteで書いています。</p>
+      <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:-4px;top:-46px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
       <div class="notes-list" data-todo="note記事のURL・タイトル">
         <!-- ▼ 記事リンクはダミーです。公開後に差し替えてください -->
         <a href="#" class="note-card">
@@ -495,6 +506,22 @@
       <p class="section-kicker">08</p>
       <h2 class="section-title">Contact</h2>
       <p class="section-lead">ここまで読んでくださって、ありがとうございます。<br>お仕事のご相談・カジュアル面談など、お気軽にご連絡ください。</p>
+      <div class="quest-result" id="questResult" aria-live="polite">
+        <div class="quest-result-acorns" id="questResultAcorns" aria-hidden="true"></div>
+        <p class="quest-result-msg" id="questResultMsg">このページのどこかに、どんぐりが5つ隠れています。</p>
+        <button type="button" class="text-link quest-result-open" data-open-quest>冒険の記録を見る <span aria-hidden="true">→</span></button>
+        <!-- 5つ全部見つけた人へのお礼: このサイトの仕掛け -->
+        <div class="quest-secret" id="questSecret" hidden>
+          <h3>このサイトの仕掛け</h3>
+          <ul>
+            <li><b>外部ライブラリなし。</b>HTML・CSS・JavaScript だけで作っています。</li>
+            <li><b>空の色</b>は、ページ内の目印ごとに「時刻」を決めておき、スクロール位置から色を補間しています。</li>
+            <li><b>だんごむしの歩行</b>は、波の SVG を <code>getPointAtLength</code> で400点に分け、横の位置から高さと傾きを求めています。</li>
+            <li><b>スクロールの処理</b>は <code>requestAnimationFrame</code> で1フレームに1回にまとめ、重くならないようにしています。</li>
+            <li><b>実績とどんぐりの記録</b>は、この端末の <code>localStorage</code> にだけ保存しています。</li>
+          </ul>
+        </div>
+      </div>
       <div class="contact-links">
         <a href="https://x.com/pik0389" class="contact-link magnetic" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -510,6 +537,29 @@
   <p>&copy; 2026 よしだ</p>
 </footer>
 
+<!-- 冒険の記録(実績の一覧) -->
+<dialog class="quest-panel" id="questPanel" aria-labelledby="questPanelTitle">
+  <div class="quest-panel-head">
+    <h2 id="questPanelTitle">冒険の記録</h2>
+    <button type="button" class="quest-close" id="questClose" aria-label="閉じる">&times;</button>
+  </div>
+  <div class="quest-meter">
+    <span>探索度</span>
+    <div class="bar"><i id="questMeterBar"></i></div>
+    <b><span id="questPercent">0</span>%</b>
+  </div>
+  <div class="quest-acorn-slots" id="questAcornSlots" aria-label="見つけた どんぐり"></div>
+  <ul class="ach-list" id="achList"></ul>
+  <div class="quest-panel-foot">
+    <p>記録は この端末の中にだけ保存されます。</p>
+    <button type="button" class="quest-reset" id="questReset">記録を消す</button>
+  </div>
+</dialog>
+
+<!-- 実績やどんぐりのお知らせ -->
+<div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
+
 <script src="script.js"></script>
+<script src="game.js"></script>
 </body>
 </html>

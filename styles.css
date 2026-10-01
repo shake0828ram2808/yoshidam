@@ -1422,3 +1422,273 @@ button.character-visual:active{ transform: scale(.95); }
   .sky-clock{ margin-left: 10px; }
   .sky-body{ width: 60px; height: 60px; margin: -30px 0 0 -30px; }
 }
+
+/* =========================================================
+   遊びの要素: 冒険の記録・どんぐり・実績
+========================================================= */
+.visually-hidden{
+  position:absolute !important;
+  width:1px; height:1px;
+  overflow:hidden; clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.section{ position: relative; }
+
+/* ヘッダーの「冒険の記録」ボタン */
+.quest-chip{
+  display:inline-flex; align-items:center; gap: 6px;
+  margin-left: 22px;
+  padding: 3px 10px 3px 3px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(243,237,228,.03);
+  cursor: pointer;
+  transition: border-color .3s, background .3s, transform .3s var(--ease-bounce);
+}
+.quest-chip:hover{ border-color: var(--line-strong); background: rgba(243,237,228,.07); }
+.quest-chip.is-bump{ animation: chip-bump .6s var(--ease-bounce); }
+@keyframes chip-bump{
+  0%,100%{ transform: none; }
+  35%{ transform: scale(1.18); }
+}
+.quest-ring{ position: relative; width: 28px; height: 28px; flex-shrink: 0; }
+.quest-ring svg{ width:100%; height:100%; transform: rotate(-90deg); }
+.quest-ring circle{ fill: none; stroke-width: 3; }
+.quest-ring-bg{ stroke: var(--line-strong); }
+.quest-ring-fg{
+  stroke: var(--moon);
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--pct, 0));
+  transition: stroke-dashoffset .8s var(--ease);
+}
+.quest-ring img{
+  position:absolute; left: 50%; top: 50%;
+  width: 10px; height: auto;
+  transform: translate(-50%, -50%);
+}
+.quest-count{ font-size: .78rem; font-variant-numeric: tabular-nums; font-weight: 700; }
+.quest-count small{ font-weight: 400; color: var(--text-muted); }
+
+@media (max-width: 900px){
+  .quest-chip{ margin-left: 0; margin-right: 6px; }
+}
+
+/* かくれた どんぐり: ふだんは うすく、ポインターが近づくと光る(JSで --near 0〜1) */
+.acorn{
+  position:absolute;
+  z-index: 3;
+  width: 30px; height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: calc(.14 + var(--near, 0) * .86);
+  transform: rotate(var(--rot, 0deg)) scale(calc(.9 + var(--near, 0) * .25));
+  filter: drop-shadow(0 0 calc(var(--near, 0) * 12px) rgba(243,210,122,.9));
+  transition: opacity .25s, transform .3s var(--ease-bounce), filter .25s;
+}
+.acorn img{ width:100%; height:100%; object-fit: contain; pointer-events: none; }
+.acorn:focus-visible{ --near: 1; }
+.acorn.is-found{ display: none; }
+/* タッチ端末: ポインターが無いので、少し見えやすくして ときどき揺らす */
+@media (hover: none){
+  .acorn{ opacity: .38; animation: acorn-wiggle 5s ease-in-out infinite; animation-delay: var(--wd, 0s); }
+}
+@keyframes acorn-wiggle{
+  0%, 86%, 100%{ rotate: 0deg; }
+  89%{ rotate: -14deg; }
+  92%{ rotate: 12deg; }
+  95%{ rotate: -6deg; }
+}
+.kids-zone .acorn{ opacity: calc(.22 + var(--near, 0) * .78); }
+
+/* ヘッダーへ飛んでいく どんぐり(JSで生成) */
+.acorn-fly{
+  position: fixed; z-index: 300;
+  width: 30px; height: auto;
+  pointer-events: none;
+}
+
+/* トースト */
+.toast-stack{
+  position: fixed;
+  right: 20px; bottom: 20px;
+  z-index: 250;
+  display:flex; flex-direction: column; align-items: flex-end; gap: 10px;
+  pointer-events: none;
+}
+.toast{
+  display:flex; align-items:center; gap: 12px;
+  min-width: 240px; max-width: 340px;
+  padding: 12px 16px 12px 12px;
+  border-radius: 16px;
+  background: rgba(38,34,30,.94);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 14px 36px rgba(0,0,0,.4);
+  animation: toast-in .5s var(--ease-bounce) both;
+}
+.toast.is-leaving{ animation: toast-out .35s var(--ease) forwards; }
+@keyframes toast-in{ from{ opacity: 0; transform: translateY(16px) scale(.96); } }
+@keyframes toast-out{ to{ opacity: 0; transform: translateX(24px); } }
+.toast-icon{
+  flex-shrink: 0;
+  display:grid; place-items:center;
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: rgba(243,210,122,.14);
+  font-size: 1.15rem;
+}
+.toast-icon img{ width: 16px; height: auto; }
+.toast-kicker{ display:block; font-size: .68rem; color: var(--moon); letter-spacing: .08em; }
+.toast-title{ display:block; font-size: .9rem; font-weight: 700; line-height: 1.5; }
+.toast-desc{ display:block; font-size: .74rem; color: var(--text-muted); line-height: 1.5; }
+
+/* PCでは右端の現在地ドットと重ならないよう、少し内側に出す */
+@media (min-width: 1101px){ .toast-stack{ right: 56px; } }
+@media (max-width: 600px){
+  .toast-stack{ left: 12px; right: 12px; bottom: 12px; align-items: stretch; }
+  .toast{ max-width: none; }
+}
+
+/* 冒険の記録パネル */
+.quest-panel{
+  width: min(520px, calc(100vw - 32px));
+  max-height: min(720px, calc(100svh - 48px));
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 24px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  box-shadow: 0 30px 80px rgba(0,0,0,.55);
+  overflow: auto;
+}
+.quest-panel::backdrop{ background: rgba(10,9,8,.6); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.quest-panel[open]{ animation: panel-in .45s var(--ease-bounce); }
+@keyframes panel-in{ from{ opacity: 0; transform: translateY(20px) scale(.97); } }
+.quest-panel-head{
+  position: sticky; top: 0; z-index: 1;
+  display:flex; align-items:center; justify-content: space-between;
+  padding: 20px 24px 14px;
+  background: var(--bg-elevated);
+}
+.quest-panel-head h2{ font-size: 1.15rem; }
+.quest-close{
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: none;
+  font-size: 1.2rem; line-height: 1;
+  cursor: pointer;
+}
+.quest-meter{
+  display:grid; grid-template-columns: auto 1fr auto; align-items:center; gap: 12px;
+  padding: 0 24px;
+  font-size: .82rem;
+}
+.quest-meter span{ color: var(--text-muted); }
+.quest-meter .bar i{
+  background: linear-gradient(90deg, var(--accent), var(--moon));
+  transform: scaleX(var(--pct, 0));
+}
+.quest-acorn-slots{
+  display:flex; gap: 10px;
+  padding: 18px 24px 6px;
+}
+.acorn-slot{
+  display:grid; place-items:center;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  border: 1px dashed var(--line-strong);
+}
+.acorn-slot img{ width: 18px; height: auto; opacity: .12; filter: grayscale(1); }
+.acorn-slot.is-found{ border-style: solid; border-color: rgba(243,210,122,.4); background: rgba(243,210,122,.08); }
+.acorn-slot.is-found img{ opacity: 1; filter: none; }
+
+.ach-list{
+  list-style:none;
+  margin: 0; padding: 14px 24px 8px;
+  display:grid; gap: 8px;
+}
+.ach{
+  display:flex; align-items:center; gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,.12);
+}
+.ach-icon{
+  flex-shrink: 0;
+  display:grid; place-items:center;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--bg-elevated-2);
+  font-size: 1.05rem;
+  filter: grayscale(1);
+  opacity: .45;
+}
+.ach-name{ display:block; font-size: .88rem; font-weight: 700; color: var(--text-muted); }
+.ach-desc{ display:block; font-size: .74rem; color: var(--text-muted); }
+.ach.is-unlocked{ border-color: rgba(243,210,122,.28); background: rgba(243,210,122,.05); }
+.ach.is-unlocked .ach-icon{ filter: none; opacity: 1; background: rgba(243,210,122,.14); }
+.ach.is-unlocked .ach-name{ color: var(--text); }
+.quest-panel-foot{
+  display:flex; align-items:center; justify-content: space-between; gap: 12px;
+  padding: 10px 24px 22px;
+  font-size: .72rem;
+  color: var(--text-muted);
+}
+.quest-panel-foot p{ margin: 0; }
+.quest-reset{
+  border: 1px solid var(--line-strong);
+  background: none;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: .72rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.quest-reset:hover{ color: var(--text); }
+
+/* Contact の「冒険の結果」 */
+.quest-result{
+  max-width: 560px;
+  margin: 0 auto 36px;
+  padding: 22px 24px;
+  border-radius: 20px;
+  border: 1px dashed var(--line-strong);
+  background: rgba(38,34,30,.5);
+}
+.quest-result.is-complete{ border-style: solid; border-color: rgba(243,210,122,.4); background: rgba(243,210,122,.06); }
+.quest-result-acorns{ display:flex; justify-content:center; gap: 8px; margin-bottom: 10px; }
+.quest-result-acorns img{ width: 16px; height: auto; opacity: .15; filter: grayscale(1); transition: opacity .4s, filter .4s; }
+.quest-result-acorns img.is-found{ opacity: 1; filter: none; }
+.quest-result-msg{ margin: 0 0 6px; font-size: .92rem; }
+button.text-link{ border: none; padding: 0; background-color: transparent; cursor: pointer; font-family: inherit; }
+.quest-secret{
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+.quest-secret h3{ font-size: 1rem; margin-bottom: 10px; color: var(--moon); }
+.quest-secret ul{ margin: 0; padding-left: 1.2em; font-size: .86rem; color: var(--text-muted); }
+.quest-secret li{ margin-bottom: 6px; }
+.quest-secret b{ color: var(--text); font-weight: 700; }
+.quest-secret code{
+  font-size: .8em;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(0,0,0,.25);
+  color: #E3A48F;
+}
+.quest-secret:not([hidden]){ animation: rise .8s var(--ease) both; }
+
+/* ひみつのコマンドのごほうび: 空の色が いっきに一周して、どんぐりが全部光る */
+.is-konami .sky{ animation: konami-sky 2.4s ease-in-out; }
+@keyframes konami-sky{
+  50%{ filter: hue-rotate(180deg) brightness(1.7); }
+}
+.is-konami .acorn{ --near: 1 !important; }

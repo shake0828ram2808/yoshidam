@@ -1,0 +1,310 @@
+// =========================================================
+// 遊びの要素: 実績・かくれた どんぐり・探索度
+// script.js の後に読み込む(sections / currentId / scrollHooks / skyPhase などを使う)
+// =========================================================
+
+// ---------------------------------------------------------
+// 実績の一覧。secret: true は、解除するまで名前も伏せる
+// ---------------------------------------------------------
+const ACHIEVEMENTS = [
+  { id: 'start',     icon: '👣', name: 'はじめの一歩',       desc: 'スクロールして、冒険をはじめた' },
+  { id: 'dawn',      icon: '🌅', name: '夜明けを見た',       desc: '空が明るくなるところまで進んだ' },
+  { id: 'noon',      icon: '🎪', name: 'お昼の原っぱ',       desc: '子どもと楽しむアプリのゾーンに着いた' },
+  { id: 'deepdive',  icon: '🔍', name: '深掘りさん',         desc: 'Works の「詳しく」を3つとも開いた' },
+  { id: 'play',      icon: '🎮', name: 'あそんでみた',       desc: '個人開発のアプリを開いてみた' },
+  { id: 'piko',      icon: '❗', name: 'ピコと なかよし',    desc: 'ピコを3回つついた' },
+  { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
+  { id: 'nemu',      icon: '🧣', name: 'おきがえ',           desc: 'ねむひつじのスカーフを切り替えた' },
+  { id: 'night',     icon: '🌙', name: 'おやすみなさい',     desc: '夜まで、ページの最後まで読んだ' },
+  { id: 'explorer',  icon: '🧭', name: 'ぜんぶ見た',         desc: 'すべてのセクションを訪れた' },
+  { id: 'acorn1',    icon: '🌰', name: 'はじめての どんぐり', desc: 'かくれた どんぐりを1つ見つけた' },
+  { id: 'acorn5',    icon: '👑', name: 'どんぐりマスター',   desc: 'どんぐりを5つ全部見つけた' },
+  { id: 'konami',    icon: '🕹️', name: 'ひみつのコマンド',   desc: '↑↑↓↓←→←→BA', secret: true },
+];
+const ACORN_IDS = ['hero', 'skills', 'works', 'kids', 'notes'];
+const ACORN_IMG = 'assets/images/characters/acorn.png';
+const STORE_KEY = 'yoshidam:quest:v1';
+const TOAST_MS = 3600;
+
+// ---------------------------------------------------------
+// 記録の読み書き(localStorage が使えない環境でも動くように)
+// ---------------------------------------------------------
+function loadQuest() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      return { seen: d.seen || [], ach: d.ach || {}, acorns: d.acorns || [], piko: d.piko || 0, details: d.details || [] };
+    }
+  } catch (e) { /* 読めなければ はじめから */ }
+  return { seen: [], ach: {}, acorns: [], piko: 0, details: [] };
+}
+function saveQuest() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(quest)); } catch (e) { /* 保存できなくても遊べる */ }
+}
+let quest = loadQuest();
+
+// ---------------------------------------------------------
+// 画面の部品
+// ---------------------------------------------------------
+const questChip = document.getElementById('questChip');
+const questPanel = document.getElementById('questPanel');
+const toastStack = document.getElementById('toastStack');
+const achList = document.getElementById('achList');
+const acornSlots = document.getElementById('questAcornSlots');
+const acornButtons = [...document.querySelectorAll('.acorn')];
+const resultAcorns = document.getElementById('questResultAcorns');
+
+// パネルの実績一覧・どんぐりの枠を作る
+achList.innerHTML = ACHIEVEMENTS.map(a => `
+  <li class="ach" data-ach="${a.id}">
+    <span class="ach-icon" aria-hidden="true">${a.icon}</span>
+    <span><span class="ach-name"></span><span class="ach-desc"></span></span>
+  </li>`).join('');
+acornSlots.innerHTML = ACORN_IDS.map(id => `<span class="acorn-slot" data-slot="${id}"><img src="${ACORN_IMG}" alt="" width="142" height="207"></span>`).join('');
+resultAcorns.innerHTML = ACORN_IDS.map(id => `<img src="${ACORN_IMG}" alt="" data-slot="${id}" width="142" height="207">`).join('');
+
+// ---------------------------------------------------------
+// 探索度(0〜100)= 訪れたセクション 50% + 実績 30% + どんぐり 20%
+// ---------------------------------------------------------
+function explorePercent() {
+  const normal = ACHIEVEMENTS.filter(a => !a.secret);
+  const achDone = normal.filter(a => quest.ach[a.id]).length;
+  const p = (quest.seen.length / sections.length) * 50
+          + (achDone / normal.length) * 30
+          + (quest.acorns.length / ACORN_IDS.length) * 20;
+  return Math.min(100, Math.round(p));
+}
+
+function renderQuest() {
+  const pct = explorePercent();
+  document.getElementById('questRing').style.setProperty('--pct', pct);
+  document.getElementById('questAcorns').textContent = quest.acorns.length;
+  document.getElementById('questPercent').textContent = pct;
+  document.getElementById('questPercentSr').textContent = pct;
+  document.getElementById('questMeterBar').style.setProperty('--pct', (pct / 100).toFixed(3));
+
+  achList.querySelectorAll('.ach').forEach(li => {
+    const a = ACHIEVEMENTS.find(x => x.id === li.dataset.ach);
+    const done = !!quest.ach[a.id];
+    li.classList.toggle('is-unlocked', done);
+    const hidden = a.secret && !done;
+    li.querySelector('.ach-name').textContent = hidden ? '？？？' : a.name;
+    li.querySelector('.ach-desc').textContent = hidden ? 'ひみつの実績' : a.desc;
+    li.querySelector('.ach-icon').textContent = hidden ? '？' : a.icon;
+  });
+  document.querySelectorAll('[data-slot]').forEach(el => {
+    el.classList.toggle('is-found', quest.acorns.includes(el.dataset.slot));
+  });
+  acornButtons.forEach(b => b.classList.toggle('is-found', quest.acorns.includes(b.dataset.acorn)));
+
+  // Contact の「冒険の結果」
+  const n = quest.acorns.length;
+  const msg = document.getElementById('questResultMsg');
+  const secret = document.getElementById('questSecret');
+  if (n === 0) {
+    msg.textContent = finePointer
+      ? 'このページのどこかに、どんぐりが5つ隠れています。カーソルを近づけると光ります。'
+      : 'このページのどこかに、どんぐりが5つ隠れています。ときどき揺れているかも。';
+  } else if (n < ACORN_IDS.length) {
+    msg.textContent = `どんぐり ${n}/5。あと ${ACORN_IDS.length - n} 個 隠れています。`;
+  } else {
+    msg.textContent = '全部見つけてくれて、ありがとうございます! お礼に、このサイトの仕掛けを少しだけ。';
+  }
+  secret.hidden = n < ACORN_IDS.length;
+  document.getElementById('questResult').classList.toggle('is-complete', n >= ACORN_IDS.length);
+}
+
+// ---------------------------------------------------------
+// お知らせ(トースト)
+// ---------------------------------------------------------
+function showToast({ icon, kicker, title, desc, iconImg }) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `
+    <span class="toast-icon" aria-hidden="true">${iconImg ? `<img src="${iconImg}" alt="">` : icon}</span>
+    <span><span class="toast-kicker">${kicker}</span><span class="toast-title">${title}</span>${desc ? `<span class="toast-desc">${desc}</span>` : ''}</span>`;
+  toastStack.appendChild(t);
+  // 同時に出すのは3つまで。あふれたら古いものから下げる
+  while (toastStack.children.length > 3) toastStack.firstElementChild.remove();
+  setTimeout(() => {
+    t.classList.add('is-leaving');
+    t.addEventListener('animationend', () => t.remove(), { once: true });
+    if (reduceMotion) t.remove();
+  }, TOAST_MS);
+}
+
+function bumpChip() {
+  questChip.classList.remove('is-bump');
+  void questChip.offsetWidth;
+  questChip.classList.add('is-bump');
+}
+
+function unlock(id) {
+  if (quest.ach[id]) return;
+  const a = ACHIEVEMENTS.find(x => x.id === id);
+  if (!a) return;
+  quest.ach[id] = Date.now();
+  saveQuest();
+  renderQuest();
+  bumpChip();
+  showToast({ icon: a.icon, kicker: '実績を解除しました', title: a.name, desc: a.desc });
+}
+
+// ---------------------------------------------------------
+// どんぐり: 近づくと光る。押すと拾って、ヘッダーへ飛んでいく
+// ---------------------------------------------------------
+acornButtons.forEach((btn, i) => btn.style.setProperty('--wd', `${i * 1.3}s`));
+
+if (finePointer) {
+  let px = -999, py = -999, pending = false;
+  const updateNear = () => {
+    pending = false;
+    acornButtons.forEach(btn => {
+      if (btn.classList.contains('is-found')) return;
+      const r = btn.getBoundingClientRect();
+      const d = Math.hypot(px - (r.left + r.width / 2), py - (r.top + r.height / 2));
+      btn.style.setProperty('--near', Math.max(0, 1 - d / 140).toFixed(2));
+    });
+  };
+  window.addEventListener('pointermove', e => {
+    px = e.clientX; py = e.clientY;
+    if (!pending) { pending = true; requestAnimationFrame(updateNear); }
+  }, { passive: true });
+  window.addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(updateNear); } }, { passive: true });
+}
+
+function flyToChip(fromEl) {
+  if (reduceMotion || !fromEl.animate) return;
+  const a = fromEl.getBoundingClientRect();
+  const b = questChip.getBoundingClientRect();
+  const img = document.createElement('img');
+  img.src = ACORN_IMG;
+  img.className = 'acorn-fly';
+  img.style.left = `${a.left}px`;
+  img.style.top = `${a.top}px`;
+  document.body.appendChild(img);
+  const dx = b.left + 10 - a.left;
+  const dy = b.top + 4 - a.top;
+  img.animate([
+    { transform: 'translate(0,0) scale(1) rotate(0)' },
+    { transform: `translate(${dx * 0.35}px, ${dy * 0.35 - 80}px) scale(1.5) rotate(-160deg)`, offset: 0.4 },
+    { transform: `translate(${dx}px, ${dy}px) scale(.4) rotate(-360deg)`, opacity: 0.6 },
+  ], { duration: 800, easing: 'cubic-bezier(.5,0,.3,1)' }).onfinish = () => { img.remove(); bumpChip(); };
+}
+
+acornButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const id = btn.dataset.acorn;
+    if (quest.acorns.includes(id)) return;
+    flyToChip(btn);
+    quest.acorns.push(id);
+    saveQuest();
+    // 飛んでいくのを見せてから消す
+    setTimeout(renderQuest, reduceMotion ? 0 : 60);
+    const n = quest.acorns.length;
+    showToast({
+      iconImg: ACORN_IMG,
+      kicker: `どんぐり ${n}/5`,
+      title: n < 5 ? 'どんぐりを見つけた!' : '5つ全部 見つけた!',
+      desc: n < 5 ? `あと ${5 - n} 個、どこかに隠れています` : 'Contact に、ささやかなお礼があります',
+    });
+    if (n === 1) setTimeout(() => unlock('acorn1'), 500);
+    if (n === 5) setTimeout(() => unlock('acorn5'), 500);
+  });
+});
+
+// ---------------------------------------------------------
+// 実績のきっかけ
+// ---------------------------------------------------------
+// スクロールに合わせて: 訪れたセクション・空の時刻
+scrollHooks.push((y, vh) => {
+  if (currentId && !quest.seen.includes(currentId)) {
+    quest.seen.push(currentId);
+    saveQuest();
+    renderQuest();
+    if (quest.seen.length >= sections.length) unlock('explorer');
+  }
+  if (y > vh * 0.5) unlock('start');
+  const ph = skyPhase(y, vh);
+  if (ph >= 0.45) unlock('dawn');
+  if (ph >= 0.99 && currentId === 'contact') unlock('night');
+  const kz = document.getElementById('kidsZone');
+  if (kz && kz.getBoundingClientRect().top < vh * 0.5) unlock('noon');
+});
+
+// Works の「詳しく」を3つとも開いた
+document.querySelectorAll('.case-more').forEach((d, i) => {
+  d.addEventListener('toggle', () => {
+    if (!d.open || quest.details.includes(i)) return;
+    quest.details.push(i);
+    saveQuest();
+    if (quest.details.length >= document.querySelectorAll('.case-more').length) unlock('deepdive');
+  });
+});
+
+// アプリを開いた
+document.querySelectorAll('.projects a[target="_blank"]').forEach(a => {
+  a.addEventListener('click', () => unlock('play'));
+});
+
+// キャラクター
+document.getElementById('pikoButton')?.addEventListener('click', () => {
+  quest.piko += 1;
+  saveQuest();
+  if (quest.piko >= 3) unlock('piko');
+});
+document.getElementById('dangoButton')?.addEventListener('click', () => {
+  // 1回目で丸まり、丸まったまま もう1回で転がる
+  if (document.getElementById('dangoButton').classList.contains('is-rolling')) unlock('dango');
+});
+document.querySelectorAll('.nemu-btn').forEach(b => b.addEventListener('click', () => {
+  if (b.dataset.scarf === 'blue') unlock('nemu');
+}));
+
+// ひみつのコマンド ↑↑↓↓←→←→BA
+{
+  const CODE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  let pos = 0;
+  document.addEventListener('keydown', e => {
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    pos = key === CODE[pos] ? pos + 1 : (key === CODE[0] ? 1 : 0);
+    if (pos === CODE.length) {
+      pos = 0;
+      unlock('konami');
+      // ごほうび: 空がいっきに一日分まわる
+      document.documentElement.classList.add('is-konami');
+      setTimeout(() => document.documentElement.classList.remove('is-konami'), 2400);
+    }
+  });
+}
+
+// ---------------------------------------------------------
+// 冒険の記録パネル
+// ---------------------------------------------------------
+function openQuest() {
+  renderQuest();
+  if (questPanel.showModal) questPanel.showModal(); else questPanel.setAttribute('open', '');
+}
+questChip.addEventListener('click', openQuest);
+document.querySelectorAll('[data-open-quest]').forEach(b => b.addEventListener('click', openQuest));
+document.getElementById('questClose').addEventListener('click', () => questPanel.close());
+// 背景(パネルの外)を押したら閉じる
+questPanel.addEventListener('click', e => { if (e.target === questPanel) questPanel.close(); });
+document.getElementById('questReset').addEventListener('click', () => {
+  if (!window.confirm('冒険の記録(実績とどんぐり)を消して、はじめからにしますか?')) return;
+  quest = { seen: [], ach: {}, acorns: [], piko: 0, details: [] };
+  saveQuest();
+  renderQuest();
+});
+
+// ---------------------------------------------------------
+// コンソールを開いたエンジニアへ
+// ---------------------------------------------------------
+console.log(
+  '%c(\\_/)\n( •.•)  ここまで見てくれて ありがとう!\n/ > 🌰  このサイトは HTML/CSS/JS だけで作っています。\n\nひみつのコマンドも、ひとつ隠れています。',
+  'font-family: monospace; color: #C97B63; font-size: 12px; line-height: 1.5;'
+);
+
+renderQuest();
+requestTick(); // はじめの現在地(Top)も記録する
