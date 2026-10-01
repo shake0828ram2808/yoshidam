@@ -41,7 +41,7 @@ html{ scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
 
 body{
   margin:0;
-  background: var(--bg);
+  background: var(--sky-bottom, var(--bg));
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.8;
@@ -375,21 +375,6 @@ html.show-todo [data-todo]::before{
 @keyframes orb-breathe{
   0%,100%{ transform: translate(-50%,-55%) scale(1); }
   50%{ transform: translate(-50%,-55%) scale(1.08); }
-}
-
-/* 小さな星(JSで点を生成) */
-.hero-stars{ position:absolute; inset:0; pointer-events:none; }
-.hero-stars i{
-  position:absolute;
-  width: var(--s, 2px); height: var(--s, 2px);
-  border-radius: 50%;
-  background: var(--text);
-  opacity: 0;
-  animation: twinkle var(--t, 4s) ease-in-out var(--delay, 0s) infinite;
-}
-@keyframes twinkle{
-  0%,100%{ opacity: 0; }
-  50%{ opacity: var(--o, .6); }
 }
 
 .hero-inner{ position: relative; max-width: 720px; }
@@ -890,20 +875,11 @@ html.show-todo [data-todo]::before{
    Projects — kids zone (tone switch happens here)
 ========================================================= */
 .kids-zone{
-  margin-top: 100px;
-  padding: 100px 0 110px;
+  margin-top: 170px;
+  padding: 80px 0 110px;
   background: var(--kids-bg);
   color: var(--kids-ink);
-  border-radius: 48px 48px 0 0;
   position: relative;
-}
-.kids-zone::before{
-  content:"";
-  position:absolute;
-  top:-1px; left:0; right:0;
-  height: 90px;
-  background: linear-gradient(to bottom, var(--bg), var(--kids-bg));
-  border-radius: 48px 48px 0 0;
 }
 
 .kids-zone .projects-subhead--kids{
@@ -1063,9 +1039,9 @@ button.character-visual:active{ transform: scale(.95); }
 .character-visual--nemu{ background: #FBF7EF; }
 .nemu-img{
   position:absolute;
-  /* 顔(画像の横52%・縦55%あたり)が円の中央に来るように置く */
-  width: 250%; max-width: none;
-  left: -82%; top: -22%;
+  /* 顔(画像の横50%・縦53%あたり)が円の中央に来るように置く */
+  width: 300%; max-width: none;
+  left: -100%; top: -30%;
   transition: opacity .6s var(--ease);
 }
 .nemu-img--blue{ opacity: 0; }
@@ -1201,4 +1177,248 @@ button.character-visual:active{ transform: scale(.95); }
   color: var(--text-muted);
   font-size: 0.82rem;
   border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   空(スクロールで時間が進む)
+   色は JS が --sky-top / --sky-bottom / --stars / --glow / --glow-a に入れる
+========================================================= */
+.sky{
+  position: fixed; inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--sky-top, #14131A), var(--sky-bottom, var(--bg)));
+  overflow: hidden;
+}
+.sky-glow{
+  position:absolute; left: -20%; right: -20%; bottom: -40vh;
+  height: 90vh;
+  background: radial-gradient(ellipse at 50% 100%, var(--glow, #E39A6E), transparent 62%);
+  opacity: var(--glow-a, 0);
+}
+.sky-stars{ position:absolute; inset:0; opacity: var(--stars, 1); }
+.sky-stars i{
+  position:absolute;
+  width: var(--s, 2px); height: var(--s, 2px);
+  border-radius: 50%;
+  background: var(--text);
+  opacity: var(--o, .5);
+  animation: twinkle var(--t, 4s) ease-in-out var(--delay, 0s) infinite;
+}
+@keyframes twinkle{
+  0%,100%{ opacity: calc(var(--o, .5) * .2); }
+  50%{ opacity: var(--o, .5); }
+}
+/* 月と太陽。位置は JS が transform で動かす */
+.sky-body{
+  position:absolute; left: 0; top: 0;
+  width: 84px; height: 84px;
+  margin: -42px 0 0 -42px;
+  will-change: transform;
+}
+.sky-moon, .sky-sun{
+  position:absolute; inset: 0;
+  width: 100%; height: 100%;
+  transition: opacity .8s var(--ease);
+}
+.sky-moon{ filter: drop-shadow(0 0 22px rgba(243,210,122,.45)); opacity: .85; }
+.sky-sun{
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 40%, #FFF3C4, #F6C36A 60%, #EE9C55);
+  box-shadow: 0 0 60px 18px rgba(246,195,106,.35), 0 0 140px 50px rgba(246,195,106,.14);
+  opacity: 0;
+}
+.sky-body.is-sun .sky-moon{ opacity: 0; }
+.sky-body.is-sun .sky-sun{ opacity: .9; }
+
+/* ヘッダーの時計 */
+.sky-clock{
+  margin-right: auto;
+  margin-left: 14px;
+  display:inline-flex; align-items:center; gap: 5px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: .7rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: default;
+}
+.sky-clock-icon{ color: var(--moon); }
+
+/* =========================================================
+   見出しの文字が1文字ずつ出てくる
+========================================================= */
+.split-ch{
+  display:inline-block;
+  opacity: 0;
+  transform: translateY(.45em) rotate(6deg);
+  transition: opacity .6s var(--ease), transform .7s var(--ease-bounce);
+  transition-delay: calc(var(--i) * 38ms);
+}
+.is-split.is-visible .split-ch{ opacity: 1; transform: none; }
+[data-split="bounce"] .split-ch{
+  transform: translateY(-.8em) scale(.6);
+  transition: opacity .3s, transform .6s var(--ease-bounce);
+  transition-delay: calc(var(--i) * 55ms);
+}
+
+/* =========================================================
+   子ども向けゾーンのふち・飾り
+========================================================= */
+.kids-edge{
+  position:absolute; left: 0; right: 0;
+  top: -88px; height: 90px;
+  pointer-events: none;
+}
+.kids-wave{
+  position:absolute; left:0; bottom: 0;
+  width: 100%; height: 100%;
+  fill: var(--kids-bg);
+  display:block;
+}
+.kids-wave--bottom{
+  top: auto; bottom: -68px; height: 70px;
+}
+/* ガーランド(旗)。ゾーンが見えたら上から順に落ちてくる */
+.bunting{
+  position:absolute; left: 0; top: -38px;
+  width: 100%; height: 70px;
+  overflow: visible;
+}
+.bunting-string{ stroke: rgba(243,237,228,.35); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.bunting-flags{
+  list-style:none; margin:0; padding:0;
+  position:absolute; left:0; right:0; top: -38px; height: 70px;
+}
+.bunting-flags li{
+  position:absolute;
+  width: 22px; height: 26px;
+  margin-left: -11px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: 50% 0;
+  transform: rotate(var(--r, 0deg)) scaleY(0);
+  transition: transform .7s var(--ease-bounce);
+  transition-delay: calc(var(--i) * 45ms + .1s);
+}
+.kids-zone.is-entered .bunting-flags li{ transform: rotate(var(--r, 0deg)) scaleY(1); }
+
+/* ふちを歩くだんごむし */
+.edge-dango{
+  position:absolute; left: 0; top: 0;
+  width: 70px; height: auto;
+  margin: -54px 0 0 -35px;
+  transform-origin: 50% 90%;
+  will-change: transform;
+}
+.edge-dango.is-walking{ animation: dango-step .32s ease-in-out infinite; }
+@keyframes dango-step{
+  0%,100%{ translate: 0 0; }
+  50%{ translate: 0 -3px; }
+}
+
+.kids-deco{ position:absolute; inset: 0; pointer-events:none; overflow: hidden; }
+.deco{
+  position:absolute;
+  height: auto;
+  transform: translateY(calc(var(--ky, 0) * var(--depth, .3) * -120px));
+  will-change: transform;
+}
+.deco--cloud1{ width: 200px; left: -40px; top: 40px; opacity: .9; }
+.deco--cloud2{ width: 150px; right: -30px; top: 140px; opacity: .7; }
+.deco--flower{ width: 54px; left: 3%; bottom: 120px; }
+.deco--clover{ width: 50px; right: 4%; bottom: 60px; }
+.deco--ladybug{ width: 34px; right: 7%; top: 46%; rotate: -30deg; }
+.deco--star{ width: 36px; left: 6%; top: 38%; animation: deco-spin 9s linear infinite; }
+@keyframes deco-spin{ to{ rotate: 360deg; } }
+.kids-zone > .section-inner{ position: relative; }
+
+@media (max-width: 860px){
+  .deco--flower, .deco--clover, .deco--ladybug, .deco--star{ display:none; }
+  .edge-dango{ width: 54px; margin: -42px 0 0 -27px; }
+}
+
+/* =========================================================
+   3Dで傾くカード(PCのみ。JSで --rx / --ry / --gx / --gy)
+========================================================= */
+[data-tilt]{ transform-style: preserve-3d; }
+[data-tilt].is-tilting{
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
+  transition: transform .12s linear;
+}
+[data-tilt].is-tilt-out{ transition: transform .6s var(--ease-bounce); }
+[data-tilt]{ position: relative; }
+[data-tilt]::after{
+  content:"";
+  position:absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(380px circle at var(--gx, 50%) var(--gy, 0%), rgba(255,255,255,.14), transparent 55%);
+  opacity: 0;
+  transition: opacity .4s;
+}
+[data-tilt].is-tilting::after{ opacity: 1; }
+.project-card--kids[data-tilt]::after{ background: radial-gradient(380px circle at var(--gx, 50%) var(--gy, 0%), rgba(255,255,255,.55), transparent 55%); }
+
+/* =========================================================
+   キャラクターの反応(追加)
+========================================================= */
+/* ピコ: 視線と まばたき */
+.piko-look{ transition: transform .25s var(--ease); }
+.piko-eyes{ transform-box: fill-box; transform-origin: center; animation: piko-blink 4.6s infinite; }
+@keyframes piko-blink{
+  0%, 92%, 100%{ transform: scaleY(1); }
+  95%{ transform: scaleY(.1); }
+}
+
+/* ねむひつじ: Zzz がふわふわ上がる。さわると止まって起きる */
+.nemu-wrap{ position: relative; width: 132px; margin: 0 auto; }
+.nemu-zzz{
+  position:absolute; right: -14px; top: -6px;
+  z-index: 2;
+  font-family: var(--font-round);
+  font-weight: 700;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.nemu-zzz i{
+  position:absolute; right: 0; top: 0;
+  font-style: normal;
+  opacity: 0;
+  animation: zzz 3.6s ease-out infinite;
+  animation-delay: calc(var(--n, 0) * 1.2s);
+}
+.nemu-zzz i:nth-child(1){ --n:0; font-size: .7rem; }
+.nemu-zzz i:nth-child(2){ --n:1; font-size: .85rem; }
+.nemu-zzz i:nth-child(3){ --n:2; font-size: 1.05rem; }
+@keyframes zzz{
+  0%{ opacity: 0; transform: translate(0, 18px) rotate(-10deg); }
+  20%{ opacity: .9; }
+  100%{ opacity: 0; transform: translate(16px, -26px) rotate(12deg); }
+}
+.character-card--nemu:hover .nemu-zzz i{ animation-play-state: paused; opacity: 0; transition: opacity .2s; }
+.character-card--nemu:hover .character-visual--nemu{ animation: nemu-wake .5s var(--ease-bounce); }
+@keyframes nemu-wake{
+  0%,100%{ transform: none; }
+  40%{ transform: translateY(-5px) scale(1.04); }
+}
+/* スカーフを切り替えたときの きらきら(JSで生成) */
+.sparkle{
+  position:absolute; left: 50%; top: 58%;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--c);
+  pointer-events: none;
+  z-index: 3;
+  animation: sparkle .8s var(--ease) forwards;
+}
+@keyframes sparkle{
+  0%{ transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100%{ transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.2); opacity: 0; }
+}
+
+@media (max-width: 600px){
+  .sky-clock{ margin-left: 10px; }
+  .sky-body{ width: 60px; height: 60px; margin: -30px 0 0 -30px; }
 }
