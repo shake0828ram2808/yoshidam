@@ -30,7 +30,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') setNavOpen(f
 // =========================================================
 // 現在地の表示(ヘッダーの下線・右端のドット)
 // =========================================================
-const sections = [...document.querySelectorAll('main > section[id]')];
+// メニューに出すセクション。data-group が付いたもの(経歴・スキル)は、そのグループ(About)の一部として扱う
+const allSections = [...document.querySelectorAll('main > section[id]')];
+const sections = allSections.filter(sec => !sec.dataset.group);
 const navLinks = [...mainNav.querySelectorAll('a')];
 const indicator = mainNav.querySelector('.nav-indicator');
 const dotNav = document.getElementById('dotNav');
@@ -56,8 +58,7 @@ let currentId = null;
 function setCurrent(id) {
   if (id === currentId) return;
   currentId = id;
-  // Skills はヘッダーに無いので、ひとつ前の About を現在地として扱う
-  const navId = id === 'skills' ? 'about' : id;
+  const navId = id;
   let active = null;
   navLinks.forEach(a => {
     const on = a.getAttribute('href') === `#${navId}`;
@@ -103,9 +104,10 @@ function onScroll() {
 
   // 画面の上から 35% の位置にあるセクションを「現在地」にする
   const probe = y + vh * 0.35;
-  let current = sections[0];
-  for (const sec of sections) { if (sec.offsetTop <= probe) current = sec; }
-  setCurrent(y + vh >= document.documentElement.scrollHeight - 4 ? sections[sections.length - 1].id : current.id);
+  let current = allSections[0];
+  for (const sec of allSections) { if (sec.offsetTop <= probe) current = sec; }
+  const curId = current.dataset.group || current.id;
+  setCurrent(y + vh >= document.documentElement.scrollHeight - 4 ? sections[sections.length - 1].id : curId);
 
   dotNav.classList.toggle('is-visible', y > vh * 0.6);
   if (kidsZone) {
@@ -297,7 +299,7 @@ nemuButtons.forEach(btn => {
 // =========================================================
 // ページ内の目印ごとの「時間の進み具合(0〜1)」
 const SKY_ANCHORS = [
-  ['hero', 0], ['about', 0.16], ['skills', 0.28], ['works', 0.42],
+  ['hero', 0], ['about', 0.16], ['skills', 0.32],
   ['projects', 0.56], ['kidsZone', 0.70], ['craft', 0.76], ['characters', 0.83],
   ['certifications', 0.90], ['notes', 0.95], ['contact', 1],
 ];
@@ -848,7 +850,7 @@ if (dock) {
     }
     const next = sections[idx + 1];
     dock.classList.toggle('is-last', !next);
-    dockNextName.textContent = next ? (next.dataset.label || next.id) : 'Top';
+    dockNextName.textContent = next ? (next.dataset.label || next.id) : (sections[0].dataset.label || 'Top');
     dockNext.querySelector('.dock-next-label').textContent = next ? '次へ' : '先頭へ';
     dockNext.setAttribute('aria-label', next ? `次のセクション ${next.dataset.label} へ` : 'ページの先頭へ');
   };

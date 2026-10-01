@@ -10,8 +10,7 @@ const ACHIEVEMENTS = [
   { id: 'start',     icon: '👣', name: 'はじめの一歩',       desc: 'スクロールして、冒険をはじめた' },
   { id: 'dawn',      icon: '🌅', name: '夜明けを見た',       desc: '空が明るくなるところまで進んだ' },
   { id: 'noon',      icon: '🎪', name: 'お昼の原っぱ',       desc: '子どもと楽しむアプリのゾーンに着いた' },
-  { id: 'deepdive',  icon: '🔍', name: '深掘りさん',         desc: 'Works の「詳しく」を3つとも開いた' },
-  { id: 'builder',   icon: '🛠️', name: 'つくりかた見学',     desc: 'How I Build の3つのアプリを全部見た' },
+  { id: 'builder',   icon: '🛠️', name: 'つくりかた見学',     desc: 'Focus の3つのアプリを全部見た' },
   { id: 'play',      icon: '🎮', name: 'あそんでみた',       desc: '個人開発のアプリを開いてみた' },
   { id: 'piko',      icon: '🫧', name: 'ピコと仲間達と なかよし', desc: 'ピコと仲間達の3匹を全部つついた' },
   { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
@@ -22,7 +21,7 @@ const ACHIEVEMENTS = [
   { id: 'acorn5',    icon: '👑', name: 'どんぐりマスター',   desc: 'どんぐりを5つ全部見つけた' },
   { id: 'konami',    icon: '🕹️', name: 'ひみつのコマンド',   desc: '↑↑↓↓←→←→BA', secret: true },
 ];
-const ACORN_IDS = ['hero', 'skills', 'works', 'kids', 'notes'];
+const ACORN_IDS = ['hero', 'skills', 'kids', 'focus', 'notes'];
 const ACORN_IMG = 'assets/images/characters/acorn.png';
 const STORE_KEY = 'yoshidam:quest:v1';
 const TOAST_MS = window.innerWidth <= 600 ? 2400 : 3600; // スマホは短めに
@@ -35,7 +34,9 @@ function loadQuest() {
     const raw = localStorage.getItem(STORE_KEY);
     if (raw) {
       const d = JSON.parse(raw);
-      return { seen: d.seen || [], ach: d.ach || {}, acorns: d.acorns || [], piko: Array.isArray(d.piko) ? d.piko : [], details: d.details || [] };
+      // Works を外したので、そこで拾った どんぐりは Focus のものとして数える
+      const acorns = (d.acorns || []).map(id => (id === 'works' ? 'focus' : id));
+      return { seen: d.seen || [], ach: d.ach || {}, acorns, piko: Array.isArray(d.piko) ? d.piko : [], details: d.details || [] };
     }
   } catch (e) { /* 読めなければ はじめから */ }
   return { seen: [], ach: {}, acorns: [], piko: [], details: [] };
@@ -257,17 +258,7 @@ scrollHooks.push((y, vh) => {
   if (kz && kz.getBoundingClientRect().top < vh * 0.5) unlock('noon');
 });
 
-// Works の「詳しく」を3つとも開いた
-document.querySelectorAll('.case-more').forEach((d, i) => {
-  d.addEventListener('toggle', () => {
-    if (!d.open || quest.details.includes(i)) return;
-    quest.details.push(i);
-    saveQuest();
-    if (quest.details.length >= document.querySelectorAll('.case-more').length) unlock('deepdive');
-  });
-});
-
-// How I Build のタブを全部見た
+// Focus のタブを全部見た
 {
   const seenTabs = new Set(['tab-zutsu']);
   document.addEventListener('craft-tab', e => {

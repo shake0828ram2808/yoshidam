@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>よしだ | エンジニアポートフォリオ</title>
-<meta name="description" content="Webエンジニア よしだのポートフォリオ。モノレポ化・pnpm移行・AI駆動開発などの実務の工夫と、子どもと一緒につくったゲームや学習アプリを紹介しています。">
+<meta name="description" content="Webエンジニア よしだのポートフォリオ。教師や児童生徒向けのWebサービスの開発運用と、子どもと一緒につくったゲームや学習アプリを紹介しています。">
 <meta name="theme-color" content="#1C1A17">
 
 <!-- OGP / SNSカード -->
@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="よしだ | エンジニアポートフォリオ">
 <meta property="og:title" content="よしだ | エンジニアポートフォリオ">
-<meta property="og:description" content="つくる理由は、いつも誰かの「ちょっと嬉しい」。実務の工夫と、個人開発のアプリたち。">
+<meta property="og:description" content="効率と、こだわりと、持続性。Webエンジニア よしだのポートフォリオ。">
 <meta property="og:url" content="https://example.com/">
 <meta property="og:image" content="https://example.com/assets/images/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -55,12 +55,11 @@
     <span id="skyClockText">午前 2:00</span>
   </span>
   <nav class="main-nav" id="mainNav" aria-label="ページ内メニュー">
-    <a href="#about">About</a>
-    <a href="#works">Works</a>
-    <a href="#projects">Projects</a>
-    <a href="#craft">Build</a>
-    <a href="#characters">Characters</a>
-    <a href="#certifications">Certifications</a>
+    <a href="#hero">About</a>
+    <a href="#projects">Apps</a>
+    <a href="#craft">Focus</a>
+    <a href="#characters">Cast</a>
+    <a href="#certifications">Certs</a>
     <a href="#notes">Notes</a>
     <a href="#contact">Contact</a>
     <span class="nav-indicator" aria-hidden="true"></span>
@@ -87,17 +86,17 @@
 <main>
 
   <!-- ============ HERO ============ -->
-  <section id="hero" class="hero" data-label="Top">
+  <section id="hero" class="hero" data-label="About">
     <div class="hero-orb" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="hero-eyebrow">Web Engineer / Indie App Maker</p>
       <h1 class="hero-title">
-        <span class="hero-line" style="--d:0">つくる理由は、</span>
-        <span class="hero-line" style="--d:1">いつも誰かの</span>
-        <span class="hero-line" style="--d:2">「ちょっと<em class="hero-em">嬉しい</em>」。</span>
+        <span class="hero-line" style="--d:0">効率と、</span>
+        <span class="hero-line" style="--d:1">こだわりと、</span>
+        <span class="hero-line" style="--d:2"><em class="hero-em">持続性</em></span>
       </h1>
       <p class="hero-lead">
-        業務ではモノレポ化やAI駆動開発で、チームの開発体験を改善。<br class="br-pc">
+        Webアプリケーションエンジニア。<br class="br-pc">業務では、教師や児童生徒向けの様々なwebサービスの開発運用をしています。<br class="br-pc">
         休日は子どもと一緒に考えたゲームや学習アプリをつくっています。
       </p>
 
@@ -111,10 +110,10 @@
           <span class="stat-num"><span data-count="155">155</span><small>回</small></span>
           <span class="stat-label">ゲームの<br>改善リリース</span>
         </li>
-        <!-- ▼ 実際の効果の数字に差し替えてください(data-todo を消すと「仮」表示も消えます) -->
-        <li class="stat" data-todo="実際のCI短縮率">
-          <span class="stat-num"><small>−</small><span data-count="42">42</span><small>%</small></span>
-          <span class="stat-label">pnpm移行での<br>CI時間</span>
+        <!-- ▼ note の記事を公開したら本数を入れてください(data-todo を消すと「仮」表示も消えます) -->
+        <li class="stat" data-todo="noteの記事の本数">
+          <span class="stat-num">〇<small>本</small></span>
+          <span class="stat-label">noteの<br>記事</span>
         </li>
       </ul>
 
@@ -133,25 +132,15 @@
   </section>
 
   <!-- ============ ABOUT ============ -->
-  <section id="about" class="section about" data-label="About">
+  <section id="about" class="section about" data-label="About" data-group="hero">
     <div class="section-inner">
-      <p class="section-kicker">01</p>
-      <h2 class="section-title">About</h2>
       <div class="about-grid">
         <div class="about-photo">
           <img src="assets/images/yoshida-avatar.jpg" alt="よしだのアイコン" width="400" height="400" loading="lazy">
         </div>
         <div class="about-body">
-          <!-- ▼ ここは実際のプロフィール文に差し替えてください -->
-          <p class="about-lead" data-todo="プロフィール文">
-            Webアプリケーションエンジニア。業務では既存プロダクトの開発基盤の改善や新しい開発フローの導入を担当。個人では「誰かの日常にちょっと寄り添うアプリ」をテーマに、子ども向けから健康管理まで幅広く作っています。
-          </p>
-          <ul class="about-tags">
-            <li>開発基盤の改善</li>
-            <li>AI駆動開発</li>
-            <li>個人開発</li>
-            <li>子どもと一緒につくる</li>
-          </ul>
+          <h2 class="section-title">Career</h2>
+          <p class="about-sub">これまでの歩み</p>
         </div>
       </div>
 
@@ -190,9 +179,8 @@
   </section>
 
   <!-- ============ SKILLS ============ -->
-  <section id="skills" class="section skills" data-label="Skills">
+  <section id="skills" class="section skills" data-label="Skills" data-group="hero">
     <div class="section-inner">
-      <p class="section-kicker">02</p>
       <h2 class="section-title">Skills</h2>
       <button type="button" class="acorn" data-acorn="skills" aria-label="かくれた どんぐり" style="right:2%;top:-8px;--rot:14deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
       <div class="skills-grid" data-todo="技術スタック" data-fold="技術スタックを見る">
@@ -217,100 +205,13 @@
     </div>
   </section>
 
-  <!-- ============ WORKS (実務PR) ============ -->
-  <section id="works" class="section works" data-label="Works">
-    <div class="section-inner">
-      <p class="section-kicker">03</p>
-      <h2 class="section-title">Works</h2>
-      <p class="section-lead">業務の中で取り組んだ、開発体験を良くするための工夫です。<br class="br-pc">課題 → 判断 → 結果 の順にまとめています。</p>
-
-      <div class="case-list">
-
-        <!-- ▼ 数字(Before/After)と記事リンクは仮です。実際の値に差し替えてください -->
-        <article class="case-card">
-          <header class="case-head">
-            <span class="case-no">Case 01</span>
-            <h3>マルチリポジトリからモノレポへ</h3>
-            <ul class="tag-list"><li>pnpm workspaces</li><li>CI共通化</li><li>依存管理</li></ul>
-          </header>
-          <div class="case-detail" data-fold="課題・やったこと・結果を見る">
-          <dl class="case-flow">
-            <div><dt>課題</dt><dd>フロントエンド資産が複数のリポジトリに分かれ、同じ修正を何度も入れる・バージョンがずれる状態だった。</dd></div>
-            <div><dt>やったこと</dt><dd>モノレポ構成に統合し、依存関係を一元管理。CIの設定を共通化した。</dd></div>
-            <div><dt>結果</dt><dd>リリースまでの手間が減り、リリースサイクルを短縮できた。</dd></div>
-          </dl>
-          <div class="case-metric" data-todo="リリース頻度の実数">
-            <p class="metric-title">リリース頻度(月あたり)</p>
-            <div class="metric-bars" role="img" aria-label="Before 2回、After 6回">
-              <div class="metric-row"><span>Before</span><div class="bar"><i style="--v:.33"></i></div><b>2回</b></div>
-              <div class="metric-row is-after"><span>After</span><div class="bar"><i style="--v:1"></i></div><b>6回</b></div>
-            </div>
-          </div>
-          <details class="case-more">
-            <summary>なぜモノレポを選んだか</summary>
-            <p data-todo="判断の理由">ほかの選択肢(共通パッケージを別リポジトリで公開する、git submodule など)と比べ、変更が1つのPRで完結し、レビューしやすい点を重視した。</p>
-          </details>
-          </div>
-          <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
-        </article>
-
-        <article class="case-card">
-          <header class="case-head">
-            <span class="case-no">Case 02</span>
-            <h3>npm から pnpm への移行</h3>
-            <ul class="tag-list"><li>pnpm</li><li>CI高速化</li><li>移行計画</li></ul>
-          </header>
-          <div class="case-detail" data-fold="課題・やったこと・結果を見る">
-          <dl class="case-flow">
-            <div><dt>課題</dt><dd>node_modules が肥大化し、インストールとCIに時間がかかっていた。</dd></div>
-            <div><dt>やったこと</dt><dd>pnpmへ移行し、ワークスペースの設計を見直した。移行手順を段階に分けて、影響範囲を小さく保った。</dd></div>
-            <div><dt>結果</dt><dd>CIの実行時間とディスク使用量を削減できた。</dd></div>
-          </dl>
-          <div class="case-metric" data-todo="CI時間の実数">
-            <p class="metric-title">CI 実行時間</p>
-            <div class="metric-bars" role="img" aria-label="Before 12分、After 7分">
-              <div class="metric-row"><span>Before</span><div class="bar"><i style="--v:1"></i></div><b>12分</b></div>
-              <div class="metric-row is-after"><span>After</span><div class="bar"><i style="--v:.58"></i></div><b>7分</b></div>
-            </div>
-          </div>
-          <details class="case-more">
-            <summary>ハマったところ</summary>
-            <p data-todo="移行でハマった点">幽霊依存(package.json に書かれていないのに動いていた依存)が表に出たので、ひとつずつ明示的に追加して解消した。</p>
-          </details>
-          </div>
-          <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
-        </article>
-
-        <article class="case-card">
-          <header class="case-head">
-            <span class="case-no">Case 03</span>
-            <h3>AI駆動開発への挑戦</h3>
-            <ul class="tag-list"><li>Claude Code</li><li>開発フロー設計</li><li>チーム導入</li></ul>
-          </header>
-          <div class="case-detail" data-fold="課題・やったこと・結果を見る">
-          <dl class="case-flow">
-            <div><dt>課題</dt><dd>AIツールを個人では使っていても、チームの開発フローには組み込めていなかった。</dd></div>
-            <div><dt>やったこと</dt><dd>Claude Codeをチーム開発に取り入れ、設計レビューや実装の一部を任せるフローを構築した。</dd></div>
-            <div><dt>結果</dt><dd>導入の壁と、実際に効果のあった使い方をチームで共有できる形にまとめた。</dd></div>
-          </dl>
-          <details class="case-more">
-            <summary>個人開発での使い方</summary>
-            <p>リポジトリごとに CLAUDE.md で設計方針・編集ルール・確認手順を書き、方針決定は自分、確定した実装はAIに任せる、という役割分担で開発している。</p>
-          </details>
-          </div>
-          <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
-          <button type="button" class="acorn" data-acorn="works" aria-label="かくれた どんぐり" style="right:18px;bottom:16px;--rot:-8deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
-        </article>
-
-      </div>
-    </div>
-  </section>
+  <!-- Works(業務での工夫)は、note の記事を書いてから戻す予定(git の履歴に残っています) -->
 
   <!-- ============ PROJECTS ============ -->
-  <section id="projects" class="section projects" data-label="Projects">
+  <section id="projects" class="section projects" data-label="Apps">
     <div class="section-inner">
-      <p class="section-kicker">04</p>
-      <h2 class="section-title">Projects</h2>
+      <p class="section-kicker">02</p>
+      <h2 class="section-title">Apps</h2>
       <p class="section-lead">個人で企画から開発まで手がけたアプリです。</p>
 
       <h3 class="projects-subhead projects-subhead--calm">じっくり向き合うアプリ</h3>
@@ -445,10 +346,10 @@
   </section>
 
   <!-- ============ HOW I BUILD (つくりかた) ============ -->
-  <section id="craft" class="section craft" data-label="Build">
+  <section id="craft" class="section craft" data-label="Focus">
     <div class="section-inner">
-      <p class="section-kicker">05</p>
-      <h2 class="section-title">How I Build</h2>
+      <p class="section-kicker">03</p>
+      <h2 class="section-title">Focus</h2>
       <p class="section-lead">個人開発は、AIと役割を分けながら進めています。<br class="br-pc">「どう作っているか」も、見てもらえるとうれしいです。</p>
 
       <!-- AI駆動開発のサイクル。画面に入ると、1つずつ順に光る -->
@@ -515,6 +416,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
 
       <!-- 開発ログ: だんごむしのぼうけん v1 → v155 -->
       <div class="devlog">
+        <button type="button" class="acorn" data-acorn="focus" aria-label="かくれた どんぐり" style="right:-6px;top:-40px;--rot:16deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
         <div class="devlog-head">
           <h3 class="craft-subhead">開発ログ: だんごむしのぼうけん</h3>
           <p class="devlog-level"><span>改善リリース</span><b>v<span data-count="155">155</span></b></p>
@@ -571,10 +473,10 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
   </section>
 
   <!-- ============ CHARACTERS ============ -->
-  <section id="characters" class="section characters" data-label="Characters">
+  <section id="characters" class="section characters" data-label="Cast">
     <div class="section-inner">
-      <p class="section-kicker">06</p>
-      <h2 class="section-title">Characters</h2>
+      <p class="section-kicker">04</p>
+      <h2 class="section-title">Cast</h2>
       <p class="section-lead">アプリに登場するキャラクターたちです。さわってみてください。</p>
 
       <div class="character-list">
@@ -663,10 +565,10 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
   </section>
 
   <!-- ============ CERTIFICATIONS ============ -->
-  <section id="certifications" class="section certifications" data-label="Certifications">
+  <section id="certifications" class="section certifications" data-label="Certs">
     <div class="section-inner">
-      <p class="section-kicker">07</p>
-      <h2 class="section-title">Certifications</h2>
+      <p class="section-kicker">05</p>
+      <h2 class="section-title">Certs</h2>
       <!-- ▼ 資格はダミーです。実際の取得状況に差し替えてください -->
       <div class="cert-list" data-todo="資格の取得状況">
         <div class="cert-badge">
@@ -688,7 +590,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
   <!-- ============ NOTES ============ -->
   <section id="notes" class="section notes" data-label="Notes">
     <div class="section-inner">
-      <p class="section-kicker">08</p>
+      <p class="section-kicker">06</p>
       <h2 class="section-title">Notes</h2>
       <p class="section-lead">開発の工夫やキャリアについて、noteで書いています。</p>
       <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:-4px;top:-46px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
@@ -713,9 +615,9 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
   <!-- ============ CONTACT ============ -->
   <section id="contact" class="section contact" data-label="Contact">
     <div class="section-inner">
-      <p class="section-kicker">09</p>
+      <p class="section-kicker">07</p>
       <h2 class="section-title">Contact</h2>
-      <p class="section-lead">ここまで読んでくださって、ありがとうございます。<br>お仕事のご相談・カジュアル面談など、お気軽にご連絡ください。</p>
+      <p class="section-lead contact-lead"><span>読んでくださって、ありがとうございます。</span><span>面談や仕事のご相談など、お気軽にご連絡ください。</span></p>
       <div class="quest-result" id="questResult" aria-live="polite">
         <div class="quest-result-acorns" id="questResultAcorns" aria-hidden="true"></div>
         <p class="quest-result-msg" id="questResultMsg">このページのどこかに、どんぐりが5つ隠れています。</p>

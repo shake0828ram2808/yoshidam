@@ -2351,3 +2351,13 @@ code{
   .section{ padding: 64px 0; }
   .section-lead{ margin-bottom: 32px; }
 }
+
+/* About(ヒーロー)の下の経歴・Contact の文 */
+.devlog{ position: relative; }
+.about-sub{ margin: 0; color: var(--text-muted); font-size: .9rem; }
+.about-grid{ margin-bottom: 40px; }
+.contact-lead span{ display: block; white-space: nowrap; }
+@media (max-width: 600px){
+  /* 1行が画面幅に収まるよう、文字を少しだけ小さく */
+  .contact-lead{ font-size: min(.98rem, 3.55vw); }
+}

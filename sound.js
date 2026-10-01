@@ -82,7 +82,7 @@
     ['#dangoButton', 'roll'],
     ['.nemu-btn', 'chime'],
     ['.acorn', 'acorn'],
-    ['.craft-tabs [role="tab"], .log-dot, .cycle-step, .case-more summary', 'tap'],
+    ['.craft-tabs [role="tab"], .log-dot, .cycle-step', 'tap'],
     ['#questChip, [data-open-quest]', 'open'],
   ];
   document.addEventListener('click', e => {
