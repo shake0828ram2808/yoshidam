@@ -2033,3 +2033,13 @@ code{
 .kids-actions{ display: grid; grid-template-columns: 1fr 1fr; }
 .kids-actions .kids-btn{ justify-content: center; white-space: nowrap; padding: 8px 6px; font-size: .78rem; }
 .project-card--wide .kids-actions{ grid-template-columns: auto auto; justify-content: start; }
+
+/* だんごむし(目玉)は1行まるごと、その下にピコのシリーズ3本 */
+@media (min-width: 861px){
+  .project-card--wide{ grid-column: 1 / -1; }
+  .project-card--wide .phone--kids{ width: 20%; max-width: 190px; }
+}
+/* じっくり向き合うアプリは縦に並べる */
+.project-card--calm + .project-card--calm{ margin-top: 24px; }
+.project-card--calm:nth-of-type(2) .phone{ transform: rotate(3deg); }
+.project-card--calm:nth-of-type(2):hover .phone{ transform: rotate(0) translateY(-6px); }
