@@ -11,6 +11,7 @@ const ACHIEVEMENTS = [
   { id: 'dawn',      icon: '🌅', name: '夜明けを見た',       desc: '空が明るくなるところまで進んだ' },
   { id: 'noon',      icon: '🎪', name: 'お昼の原っぱ',       desc: '子どもと楽しむアプリのゾーンに着いた' },
   { id: 'deepdive',  icon: '🔍', name: '深掘りさん',         desc: 'Works の「詳しく」を3つとも開いた' },
+  { id: 'builder',   icon: '🛠️', name: 'つくりかた見学',     desc: 'How I Build の3つのアプリを全部見た' },
   { id: 'play',      icon: '🎮', name: 'あそんでみた',       desc: '個人開発のアプリを開いてみた' },
   { id: 'piko',      icon: '❗', name: 'ピコと なかよし',    desc: 'ピコを3回つついた' },
   { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
@@ -125,8 +126,9 @@ function showToast({ icon, kicker, title, desc, iconImg }) {
     <span class="toast-icon" aria-hidden="true">${iconImg ? `<img src="${iconImg}" alt="">` : icon}</span>
     <span><span class="toast-kicker">${kicker}</span><span class="toast-title">${title}</span>${desc ? `<span class="toast-desc">${desc}</span>` : ''}</span>`;
   toastStack.appendChild(t);
-  // 同時に出すのは3つまで。あふれたら古いものから下げる
-  while (toastStack.children.length > 3) toastStack.firstElementChild.remove();
+  // 同時に出すのは3つまで(スマホは1つ)。あふれたら古いものから下げる
+  const maxToasts = window.innerWidth <= 600 ? 1 : 3;
+  while (toastStack.children.length > maxToasts) toastStack.firstElementChild.remove();
   setTimeout(() => {
     t.classList.add('is-leaving');
     t.addEventListener('animationend', () => t.remove(), { once: true });
@@ -148,7 +150,28 @@ function unlock(id) {
   saveQuest();
   renderQuest();
   bumpChip();
-  showToast({ icon: a.icon, kicker: '実績を解除しました', title: a.name, desc: a.desc });
+  // ページの途中へ一気に移動したときなど、同時に解除されたものは1枚にまとめる
+  pendingAch.push(a);
+  clearTimeout(achTimer);
+  achTimer = setTimeout(flushAchToasts, 300);
+}
+
+let pendingAch = [];
+let achTimer = null;
+function flushAchToasts() {
+  const list = pendingAch;
+  pendingAch = [];
+  if (list.length === 1) {
+    const a = list[0];
+    showToast({ icon: a.icon, kicker: '実績を解除しました', title: a.name, desc: a.desc });
+  } else if (list.length > 1) {
+    showToast({
+      icon: '🏅',
+      kicker: `実績を ${list.length} 個 解除しました`,
+      title: list.map(a => a.name).join('・'),
+      desc: '冒険の記録で確認できます',
+    });
+  }
 }
 
 // ---------------------------------------------------------
@@ -242,6 +265,15 @@ document.querySelectorAll('.case-more').forEach((d, i) => {
     if (quest.details.length >= document.querySelectorAll('.case-more').length) unlock('deepdive');
   });
 });
+
+// How I Build のタブを全部見た
+{
+  const seenTabs = new Set(['tab-zutsu']);
+  document.addEventListener('craft-tab', e => {
+    seenTabs.add(e.target.id);
+    if (seenTabs.size >= document.querySelectorAll('.craft-tabs [role="tab"]').length) unlock('builder');
+  });
+}
 
 // アプリを開いた
 document.querySelectorAll('.projects a[target="_blank"]').forEach(a => {

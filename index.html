@@ -57,6 +57,7 @@
     <a href="#about">About</a>
     <a href="#works">Works</a>
     <a href="#projects">Projects</a>
+    <a href="#craft">Build</a>
     <a href="#characters">Characters</a>
     <a href="#certifications">Certifications</a>
     <a href="#notes">Notes</a>
@@ -385,10 +386,136 @@
     </div>
   </section>
 
+  <!-- ============ HOW I BUILD (つくりかた) ============ -->
+  <section id="craft" class="section craft" data-label="Build">
+    <div class="section-inner">
+      <p class="section-kicker">05</p>
+      <h2 class="section-title">How I Build</h2>
+      <p class="section-lead">個人開発は、AIと役割を分けながら進めています。<br class="br-pc">「どう作っているか」も、見てもらえるとうれしいです。</p>
+
+      <!-- AI駆動開発のサイクル。画面に入ると、1つずつ順に光る -->
+      <h3 class="craft-subhead">AI駆動開発のサイクル</h3>
+      <ol class="cycle" id="cycle">
+        <li class="cycle-step"><span class="cycle-no">1</span><h4>ルールを書く</h4><p>リポジトリごとに <code>CLAUDE.md</code> を置き、目的・守ること・確認の手順を書く。</p></li>
+        <li class="cycle-step"><span class="cycle-no">2</span><h4>役割を分ける</h4><p>方針や設計の判断は自分。仕様が決まった実装や単純作業はAIに任せる。</p></li>
+        <li class="cycle-step"><span class="cycle-no">3</span><h4>自動で確かめる</h4><p>単体テストと、スマホサイズのスクリーンショット(Playwright)で確認する。</p></li>
+        <li class="cycle-step"><span class="cycle-no">4</span><h4>実機で触る</h4><p>実機で遊び、気になるところはスクショに印をつけて伝える。</p></li>
+        <li class="cycle-step"><span class="cycle-no">5</span><h4>記録して、くり返す</h4><p>変更履歴と資料を毎回更新。次の会話でもAIが経緯をたどれる。</p></li>
+      </ol>
+
+      <!-- 設計の見どころ(アプリごとのタブ) -->
+      <h3 class="craft-subhead">設計の見どころ</h3>
+      <div class="craft-tabs" role="tablist" aria-label="アプリを選ぶ">
+        <button type="button" role="tab" id="tab-zutsu" aria-controls="panel-zutsu" aria-selected="true">頭痛手帳</button>
+        <button type="button" role="tab" id="tab-nige" aria-controls="panel-nige" aria-selected="false" tabindex="-1">だんごむし</button>
+        <button type="button" role="tab" id="tab-piko" aria-controls="panel-piko" aria-selected="false" tabindex="-1">ピコ</button>
+        <span class="craft-tab-indicator" aria-hidden="true"></span>
+      </div>
+      <div class="craft-panels">
+        <div class="craft-panel" role="tabpanel" id="panel-zutsu" aria-labelledby="tab-zutsu">
+          <ul class="craft-points">
+            <li><b>保存先を差し替えられる設計。</b>保存処理をリポジトリ層にまとめ、Web と iOS で実装だけを切り替える。</li>
+            <li><b>計算ロジックは必ずテスト。</b>服薬日数のカウントなど 18ファイル・143件の単体テスト(Vitest)。</li>
+            <li><b>健康データは端末の外に出さない。</b>天気APIに送る位置情報も、地域程度に丸める。</li>
+            <li><b>仲間との共有はサーバー側でも検証。</b>Cloudflare Workers + D1。パスワードは PBKDF2 でハッシュ化。</li>
+          </ul>
+          <figure class="code-card"><figcaption>src/storage/keyValueStore.ts</figcaption><pre><code>export interface KeyValueStore {
+  get(key: string): Promise&lt;string | null&gt;;
+  set(key: string, value: string): Promise&lt;void&gt;;
+  remove(key: string): Promise&lt;void&gt;;
+}
+// Web: localStorage / IndexedDB
+// iOS: @capacitor/preferences</code></pre></figure>
+        </div>
+        <div class="craft-panel" role="tabpanel" id="panel-nige" aria-labelledby="tab-nige" hidden>
+          <ul class="craft-points">
+            <li><b>ライブラリなしの自作エンジン。</b>素の JavaScript と Python の自作ビルドで、1枚の HTML に結合。</li>
+            <li><b>音はすべてコードで生成。</b>効果音36種を WebAudio で合成し、音声ファイルは0。BGMはストリーミング再生。</li>
+            <li><b>文言は1つの表から。</b><code>TEXT.md</code> の表をビルド時に読み込み、日本語/ひらがなを切り替え。</li>
+            <li><b>素材づくりも自動化。</b>画像生成から背景の切り抜き、組み込みまでをスクリプトで。</li>
+          </ul>
+          <figure class="code-card"><figcaption>tools/src/game.js(効果音の定義・抜粋)</figcaption><pre><code>const SE = {
+  tap:    ()=&gt;{ tone({f0:660, f1:880,  dur:0.06, type:&#x27;sine&#x27;}); },
+  pickup: ()=&gt;{ tone({f0:880, f1:1320, dur:0.09, type:&#x27;triangle&#x27;}); },
+  roll:   ()=&gt;{ noise({f0:900, f1:280, dur:0.3}); },
+  // …36種。音声ファイルは1つも使わない
+};</code></pre></figure>
+        </div>
+        <div class="craft-panel" role="tabpanel" id="panel-piko" aria-labelledby="tab-piko" hidden>
+          <ul class="craft-points">
+            <li><b>キャラは共通ライブラリに。</b>ピコのSVG・アニメーション・口パク・吹き出しを <code>shared/piko.js</code> にまとめた。</li>
+            <li><b>シリーズで使い回す。</b>けいさんアプリで使い、九九・文字の学習アプリにも広げていく。</li>
+            <li><b>ビルドで1ファイルに。</b>共通部分はビルド時に埋め込み、Capacitor で iOS アプリ化。</li>
+          </ul>
+          <figure class="code-card"><figcaption>shared/piko.js の使い方(抜粋)</figcaption><pre><code>// 各アプリは参照するだけ。キャラの変更は shared/ の1か所で
+initPiko({ prefix: &#x27;home&#x27;, size: 120 });
+buildPikoVariantSVG({ color: &#x27;pink&#x27;, face: FACES.niko });
+setPikoMouth(&#x27;home&#x27;, &#x27;A&#x27;);   // 口パク
+playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
+        </div>
+      </div>
+
+      <!-- 開発ログ: だんごむしのぼうけん v1 → v155 -->
+      <div class="devlog">
+        <div class="devlog-head">
+          <h3 class="craft-subhead">開発ログ: だんごむしのぼうけん</h3>
+          <p class="devlog-level"><span>改善リリース</span><b>v<span data-count="155">155</span></b></p>
+        </div>
+        <p class="devlog-lead">遊んでみて気づいたことを、すぐ直す。その積み重ねの主な節目です。</p>
+        <ol class="log-track" id="logTrack">
+          <li class="log-item" style="--i:0">
+            <button type="button" class="log-dot" aria-describedby="log-0"><span>v1</span></button>
+            <div class="log-card" id="log-0" role="tooltip"><b><em class="log-v">v1</em>はじまり</b><span>チャットで作った試作を、アプリの骨組み(モック)に移した</span></div>
+          </li>
+          <li class="log-item" style="--i:1">
+            <button type="button" class="log-dot" aria-describedby="log-1"><span>v37</span></button>
+            <div class="log-card" id="log-1" role="tooltip"><b><em class="log-v">v37</em>操作が決まる</b><span>やじるしスティックで歩き、手をはなすと丸まる操作に決定</span></div>
+          </li>
+          <li class="log-item" style="--i:2">
+            <button type="button" class="log-dot" aria-describedby="log-2"><span>v39</span></button>
+            <div class="log-card" id="log-2" role="tooltip"><b><em class="log-v">v39</em>絵本のマップ</b><span>ぼうけんマップを、1エリア=1ページの絵本式に</span></div>
+          </li>
+          <li class="log-item" style="--i:3">
+            <button type="button" class="log-dot" aria-describedby="log-3"><span>v70</span></button>
+            <div class="log-card" id="log-3" role="tooltip"><b><em class="log-v">v70</em>ソースを分割</b><span>CSS / JS / 骨組みに分け、ビルドで1枚のHTMLに結合</span></div>
+          </li>
+          <li class="log-item" style="--i:4">
+            <button type="button" class="log-dot" aria-describedby="log-4"><span>v85</span></button>
+            <div class="log-card" id="log-4" role="tooltip"><b><em class="log-v">v85</em>137KBに</b><span>画像を配信用フォルダへ書き出し、ページを 17MB → 約137KB に</span></div>
+          </li>
+          <li class="log-item" style="--i:5">
+            <button type="button" class="log-dot" aria-describedby="log-5"><span>v108</span></button>
+            <div class="log-card" id="log-5" role="tooltip"><b><em class="log-v">v108</em>遊びの深み</b><span>星3つの評価と、ボスを枝に「はめる」パズルを追加</span></div>
+          </li>
+          <li class="log-item" style="--i:6">
+            <button type="button" class="log-dot" aria-describedby="log-6"><span>v123</span></button>
+            <div class="log-card" id="log-6" role="tooltip"><b><em class="log-v">v123</em>音をコードで</b><span>効果音36種を WebAudio で生成。音声ファイルは0</span></div>
+          </li>
+          <li class="log-item" style="--i:7">
+            <button type="button" class="log-dot" aria-describedby="log-7"><span>v129</span></button>
+            <div class="log-card" id="log-7" role="tooltip"><b><em class="log-v">v129</em>文言を1つの表に</b><span>全テキストを表に集約し、日本語/ひらがなを切り替え可能に</span></div>
+          </li>
+          <li class="log-item" style="--i:8">
+            <button type="button" class="log-dot" aria-describedby="log-8"><span>v139</span></button>
+            <div class="log-card" id="log-8" role="tooltip"><b><em class="log-v">v139</em>チュートリアル</b><span>操作を1つずつ教え、できたら ほめる</span></div>
+          </li>
+          <li class="log-item" style="--i:9">
+            <button type="button" class="log-dot" aria-describedby="log-9"><span>v148</span></button>
+            <div class="log-card" id="log-9" role="tooltip"><b><em class="log-v">v148</em>新しい敵たち</b><span>アリジゴク・つむじ風・カエル。それぞれ違う避け方</span></div>
+          </li>
+          <li class="log-item" style="--i:10">
+            <button type="button" class="log-dot" aria-describedby="log-10"><span>v155</span></button>
+            <div class="log-card" id="log-10" role="tooltip"><b><em class="log-v">v155</em>いま</b><span>遊んで気づいたことをもとに、今も改善中</span></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CHARACTERS ============ -->
   <section id="characters" class="section characters" data-label="Characters">
     <div class="section-inner">
-      <p class="section-kicker">05</p>
+      <p class="section-kicker">06</p>
       <h2 class="section-title">Characters</h2>
       <p class="section-lead">アプリに登場するキャラクターたちです。さわってみてください。</p>
 
@@ -455,7 +582,7 @@
   <!-- ============ CERTIFICATIONS ============ -->
   <section id="certifications" class="section certifications" data-label="Certifications">
     <div class="section-inner">
-      <p class="section-kicker">06</p>
+      <p class="section-kicker">07</p>
       <h2 class="section-title">Certifications</h2>
       <!-- ▼ 資格はダミーです。実際の取得状況に差し替えてください -->
       <div class="cert-list" data-todo="資格の取得状況">
@@ -478,7 +605,7 @@
   <!-- ============ NOTES ============ -->
   <section id="notes" class="section notes" data-label="Notes">
     <div class="section-inner">
-      <p class="section-kicker">07</p>
+      <p class="section-kicker">08</p>
       <h2 class="section-title">Notes</h2>
       <p class="section-lead">開発の工夫やキャリアについて、noteで書いています。</p>
       <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:-4px;top:-46px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
@@ -503,7 +630,7 @@
   <!-- ============ CONTACT ============ -->
   <section id="contact" class="section contact" data-label="Contact">
     <div class="section-inner">
-      <p class="section-kicker">08</p>
+      <p class="section-kicker">09</p>
       <h2 class="section-title">Contact</h2>
       <p class="section-lead">ここまで読んでくださって、ありがとうございます。<br>お仕事のご相談・カジュアル面談など、お気軽にご連絡ください。</p>
       <div class="quest-result" id="questResult" aria-live="polite">

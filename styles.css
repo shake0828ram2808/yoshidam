@@ -48,6 +48,8 @@ body{
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+/* 飾り(雲・光・月など)がはみ出しても、ページが横にずれないようにする */
+html, body{ overflow-x: clip; }
 
 h1,h2,h3,h4{
   font-family: var(--font-head);
@@ -1692,3 +1694,289 @@ button.text-link{ border: none; padding: 0; background-color: transparent; curso
   50%{ filter: hue-rotate(180deg) brightness(1.7); }
 }
 .is-konami .acorn{ --near: 1 !important; }
+
+/* =========================================================
+   How I Build
+========================================================= */
+.craft-subhead{
+  font-size: 1.05rem;
+  margin: 0 0 20px;
+  color: var(--text-muted);
+}
+.craft-subhead + .cycle,
+.craft-subhead + .craft-tabs{ margin-top: 0; }
+
+/* AI駆動開発のサイクル: 5つの段。.is-active が順番に移っていく */
+.cycle{
+  list-style:none;
+  margin: 0 0 72px; padding: 0;
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  position: relative;
+}
+/* 段をつなぐ線(最後から最初へ戻る矢印は ::after) */
+.cycle::before{
+  content:"";
+  position:absolute; left: 10%; right: 10%; top: 26px;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px);
+}
+.cycle-step{
+  position: relative;
+  padding: 0 4px;
+  text-align: center;
+}
+.cycle-no{
+  position: relative; z-index: 1;
+  display:grid; place-items:center;
+  width: 52px; height: 52px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--line-strong);
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  transition: background .4s, border-color .4s, color .4s, transform .5s var(--ease-bounce), box-shadow .4s;
+}
+.cycle-step h4{ font-size: .95rem; margin-bottom: 6px; transition: color .4s; }
+.cycle-step p{ margin: 0; font-size: .8rem; line-height: 1.7; color: var(--text-muted); }
+.cycle-step.is-active .cycle-no{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  transform: scale(1.12);
+  box-shadow: 0 0 0 8px var(--accent-soft);
+}
+.cycle-step.is-done .cycle-no{ border-color: var(--accent); color: var(--accent); }
+.cycle-step.is-active h4{ color: var(--moon); }
+code{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .86em;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(0,0,0,.25);
+  color: #E3A48F;
+}
+
+@media (max-width: 760px){
+  .cycle{ grid-template-columns: 1fr; gap: 0; }
+  .cycle::before{ left: 25px; right: auto; top: 26px; bottom: 26px; width: 2px; height: auto;
+    background: repeating-linear-gradient(180deg, var(--line-strong) 0 6px, transparent 6px 12px); }
+  .cycle-step{ display:grid; grid-template-columns: 52px 1fr; column-gap: 16px; text-align: left; padding: 0 0 18px; }
+  .cycle-no{ grid-row: span 2; margin: 0; }
+  .cycle-step h4{ align-self: end; }
+}
+
+/* 設計の見どころ: タブ */
+.craft-tabs{
+  position: relative;
+  display:flex; flex-wrap: wrap; gap: 4px;
+  padding: 4px;
+  margin-bottom: 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(38,34,30,.6);
+  width: fit-content;
+  max-width: 100%;
+}
+.craft-tabs [role="tab"]{
+  position: relative; z-index: 1;
+  border: none;
+  background: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: .86rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color .3s;
+}
+.craft-tabs [role="tab"][aria-selected="true"]{ color: var(--bg); font-weight: 700; }
+.craft-tab-indicator{
+  position:absolute; left: 0; top: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: transform .45s var(--ease-bounce), width .45s var(--ease-bounce), height .3s;
+}
+.craft-panels{ margin-bottom: 72px; }
+.craft-panel{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+  padding: 28px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+}
+.craft-panel[hidden]{ display: none; }
+.craft-panel > *{ min-width: 0; } /* 長いコードでパネルが広がらないように */
+.craft-panel:not([hidden]){ animation: panel-swap .5s var(--ease) both; }
+@keyframes panel-swap{ from{ opacity: 0; transform: translateY(10px); } }
+.craft-points{ list-style:none; margin: 0; padding: 0; display:grid; gap: 14px; }
+.craft-points li{
+  position: relative;
+  padding-left: 22px;
+  font-size: .88rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.craft-points li::before{
+  content:"";
+  position:absolute; left: 2px; top: .55em;
+  width: 9px; height: 9px;
+  border-radius: 3px;
+  background: var(--accent);
+  rotate: 45deg;
+}
+.craft-points b{ display:block; color: var(--text); }
+
+.code-card{
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #15130F;
+}
+.code-card figcaption{
+  display:flex; align-items:center; gap: 6px;
+  padding: 8px 14px;
+  font-size: .72rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--line);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.code-card figcaption::before{
+  content:"";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #E5786B;
+  box-shadow: 13px 0 0 #E5B567, 26px 0 0 #8CC07A;
+  margin-right: 30px;
+}
+.code-card pre{
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+  font-size: .76rem;
+  line-height: 1.7;
+}
+.code-card code{ background: none; padding: 0; color: #E9DFD1; font-size: 1em; }
+.code-card .tok-c{ color: #8E8577; }
+.code-card .tok-k{ color: #E3A48F; }
+.code-card .tok-s{ color: #B9D89A; }
+.code-card .tok-n{ color: #F3D27A; }
+
+@media (max-width: 760px){
+  .craft-panel{ grid-template-columns: 1fr; padding: 22px 18px; }
+  .craft-tabs{ border-radius: 18px; }
+  .craft-tabs [role="tab"]{ padding: 8px 12px; font-size: .8rem; }
+}
+
+/* 開発ログ */
+.devlog-head{ display:flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.devlog-head .craft-subhead{ margin-bottom: 4px; }
+.devlog-level{ margin: 0; display:flex; align-items: baseline; gap: 8px; font-size: .8rem; color: var(--text-muted); }
+.devlog-level b{ font-family: var(--font-head); font-size: 1.6rem; color: var(--moon); font-variant-numeric: tabular-nums; }
+.devlog-lead{ margin: 0 0 28px; font-size: .88rem; color: var(--text-muted); }
+
+/* 横に並んだ節目。線が左から伸び、点が順に灯る(JSで --lt 0〜1) */
+.log-track{
+  list-style:none;
+  margin: 0; padding: 0 0 8px;
+  position: relative;
+  display:grid;
+  grid-template-columns: repeat(11, 1fr);
+}
+.log-track::before,
+.log-track::after{
+  content:"";
+  position:absolute; left: 4%; right: 4%; top: 15px;
+  height: 3px; border-radius: 3px;
+}
+.log-track::before{ background: var(--line); }
+.log-track::after{
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--moon));
+  transform-origin: left;
+  transform: scaleX(var(--lt, 0));
+  transition: transform .2s linear;
+}
+.log-item{ position: relative; display:flex; flex-direction: column; align-items:center; }
+.log-dot{
+  position: relative; z-index: 1;
+  display:grid; place-items:center;
+  width: 32px; height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color .3s, background .3s, transform .4s var(--ease-bounce);
+}
+.log-dot::after{
+  content:"";
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--line-strong);
+  transition: background .3s;
+}
+.log-dot span{
+  position:absolute; top: 40px; left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: .72rem;
+  font-family: var(--font-round);
+  color: var(--text-muted);
+}
+.log-item.is-lit .log-dot{ border-color: var(--accent); }
+.log-item.is-lit .log-dot::after{ background: var(--accent); }
+.log-item:last-child.is-lit .log-dot::after{ background: var(--moon); box-shadow: 0 0 12px var(--moon); }
+.log-dot:hover, .log-dot:focus-visible, .log-item.is-open .log-dot{ transform: scale(1.2); }
+
+.log-card{
+  position:absolute; bottom: calc(100% + 10px); left: 50%;
+  z-index: 5;
+  width: 200px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--bg-elevated-2);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 12px 30px rgba(0,0,0,.4);
+  font-size: .76rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 6px);
+  transition: opacity .25s, transform .3s var(--ease);
+}
+.log-card b{ display:block; color: var(--text); font-size: .84rem; margin-bottom: 2px; }
+.log-v{ display:none; font-style: normal; color: var(--moon); margin-right: 8px; font-family: var(--font-round); }
+@media (max-width: 760px){ .log-v{ display:inline; } }
+.log-item:first-child .log-card{ left: 0; transform: translate(0, 6px); }
+.log-item:last-child .log-card{ left: auto; right: 0; transform: translate(0, 6px); }
+.log-dot:hover + .log-card,
+.log-dot:focus-visible + .log-card,
+.log-item.is-open .log-card{ opacity: 1; transform: translate(-50%, 0); }
+.log-item:first-child .log-dot:hover + .log-card,
+.log-item:first-child .log-dot:focus-visible + .log-card,
+.log-item:first-child.is-open .log-card,
+.log-item:last-child .log-dot:hover + .log-card,
+.log-item:last-child .log-dot:focus-visible + .log-card,
+.log-item:last-child.is-open .log-card{ transform: none; }
+
+/* スマホ: 縦に並べて、説明は常に見せる */
+@media (max-width: 760px){
+  .log-track{ grid-template-columns: 1fr; padding: 0; }
+  .log-track::before, .log-track::after{ left: 15px; right: auto; top: 16px; bottom: 16px; width: 3px; height: auto; }
+  .log-track::after{ transform-origin: top; transform: scaleY(var(--lt, 0)); }
+  .log-item{ flex-direction: row; align-items: flex-start; gap: 14px; padding-bottom: 16px; }
+  .log-dot{ flex-shrink: 0; }
+  .log-dot span{ position: static; transform: none; display:none; }
+  .log-card{
+    position: static; width: auto;
+    opacity: 1; transform: none; pointer-events: auto;
+    background: none; border: none; box-shadow: none; padding: 4px 0 0;
+  }
+  .log-item:first-child .log-card, .log-item:last-child .log-card{ transform: none; }
+}

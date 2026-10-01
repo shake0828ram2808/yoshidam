@@ -268,7 +268,7 @@ nemuButtons.forEach(btn => {
 // ページ内の目印ごとの「時間の進み具合(0〜1)」
 const SKY_ANCHORS = [
   ['hero', 0], ['about', 0.16], ['skills', 0.28], ['works', 0.42],
-  ['projects', 0.56], ['kidsZone', 0.70], ['characters', 0.82],
+  ['projects', 0.56], ['kidsZone', 0.70], ['craft', 0.76], ['characters', 0.83],
   ['certifications', 0.90], ['notes', 0.95], ['contact', 1],
 ];
 // 時間の進み具合ごとの空の色。文字が読めるよう、どれも暗めにしてある
@@ -541,5 +541,111 @@ nemuButtons.forEach(btn => {
     }
   });
 });
+
+
+// =========================================================
+// How I Build
+// =========================================================
+// AI駆動開発のサイクル: 画面に入っている間、1つずつ順に光らせる
+const cycleSteps = [...document.querySelectorAll('.cycle-step')];
+if (cycleSteps.length) {
+  let step = -1, cycleTimer = null;
+  const advance = () => {
+    step = (step + 1) % cycleSteps.length;
+    cycleSteps.forEach((el, i) => {
+      el.classList.toggle('is-active', i === step);
+      el.classList.toggle('is-done', i < step);
+    });
+  };
+  if (reduceMotion) {
+    cycleSteps.forEach(el => el.classList.add('is-done'));
+  } else {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !cycleTimer) { advance(); cycleTimer = setInterval(advance, 1800); }
+        if (!e.isIntersecting && cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+      });
+    }, { threshold: 0.4 }).observe(document.getElementById('cycle'));
+  }
+  // 段を押すと、その段で止めずに そこから続ける
+  cycleSteps.forEach((el, i) => el.addEventListener('click', () => { step = i - 1; advance(); }));
+}
+
+// 設計の見どころ: タブ(矢印キーでも切り替え)
+const craftTabs = [...document.querySelectorAll('.craft-tabs [role="tab"]')];
+const craftIndicator = document.querySelector('.craft-tab-indicator');
+function moveCraftIndicator(tab) {
+  craftIndicator.style.width = `${tab.offsetWidth}px`;
+  craftIndicator.style.height = `${tab.offsetHeight}px`;
+  craftIndicator.style.transform = `translate(${tab.offsetLeft}px, ${tab.offsetTop}px)`;
+}
+function selectCraftTab(tab, focus) {
+  craftTabs.forEach(t => {
+    const on = t === tab;
+    t.setAttribute('aria-selected', String(on));
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+  });
+  moveCraftIndicator(tab);
+  if (focus) tab.focus();
+  tab.dispatchEvent(new CustomEvent('craft-tab', { bubbles: true }));
+}
+craftTabs.forEach((tab, i) => {
+  tab.addEventListener('click', () => selectCraftTab(tab));
+  tab.addEventListener('keydown', e => {
+    const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    selectCraftTab(craftTabs[(i + d + craftTabs.length) % craftTabs.length], true);
+  });
+});
+if (craftTabs.length) {
+  moveCraftIndicator(craftTabs[0]);
+  window.addEventListener('resize', () => moveCraftIndicator(craftTabs.find(t => t.getAttribute('aria-selected') === 'true')));
+  document.fonts?.ready.then(() => moveCraftIndicator(craftTabs.find(t => t.getAttribute('aria-selected') === 'true')));
+}
+
+// コードの簡単な色分け(コメント・文字列・数字・キーワード)
+document.querySelectorAll('.code-card code').forEach(code => {
+  const src = code.textContent;
+  const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const re = /(\/\/[^\n]*)|('[^']*')|\b(export|interface|const|function|return|Promise|string|void|null)\b|\b(\d+(?:\.\d+)?)\b/g;
+  let out = '', last = 0, m;
+  while ((m = re.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    const cls = m[1] ? 'tok-c' : m[2] ? 'tok-s' : m[3] ? 'tok-k' : 'tok-n';
+    out += `<span class="${cls}">${esc(m[0])}</span>`;
+    last = re.lastIndex;
+  }
+  code.innerHTML = out + esc(src.slice(last));
+});
+
+// 開発ログ: 読み進めた分だけ線が伸び、節目が灯る
+const logTrack = document.getElementById('logTrack');
+if (logTrack) {
+  const logItems = [...logTrack.querySelectorAll('.log-item')];
+  scrollHooks.push((y, vh) => {
+    const r = logTrack.getBoundingClientRect();
+    // 線の始まりが画面の下80%に来たら伸び始め、40%で伸びきる
+    const t = clamp01((vh * 0.85 - r.top) / (vh * 0.45));
+    logTrack.style.setProperty('--lt', t.toFixed(3));
+    const lit = Math.round(t * (logItems.length - 1));
+    logItems.forEach((li, i) => li.classList.toggle('is-lit', i <= lit && t > 0));
+  });
+  // タッチ端末では、点を押すと説明を開く
+  logItems.forEach(li => li.querySelector('.log-dot').addEventListener('click', () => {
+    const open = !li.classList.contains('is-open');
+    logItems.forEach(x => x.classList.remove('is-open'));
+    li.classList.toggle('is-open', open);
+  }));
+  // 「v155」の数え上げ
+  const lv = document.querySelector('.devlog-level [data-count]');
+  if (lv) {
+    lv.textContent = reduceMotion ? lv.dataset.count : '1';
+    new IntersectionObserver((entries, obs) => {
+      if (entries[0].isIntersecting) { countUp(lv); obs.disconnect(); }
+    }, { threshold: 0.6 }).observe(lv);
+  }
+}
 
 onScroll();
