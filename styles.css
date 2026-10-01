@@ -2884,3 +2884,23 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   html.at-hero .section-dock{ transform: translateY(140%); opacity: 0; pointer-events: none; }
   html.at-hero .dock-next{ opacity: 0; transform: translateY(10px) scale(.92); pointer-events: none; }
 }
+
+/* キャッチコピーは1行で見せる(「工夫と」「効率と」「持続性」が順に浮かび上がる) */
+.hero-title{ white-space: nowrap; font-size: clamp(2rem, 8.4vw, 5.2rem); letter-spacing: .03em; }
+.hero-title .hero-line{ display: inline-block; }
+@media (max-width: 560px){
+  .hero-title{ font-size: min(8.4vw, 2.6rem); }
+}
+
+/* About: Career の見出しも Skills・Certs と同じ左の位置にそろえ、写真は右に置く */
+.about .about-grid{ grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
+.about .about-grid .about-photo{ order: 2; }
+.about .about-grid .about-body{ order: 1; }
+.about .about-grid .about-photo img{ width: 112px; height: 112px; }
+@media (max-width: 760px){
+  .about .about-grid{ grid-template-columns: 1fr auto; gap: 16px; justify-items: stretch; }
+  .about .about-grid .about-photo img{ width: 84px; height: 84px; }
+}
+@media (max-width: 560px){
+  .about .about-grid{ text-align: left; }
+}
