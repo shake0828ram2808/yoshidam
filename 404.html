@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ページが見つかりません | よしだ</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<style>
+  :root{ --bg:#1C1A17; --text:#F3EDE4; --muted:#A79C8E; --accent:#C97B63; }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; min-height:100svh;
+    display:grid; place-items:center;
+    background: radial-gradient(circle at 50% 40%, rgba(201,123,99,.14), transparent 60%), var(--bg);
+    color:var(--text);
+    font-family:"Zen Maru Gothic","Noto Sans JP",sans-serif;
+    text-align:center; padding:24px;
+  }
+  .dango{ width:150px; margin:0 auto 8px; animation: wobble 2.4s ease-in-out infinite; transform-origin: 50% 90%; }
+  @keyframes wobble{ 0%,100%{ transform: rotate(-6deg); } 50%{ transform: rotate(6deg); } }
+  .code{ font-size:.8rem; letter-spacing:.3em; color:var(--accent); margin:0 0 8px; }
+  h1{ font-size:1.5rem; margin:0 0 10px; }
+  p{ color:var(--muted); margin:0 0 28px; line-height:1.8; }
+  a{
+    display:inline-block; padding:12px 26px; border-radius:999px;
+    background:var(--accent); color:var(--bg); text-decoration:none; font-weight:700;
+  }
+  @media (prefers-reduced-motion: reduce){ .dango{ animation:none; } }
+</style>
+</head>
+<body>
+  <main>
+    <img class="dango" src="/assets/images/characters/dango_front_up.png" alt="きょろきょろする だんごむし" width="230" height="215">
+    <p class="code">404</p>
+    <h1>まいごに なっちゃった…</h1>
+    <p>お探しのページは見つかりませんでした。<br>だんごむしと一緒に、はじめの場所へ戻りましょう。</p>
+    <a href="/">トップページへ</a>
+  </main>
+</body>
+</html>

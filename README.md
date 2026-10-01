@@ -1,28 +1,29 @@
-# ポートフォリオサイト
+# よしだ | エンジニアポートフォリオ
 
-GitHub Pagesでそのまま公開できる静的サイトです。
+ビルド不要の静的サイト(HTML / CSS / JavaScript)です。GitHub Pages や Cloudflare Pages にそのまま置けます。
 
-## 公開方法
+## ファイル構成
 
-1. GitHubで新しいリポジトリを作成(例:`yourname.github.io`、または好きなリポジトリ名)
-2. このフォルダの中身(index.html, styles.css, script.js, assets/)をリポジトリ直下にアップロード
-3. GitHubの Settings → Pages で公開設定
-   - リポジトリ名を `yourname.github.io` にした場合:特に設定不要でそのまま公開されます
-   - 別名のリポジトリの場合:Settings → Pages で「Branch: main / (root)」を選択して Save
+| ファイル | 役割 |
+|---|---|
+| `index.html` | ページ本体 |
+| `styles.css` | 見た目・アニメーション(色などは先頭の `:root` に集約) |
+| `script.js` | 動き(現在地ナビ・スクロール演出・カウントアップ・キャラの反応) |
+| `404.html` | ページが見つからないとき(迷子のだんごむし) |
+| `assets/images/characters/` | キャラクター素材(だんごむしは nigerun リポジトリから流用) |
+| `assets/images/projects/` | 各アプリの画面(スマホ枠の中に表示) |
+| `assets/images/og-image.png` | SNSで共有したときのカード画像(1200×630) |
 
-## 差し替えが必要な場所(index.html内にコメント有り)
+## 仮のままの場所を確認する
 
-- `#about` の自己紹介文・経歴タイムライン(ダミーです)
-- `#skills` のスキル一覧(ダミーです)
-- `#works` のnote記事リンク(`href="#"` のまま)
-- `#certifications` の資格情報(ダミーです)
-- `#notes` のnote記事リンク・タイトル
-- 個人開発アプリ(Claude Codeで作った学習アプリ)のリンク
+仮のデータが入っている要素には `data-todo="何を入れるか"` が付いています。
 
-## 今後の追加でやると良いこと
+- ページのURLに **`?todo`** を付けて開くと、仮の場所が点線の枠で囲まれ、何を入れるかのラベルが出ます。
+  ブラウザのコンソールにも一覧が出ます。
+- 数字(ヒーローの実績・Works の Before/After)は、本番でも小さく「仮」と表示されます。
+  実際の値に差し替えたら、その要素の `data-todo` を消してください。
 
-- 「ねむひつじ」の男の子(青いスカーフ)バージョンの画像を用意し、
-  `assets/images/` に追加後、`script.js` 内の `nemuSources.blue` のパスを差し替える
-- 「だんごむし」「ピコ」のCharactersセクションは現在アイコン(絵文字)で仮置きしているので、
-  実際のキャラクターイラストがあれば `index.html` の該当箇所を画像に差し替えるとより魅力的になります
-- Works / Notes セクションのリンク先をnote公開後のURLに差し替える
+## 公開前にやること
+
+- `index.html` の `og:url` と `og:image` を、公開URLの絶対パス(`https://〜`)に差し替える
+- `404.html` はサイトのルートに置かれる前提で `/assets/...` を参照しています

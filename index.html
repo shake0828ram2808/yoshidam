@@ -2,9 +2,28 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>よしだ | エンジニアポートフォリオ</title>
-<meta name="description" content="よしだのエンジニアポートフォリオ。実務での開発の工夫と、個人開発アプリの紹介。">
+<meta name="description" content="Webエンジニア よしだのポートフォリオ。モノレポ化・pnpm移行・AI駆動開発などの実務の工夫と、子どもと一緒につくったゲームや学習アプリを紹介しています。">
+<meta name="theme-color" content="#1C1A17">
+
+<!-- OGP / SNSカード -->
+<!-- ▼ 公開URLが決まったら、og:url と og:image を絶対URL(https://〜)に差し替えてください -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="よしだ | エンジニアポートフォリオ">
+<meta property="og:title" content="よしだ | エンジニアポートフォリオ">
+<meta property="og:description" content="つくる理由は、いつも誰かの「ちょっと嬉しい」。実務の工夫と、個人開発のアプリたち。">
+<meta property="og:url" content="https://example.com/">
+<meta property="og:image" content="https://example.com/assets/images/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@pik0389">
+
+<link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,10 +31,15 @@
 </head>
 <body>
 
+<a class="skip-link" href="#about">本文へスキップ</a>
+
 <!-- ナビゲーション -->
 <header class="site-header" id="siteHeader">
-  <a href="#hero" class="brand">よしだ</a>
-  <nav class="main-nav" id="mainNav">
+  <a href="#hero" class="brand" aria-label="よしだ(ページの先頭へ)">
+    <svg class="brand-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2z" fill="currentColor"/></svg>
+    よしだ
+  </a>
+  <nav class="main-nav" id="mainNav" aria-label="ページ内メニュー">
     <a href="#about">About</a>
     <a href="#works">Works</a>
     <a href="#projects">Projects</a>
@@ -23,50 +47,89 @@
     <a href="#certifications">Certifications</a>
     <a href="#notes">Notes</a>
     <a href="#contact">Contact</a>
+    <span class="nav-indicator" aria-hidden="true"></span>
   </nav>
-  <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+  <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mainNav">
     <span></span><span></span><span></span>
   </button>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
 </header>
+
+<!-- 右端の現在地ドット(PCのみ・JSで生成) -->
+<nav class="dot-nav" id="dotNav" aria-label="セクション一覧"></nav>
 
 <main>
 
   <!-- ============ HERO ============ -->
-  <section id="hero" class="hero">
+  <section id="hero" class="hero" data-label="Top">
     <div class="hero-orb" aria-hidden="true"></div>
+    <div class="hero-stars" aria-hidden="true"></div>
     <div class="hero-inner">
-      <p class="hero-eyebrow">Web Engineer</p>
+      <p class="hero-eyebrow">Web Engineer / Indie App Maker</p>
       <h1 class="hero-title">
         <span class="hero-line" style="--d:0">つくる理由は、</span>
         <span class="hero-line" style="--d:1">いつも誰かの</span>
-        <span class="hero-line" style="--d:2">「ちょっと嬉しい」。</span>
+        <span class="hero-line" style="--d:2">「ちょっと<em class="hero-em">嬉しい</em>」。</span>
       </h1>
       <p class="hero-lead">
-        業務ではモノレポ化やAI駆動開発に取り組みながら、<br class="br-pc">
+        業務ではモノレポ化やAI駆動開発で、チームの開発体験を改善。<br class="br-pc">
         休日は子どもと一緒に考えたゲームや学習アプリをつくっています。
       </p>
-      <a href="#projects" class="hero-cta">つくったものを見る</a>
+
+      <!-- ヒーローの数字。data-count の値まで数え上げる -->
+      <ul class="hero-stats" aria-label="ひと目でわかる実績">
+        <li class="stat">
+          <span class="stat-num"><span data-count="3">3</span></span>
+          <span class="stat-label">公開中の<br>個人開発アプリ</span>
+        </li>
+        <li class="stat">
+          <span class="stat-num"><span data-count="155">155</span><small>回</small></span>
+          <span class="stat-label">ゲームの<br>改善リリース</span>
+        </li>
+        <!-- ▼ 実際の効果の数字に差し替えてください(data-todo を消すと「仮」表示も消えます) -->
+        <li class="stat" data-todo="実際のCI短縮率">
+          <span class="stat-num"><small>−</small><span data-count="42">42</span><small>%</small></span>
+          <span class="stat-label">pnpm移行での<br>CI時間</span>
+        </li>
+      </ul>
+
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn--primary magnetic">
+          つくったものを見る
+          <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M10 4v12m0 0-5-5m5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#about" class="btn btn--ghost">30秒で経歴を見る</a>
+      </div>
     </div>
-    <a href="#about" class="scroll-hint" aria-label="下へスクロール"><span></span></a>
+    <a href="#about" class="scroll-hint" id="scrollHint" aria-label="下へスクロール">
+      <span class="scroll-hint-text">scroll</span><span class="scroll-hint-line"></span>
+    </a>
   </section>
 
   <!-- ============ ABOUT ============ -->
-  <section id="about" class="section about">
+  <section id="about" class="section about" data-label="About">
     <div class="section-inner">
+      <p class="section-kicker">01</p>
       <h2 class="section-title">About</h2>
       <div class="about-grid">
         <div class="about-photo">
-          <img src="assets/images/yoshida-avatar.jpg" alt="よしだのアイコン" loading="lazy">
+          <img src="assets/images/yoshida-avatar.jpg" alt="よしだのアイコン" width="400" height="400" loading="lazy">
         </div>
         <div class="about-body">
-          <p class="about-lead">
-            <!-- ▼ ここは実際のプロフィール文に差し替えてください -->
+          <!-- ▼ ここは実際のプロフィール文に差し替えてください -->
+          <p class="about-lead" data-todo="プロフィール文">
             Webアプリケーションエンジニア。業務では既存プロダクトの開発基盤の改善や新しい開発フローの導入を担当。個人では「誰かの日常にちょっと寄り添うアプリ」をテーマに、子ども向けから健康管理まで幅広く作っています。
           </p>
+          <ul class="about-tags">
+            <li>開発基盤の改善</li>
+            <li>AI駆動開発</li>
+            <li>個人開発</li>
+            <li>子どもと一緒につくる</li>
+          </ul>
         </div>
       </div>
 
-      <ol class="timeline">
+      <ol class="timeline" data-todo="経歴(年・内容)">
         <!-- ▼ 経歴はダミーです。実際の年数・内容に差し替えてください -->
         <li class="timeline-item">
           <span class="timeline-year">2020</span>
@@ -101,10 +164,11 @@
   </section>
 
   <!-- ============ SKILLS ============ -->
-  <section id="skills" class="section skills">
+  <section id="skills" class="section skills" data-label="Skills">
     <div class="section-inner">
+      <p class="section-kicker">02</p>
       <h2 class="section-title">Skills</h2>
-      <div class="skills-grid">
+      <div class="skills-grid" data-todo="技術スタック">
         <!-- ▼ スキルはダミーです。実際の技術スタックに差し替えてください -->
         <div class="skill-group">
           <h3>Frontend</h3>
@@ -127,85 +191,153 @@
   </section>
 
   <!-- ============ WORKS (実務PR) ============ -->
-  <section id="works" class="section works">
+  <section id="works" class="section works" data-label="Works">
     <div class="section-inner">
+      <p class="section-kicker">03</p>
       <h2 class="section-title">Works</h2>
-      <p class="section-lead">業務の中で取り組んだ、開発体験を良くするための工夫です。</p>
+      <p class="section-lead">業務の中で取り組んだ、開発体験を良くするための工夫です。<br class="br-pc">課題 → 判断 → 結果 の順にまとめています。</p>
 
-      <div class="works-list">
-        <article class="work-card">
-          <h3>マルチリポジトリからモノレポへ</h3>
-          <p>複数リポジトリに分散していたフロントエンド資産をモノレポ構成に統合。依存関係の一元管理とCIの共通化により、リリースサイクルを短縮しました。</p>
-          <a href="#" class="work-link">note記事を読む →</a>
+      <div class="case-list">
+
+        <!-- ▼ 数字(Before/After)と記事リンクは仮です。実際の値に差し替えてください -->
+        <article class="case-card">
+          <header class="case-head">
+            <span class="case-no">Case 01</span>
+            <h3>マルチリポジトリからモノレポへ</h3>
+            <ul class="tag-list"><li>pnpm workspaces</li><li>CI共通化</li><li>依存管理</li></ul>
+          </header>
+          <dl class="case-flow">
+            <div><dt>課題</dt><dd>フロントエンド資産が複数のリポジトリに分かれ、同じ修正を何度も入れる・バージョンがずれる状態だった。</dd></div>
+            <div><dt>やったこと</dt><dd>モノレポ構成に統合し、依存関係を一元管理。CIの設定を共通化した。</dd></div>
+            <div><dt>結果</dt><dd>リリースまでの手間が減り、リリースサイクルを短縮できた。</dd></div>
+          </dl>
+          <div class="case-metric" data-todo="リリース頻度の実数">
+            <p class="metric-title">リリース頻度(月あたり)</p>
+            <div class="metric-bars" role="img" aria-label="Before 2回、After 6回">
+              <div class="metric-row"><span>Before</span><div class="bar"><i style="--v:.33"></i></div><b>2回</b></div>
+              <div class="metric-row is-after"><span>After</span><div class="bar"><i style="--v:1"></i></div><b>6回</b></div>
+            </div>
+          </div>
+          <details class="case-more">
+            <summary>なぜモノレポを選んだか</summary>
+            <p data-todo="判断の理由">ほかの選択肢(共通パッケージを別リポジトリで公開する、git submodule など)と比べ、変更が1つのPRで完結し、レビューしやすい点を重視した。</p>
+          </details>
+          <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
         </article>
-        <article class="work-card">
-          <h3>npm から pnpm への移行</h3>
-          <p>node_modulesの肥大化とインストール速度の課題を解消するため、pnpmへ移行。ワークスペース設計を見直し、CI実行時間を短縮しました。</p>
-          <a href="#" class="work-link">note記事を読む →</a>
+
+        <article class="case-card">
+          <header class="case-head">
+            <span class="case-no">Case 02</span>
+            <h3>npm から pnpm への移行</h3>
+            <ul class="tag-list"><li>pnpm</li><li>CI高速化</li><li>移行計画</li></ul>
+          </header>
+          <dl class="case-flow">
+            <div><dt>課題</dt><dd>node_modules が肥大化し、インストールとCIに時間がかかっていた。</dd></div>
+            <div><dt>やったこと</dt><dd>pnpmへ移行し、ワークスペースの設計を見直した。移行手順を段階に分けて、影響範囲を小さく保った。</dd></div>
+            <div><dt>結果</dt><dd>CIの実行時間とディスク使用量を削減できた。</dd></div>
+          </dl>
+          <div class="case-metric" data-todo="CI時間の実数">
+            <p class="metric-title">CI 実行時間</p>
+            <div class="metric-bars" role="img" aria-label="Before 12分、After 7分">
+              <div class="metric-row"><span>Before</span><div class="bar"><i style="--v:1"></i></div><b>12分</b></div>
+              <div class="metric-row is-after"><span>After</span><div class="bar"><i style="--v:.58"></i></div><b>7分</b></div>
+            </div>
+          </div>
+          <details class="case-more">
+            <summary>ハマったところ</summary>
+            <p data-todo="移行でハマった点">幽霊依存(package.json に書かれていないのに動いていた依存)が表に出たので、ひとつずつ明示的に追加して解消した。</p>
+          </details>
+          <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
         </article>
-        <article class="work-card">
-          <h3>AI駆動開発への挑戦</h3>
-          <p>Claude Codeをチーム開発に取り入れ、設計レビューや実装の一部を任せるフローを構築。導入の壁と、実際に効果のあった使い方をまとめています。</p>
-          <a href="#" class="work-link">note記事を読む →</a>
+
+        <article class="case-card">
+          <header class="case-head">
+            <span class="case-no">Case 03</span>
+            <h3>AI駆動開発への挑戦</h3>
+            <ul class="tag-list"><li>Claude Code</li><li>開発フロー設計</li><li>チーム導入</li></ul>
+          </header>
+          <dl class="case-flow">
+            <div><dt>課題</dt><dd>AIツールを個人では使っていても、チームの開発フローには組み込めていなかった。</dd></div>
+            <div><dt>やったこと</dt><dd>Claude Codeをチーム開発に取り入れ、設計レビューや実装の一部を任せるフローを構築した。</dd></div>
+            <div><dt>結果</dt><dd>導入の壁と、実際に効果のあった使い方をチームで共有できる形にまとめた。</dd></div>
+          </dl>
+          <details class="case-more">
+            <summary>個人開発での使い方</summary>
+            <p>リポジトリごとに CLAUDE.md で設計方針・編集ルール・確認手順を書き、方針決定は自分、確定した実装はAIに任せる、という役割分担で開発している。</p>
+          </details>
+          <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
         </article>
+
       </div>
     </div>
   </section>
 
   <!-- ============ PROJECTS ============ -->
-  <section id="projects" class="section projects">
+  <section id="projects" class="section projects" data-label="Projects">
     <div class="section-inner">
+      <p class="section-kicker">04</p>
       <h2 class="section-title">Projects</h2>
       <p class="section-lead">個人で企画から開発まで手がけたアプリです。</p>
 
       <h3 class="projects-subhead projects-subhead--calm">じっくり向き合うアプリ</h3>
-      <div class="projects-row projects-row--calm">
-        <article class="project-card project-card--calm">
-          <div class="project-thumb">
-            <img src="assets/images/nemuhitsuji-sleeping.png" alt="頭痛手帳のイメージ" loading="lazy">
-          </div>
-          <div class="project-body">
-            <h4>頭痛手帳</h4>
-            <p>痛みと服薬を記録し、直近30日の服薬日数を管理できるアプリ。キャラクター「ねむひつじ」が寄り添います。</p>
-            <a href="https://zutsurun.shake0828ram.workers.dev/" class="project-link" target="_blank" rel="noopener">アプリを見る →</a>
-          </div>
-        </article>
-      </div>
+      <article class="project-card project-card--calm">
+        <div class="phone" aria-hidden="true">
+          <img src="assets/images/projects/zutsurun.webp" alt="" width="390" height="844" loading="lazy">
+        </div>
+        <div class="project-body">
+          <p class="status-badge">Web版 公開中 / iOS 準備中</p>
+          <h4>頭痛手帳</h4>
+          <p>気圧による頭痛などの痛みと服薬を記録し、直近30日の服薬日数を目安の範囲内で「やりくり」できるようにするアプリ。キャラクター「ねむひつじ」が寄り添います。</p>
+          <ul class="tag-list"><li>React</li><li>TypeScript</li><li>Vite</li><li>Capacitor</li><li>Cloudflare</li></ul>
+          <ul class="project-points">
+            <li>保存処理をリポジトリ層にまとめ、Web と iOS で切り替え</li>
+            <li>服薬カウントの計算ロジックに単体テスト</li>
+            <li>健康データは端末の外に送らない設計</li>
+          </ul>
+          <a href="https://zutsurun.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
     </div>
 
     <!-- ポップトーンに切り替わるブロック -->
     <div class="kids-zone">
       <div class="section-inner">
         <h3 class="projects-subhead projects-subhead--kids">子どもと楽しむアプリ</h3>
-        <div class="projects-row projects-row--kids">
+        <div class="projects-row--kids">
           <article class="project-card project-card--kids">
-            <div class="project-thumb project-thumb--kids">
-              <span class="kids-emoji" aria-hidden="true">🐛</span>
+            <div class="phone phone--kids" aria-hidden="true">
+              <img src="assets/images/projects/nigerun.webp" alt="" width="390" height="844" loading="lazy">
             </div>
             <div class="project-body">
+              <p class="status-badge status-badge--kids">遊べます</p>
               <h4>だんごむしのぼうけん</h4>
-              <p>子どもと一緒に考えたストーリーをもとにした、だんごむしが主人公の冒険ゲーム。</p>
-              <a href="https://nigerun.shake0828ram.workers.dev/" class="project-link project-link--kids" target="_blank" rel="noopener">あそんでみる →</a>
+              <p>子どもと一緒に考えたストーリーをもとにした、だんごむしが主人公の冒険ゲーム。全24面・敵やいきものの図鑑つき。</p>
+              <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>WebAudio</li><li>自作ビルド</li></ul>
+              <a href="https://nigerun.shake0828ram.workers.dev/" class="kids-btn" target="_blank" rel="noopener">あそんでみる <span aria-hidden="true">↗</span></a>
             </div>
           </article>
           <article class="project-card project-card--kids">
-            <div class="project-thumb project-thumb--kids">
-              <span class="kids-emoji" aria-hidden="true">🔢</span>
+            <div class="phone phone--kids" aria-hidden="true">
+              <img src="assets/images/projects/tasurun.webp" alt="" width="390" height="844" loading="lazy">
             </div>
             <div class="project-body">
+              <p class="status-badge status-badge--kids">遊べます</p>
               <h4>ピコとけいさん1年生</h4>
-              <p>キャラクター「ピコ」と一緒に、たし算・ひき算を練習できる知育アプリ。</p>
-              <a href="https://tasurun.shake0828ram.workers.dev/" class="project-link project-link--kids" target="_blank" rel="noopener">あそんでみる →</a>
+              <p>キャラクター「ピコ」と一緒に、たし算・ひき算・さくらんぼ算を練習できる知育アプリ。</p>
+              <ul class="tag-list tag-list--kids"><li>SVGアニメ</li><li>Capacitor</li><li>共通ライブラリ</li></ul>
+              <a href="https://tasurun.shake0828ram.workers.dev/" class="kids-btn" target="_blank" rel="noopener">あそんでみる <span aria-hidden="true">↗</span></a>
             </div>
           </article>
           <article class="project-card project-card--kids">
-            <div class="project-thumb project-thumb--kids">
-              <span class="kids-emoji" aria-hidden="true">✨</span>
+            <div class="phone phone--kids phone--blank" aria-hidden="true">
+              <svg viewBox="0 0 64 64" width="64" height="64"><path d="M22 20 10 32l12 12M42 20l12 12-12 12M36 14 28 50" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="project-body">
+              <p class="status-badge status-badge--kids">記事 準備中</p>
               <h4>Claude Codeで作った学習アプリ</h4>
               <p>スマホひとつで、思いついたその場でコードを書く「バイブコーディング」で開発した学習アプリ。</p>
-              <a href="#" class="project-link project-link--kids">詳しくはnoteで →</a>
+              <ul class="tag-list tag-list--kids"><li>Claude Code</li><li>スマホ開発</li></ul>
+              <a href="#" class="kids-btn" data-todo="アプリ名・note記事のURL">詳しくはnoteで <span aria-hidden="true">→</span></a>
             </div>
           </article>
         </div>
@@ -214,37 +346,63 @@
   </section>
 
   <!-- ============ CHARACTERS ============ -->
-  <section id="characters" class="section characters">
+  <section id="characters" class="section characters" data-label="Characters">
     <div class="section-inner">
+      <p class="section-kicker">05</p>
       <h2 class="section-title">Characters</h2>
-      <p class="section-lead">アプリに登場するキャラクターたちです。</p>
+      <p class="section-lead">アプリに登場するキャラクターたちです。さわってみてください。</p>
 
       <div class="character-list">
         <article class="character-card">
-          <div class="character-visual character-visual--piko">
-            <span class="kids-emoji kids-emoji--lg" aria-hidden="true">🟢</span>
-          </div>
+          <button type="button" class="character-visual character-visual--piko" id="pikoButton" aria-label="ピコをつつく">
+            <!-- ピコのSVG(pikotto/shared/piko.js の buildPikoSVG と同じ見た目) -->
+            <svg class="piko" viewBox="0 0 100 100" width="96" height="96" aria-hidden="true">
+              <defs>
+                <radialGradient id="pkBody" cx="42%" cy="35%" r="58%"><stop offset="0%" stop-color="#fff"/><stop offset="60%" stop-color="#b8d9ff"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
+                <radialGradient id="pkEye" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#6699ff"/><stop offset="100%" stop-color="#003399"/></radialGradient>
+                <radialGradient id="pkHat" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#ddeeff"/><stop offset="60%" stop-color="#88bbee"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
+                <radialGradient id="pkBrim" cx="40%" cy="30%" r="65%"><stop offset="0%" stop-color="#d0e8ff"/><stop offset="55%" stop-color="#7ab0ee"/><stop offset="100%" stop-color="#4488cc"/></radialGradient>
+                <filter id="pkShadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0055aa" flood-opacity="0.18"/></filter>
+              </defs>
+              <circle cx="50" cy="54" r="38" fill="url(#pkBody)" filter="url(#pkShadow)"/>
+              <ellipse cx="28" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
+              <ellipse cx="72" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
+              <g class="piko-eyes">
+                <g transform="translate(37 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
+                <g transform="translate(63 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="-1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
+              </g>
+              <path class="piko-mouth" d="M 45,60 C 46,62 48,62 50,60 C 52,62 54,62 55,60" fill="none" stroke="#334" stroke-width="2.2" stroke-linecap="round"/>
+              <g transform="translate(17 5) rotate(30 50 22)">
+                <ellipse cx="50" cy="21" rx="13" ry="6" fill="url(#pkBrim)"/>
+                <circle cx="50" cy="16" r="3.5" fill="url(#pkHat)"/>
+                <path class="piko-hatena" d="M 50,13 L 50,11.5 A 4.5 4.5 0 1 0 45.5,7" fill="none" stroke="url(#pkHat)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path class="piko-bang" d="M 46.5,4 A 3.5,2.5 0 0,1 53.5,4 Q 53,6 51.5,9 A 1.5,1.5 0 0,1 48.5,9 Q 47,6 46.5,4 Z" fill="#FFD000" stroke="#AA7700" stroke-width="1.2"/>
+              </g>
+            </svg>
+          </button>
           <h3>ピコ</h3>
-          <p>「ピコとけいさん1年生」のガイド役。SVGアニメーションで動くキャラクターで、黄緑・水色・ピンクの仲間もいます。</p>
+          <p>「ピコとけいさん1年生」のガイド役。SVGアニメーションで動くキャラクターで、水色・ピンク・黄緑の仲間もいます。</p>
         </article>
 
         <article class="character-card">
-          <div class="character-visual character-visual--dango">
-            <span class="kids-emoji kids-emoji--lg" aria-hidden="true">🐛</span>
-          </div>
+          <button type="button" class="character-visual character-visual--dango" id="dangoButton" aria-label="だんごむしをつつく(まるまります)">
+            <img class="dango-img dango-img--walk" src="assets/images/characters/dango_front_up.png" alt="" width="230" height="215" loading="lazy">
+            <img class="dango-img dango-img--curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267" loading="lazy">
+          </button>
           <h3>だんごむし</h3>
-          <p>「だんごむしのぼうけん」の主人公。丸まったり歩いたり、子どもと一緒に考えた動きで冒険します。</p>
+          <p>「だんごむしのぼうけん」の主人公。粘土のような質感で、つつくと丸まります。子どもと一緒に考えた動きで冒険します。</p>
         </article>
 
         <article class="character-card character-card--nemu">
-          <div class="character-visual">
-            <img id="nemuImage" src="assets/images/nemuhitsuji-sitting.png" alt="ねむひつじ" loading="lazy">
+          <div class="character-visual character-visual--nemu" data-scarf="red">
+            <img class="nemu-img nemu-img--red" src="assets/images/nemuhitsuji-sitting.png" alt="赤いスカーフのねむひつじ" width="1024" height="512" loading="lazy">
+            <img class="nemu-img nemu-img--blue" src="assets/images/nemuhitsuji-sitting-blue.png" alt="青いスカーフのねむひつじ" width="1024" height="512" loading="lazy">
           </div>
           <h3>ねむひつじ</h3>
           <p>「頭痛手帳」に登場する、赤いスカーフの女の子と青いスカーフの男の子。気分に合わせて切り替えて使えます。</p>
-          <div class="nemu-toggle" role="group" aria-label="ねむひつじの性別切り替え">
-            <button type="button" class="nemu-btn is-active" data-scarf="red">女の子</button>
-            <button type="button" class="nemu-btn" data-scarf="blue">男の子</button>
+          <div class="nemu-toggle" role="group" aria-label="ねむひつじの切り替え">
+            <button type="button" class="nemu-btn is-active" data-scarf="red" aria-pressed="true">女の子</button>
+            <button type="button" class="nemu-btn" data-scarf="blue" aria-pressed="false">男の子</button>
           </div>
         </article>
       </div>
@@ -252,55 +410,60 @@
   </section>
 
   <!-- ============ CERTIFICATIONS ============ -->
-  <section id="certifications" class="section certifications">
+  <section id="certifications" class="section certifications" data-label="Certifications">
     <div class="section-inner">
+      <p class="section-kicker">06</p>
       <h2 class="section-title">Certifications</h2>
       <!-- ▼ 資格はダミーです。実際の取得状況に差し替えてください -->
-      <div class="cert-list">
+      <div class="cert-list" data-todo="資格の取得状況">
         <div class="cert-badge">
+          <span class="cert-state is-done">取得</span>
           <h3>AWS Certified Solutions Architect – Associate</h3>
           <p>取得年:2025</p>
-          <a href="#" class="work-link">受験レポを読む →</a>
+          <a href="#" class="text-link">受験レポを読む <span aria-hidden="true">→</span></a>
         </div>
         <div class="cert-badge">
+          <span class="cert-state">学習中</span>
           <h3>AWS Certified Developer – Associate</h3>
           <p>学習中</p>
-          <a href="#" class="work-link">受験レポを読む →</a>
+          <a href="#" class="text-link">受験レポを読む <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ NOTES ============ -->
-  <section id="notes" class="section notes">
+  <section id="notes" class="section notes" data-label="Notes">
     <div class="section-inner">
+      <p class="section-kicker">07</p>
       <h2 class="section-title">Notes</h2>
       <p class="section-lead">開発の工夫やキャリアについて、noteで書いています。</p>
-      <div class="notes-list">
+      <div class="notes-list" data-todo="note記事のURL・タイトル">
         <!-- ▼ 記事リンクはダミーです。公開後に差し替えてください -->
         <a href="#" class="note-card">
-          <h3>モノレポ移行で変わった、チームの開発体験</h3>
-          <p>複数リポジトリの分断をどう解消したか</p>
+          <div><h3>モノレポ移行で変わった、チームの開発体験</h3><p>複数リポジトリの分断をどう解消したか</p></div>
+          <span class="note-arrow" aria-hidden="true">→</span>
         </a>
         <a href="#" class="note-card">
-          <h3>npmからpnpmへ。移行の記録</h3>
-          <p>手順・ハマった点・効果測定まで</p>
+          <div><h3>npmからpnpmへ。移行の記録</h3><p>手順・ハマった点・効果測定まで</p></div>
+          <span class="note-arrow" aria-hidden="true">→</span>
         </a>
         <a href="#" class="note-card">
-          <h3>AI駆動開発、はじめの一歩</h3>
-          <p>チームにClaude Codeを導入して分かったこと</p>
+          <div><h3>AI駆動開発、はじめの一歩</h3><p>チームにClaude Codeを導入して分かったこと</p></div>
+          <span class="note-arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </div>
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="section contact">
+  <section id="contact" class="section contact" data-label="Contact">
     <div class="section-inner">
+      <p class="section-kicker">08</p>
       <h2 class="section-title">Contact</h2>
-      <p class="section-lead">お気軽にご連絡ください。</p>
+      <p class="section-lead">ここまで読んでくださって、ありがとうございます。<br>お仕事のご相談・カジュアル面談など、お気軽にご連絡ください。</p>
       <div class="contact-links">
-        <a href="https://x.com/pik0389" class="contact-link" target="_blank" rel="noopener">
+        <a href="https://x.com/pik0389" class="contact-link magnetic" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           <span>@pik0389</span>
         </a>
