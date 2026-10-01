@@ -12,7 +12,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="よしだ | エンジニアポートフォリオ">
 <meta property="og:title" content="よしだ | エンジニアポートフォリオ">
-<meta property="og:description" content="効率と、こだわりと、持続性。Webエンジニア よしだのポートフォリオ。">
+<meta property="og:description" content="効率とこだわりと持続性。Webエンジニア よしだのポートフォリオ。">
 <meta property="og:url" content="https://example.com/">
 <meta property="og:image" content="https://example.com/assets/images/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -91,12 +91,12 @@
     <div class="hero-inner">
       <p class="hero-eyebrow">Web Engineer / Indie App Maker</p>
       <h1 class="hero-title">
-        <span class="hero-line" style="--d:0">効率と、</span>
-        <span class="hero-line" style="--d:1">こだわりと、</span>
+        <span class="hero-line" style="--d:0">効率と</span>
+        <span class="hero-line" style="--d:1">こだわりと</span>
         <span class="hero-line" style="--d:2"><em class="hero-em">持続性</em></span>
       </h1>
       <p class="hero-lead">
-        Webアプリケーションエンジニア。<br class="br-pc">業務では、教師や児童生徒向けの様々なwebサービスの開発運用をしています。<br class="br-pc">
+        Webアプリケーションエンジニア。<br class="br-pc">業務では、教師や児童生徒向けのwebサービスの開発運用をしています。<br class="br-pc">
         休日は子どもと一緒に考えたゲームや学習アプリをつくっています。
       </p>
 
@@ -282,6 +282,8 @@
         <ul class="bunting-flags" id="buntingFlags"></ul>
         <img class="edge-dango" id="edgeDango" src="assets/images/characters/dango_side.png" alt="" width="220" height="192">
       </div>
+      <!-- 晴れた空の雲の帯(ピコとけいさん と同じ素材)。ゆっくり左右に流れる -->
+      <div class="kids-sky" aria-hidden="true"><div class="kids-sky-band"></div></div>
       <!-- 浮かんでいる飾り(スクロールで少しずつずれる) -->
       <div class="kids-deco" aria-hidden="true">
         <img class="deco deco--cloud1" src="assets/images/characters/cloud.png" alt="" width="320" height="121" style="--depth:.25">
@@ -560,6 +562,15 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
           </button>
           <h3>だんごむし</h3>
           <p>「だんごむしのぼうけん」の主人公。粘土のような質感で、つつくと丸まります。子どもと一緒に考えた動きで冒険します。</p>
+          <div class="cast-extra">
+            <h4 class="piko-friends-title">ぼうけんで出会う ハチ</h4>
+            <!-- 2コマを切り替えて はばたく -->
+            <div class="bee" aria-hidden="true">
+              <img class="bee-frame bee-frame--a" src="assets/images/characters/bee_a.png" alt="" width="220" height="274" loading="lazy">
+              <img class="bee-frame bee-frame--b" src="assets/images/characters/bee_b.png" alt="" width="220" height="258" loading="lazy">
+            </div>
+            <p class="piko-friends-note">空から急降下してくる、ゲームの敵キャラクター。</p>
+          </div>
         </article>
 
         <article class="character-card character-card--nemu" data-tilt>
@@ -575,6 +586,9 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
           <div class="nemu-toggle" role="group" aria-label="ねむひつじの切り替え">
             <button type="button" class="nemu-btn is-active" data-scarf="red" aria-pressed="true">女の子</button>
             <button type="button" class="nemu-btn" data-scarf="blue" aria-pressed="false">男の子</button>
+          </div>
+          <div class="cast-extra">
+            <img class="nemu-moon" src="assets/images/characters/nemu_moon_sleep.png" alt="月の上で眠る ねむひつじ" width="320" height="304" loading="lazy">
           </div>
         </article>
       </div>
@@ -592,13 +606,11 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
           <span class="cert-state is-done">取得</span>
           <h3>AWS Certified Solutions Architect – Associate</h3>
           <p>取得年:2025</p>
-          <a href="#" class="text-link">受験レポを読む <span aria-hidden="true">→</span></a>
         </div>
         <div class="cert-badge">
           <span class="cert-state">学習中</span>
           <h3>AWS Certified Developer – Associate</h3>
           <p>学習中</p>
-          <a href="#" class="text-link">受験レポを読む <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>

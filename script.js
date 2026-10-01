@@ -224,19 +224,20 @@ if (finePointer && !reduceMotion) {
 // =========================================================
 // キャラクター
 // =========================================================
-// ピコ: つつくと「？」が「！」になって、びよんと伸びる
 // ピコ(SVG): つつくと「？」が「！」になって、びよんと伸びる
 const pikoButton = document.getElementById('pikoButton');
 const piko = pikoButton && pikoButton.querySelector('.piko');
+let pikoTimer;
+function pikoPoke() {
+  if (!piko) return;
+  piko.classList.remove('is-boing');
+  void piko.getBoundingClientRect(); // アニメを最初から再生しなおす
+  piko.classList.add('is-boing', 'is-surprised');
+  clearTimeout(pikoTimer);
+  pikoTimer = setTimeout(() => piko.classList.remove('is-surprised'), 1200);
+}
 if (piko) {
-  let pikoTimer;
-  pikoButton.addEventListener('click', () => {
-    piko.classList.remove('is-boing');
-    void piko.getBoundingClientRect(); // アニメを最初から再生しなおす
-    piko.classList.add('is-boing', 'is-surprised');
-    clearTimeout(pikoTimer);
-    pikoTimer = setTimeout(() => piko.classList.remove('is-surprised'), 1200);
-  });
+  pikoButton.addEventListener('click', pikoPoke);
   piko.addEventListener('animationend', e => {
     if (e.animationName === 'piko-boing') piko.classList.remove('is-boing');
   });
@@ -252,37 +253,65 @@ function pikoHop(pal, happyMs) {
   clearTimeout(pal._t);
   pal._t = setTimeout(() => pal.classList.remove('is-happy'), happyMs);
 }
+function pikoWave(fromIndex) {
+  pikoPals.forEach((other, j) => {
+    setTimeout(() => pikoHop(other, j === fromIndex ? 1400 : 900), 160 * Math.abs(fromIndex - j));
+  });
+}
 pikoPals.forEach((pal, i) => {
   pal.addEventListener('click', () => {
-    pikoHop(pal, 1400);
-    if (reduceMotion) return;
-    pikoPals.forEach((other, j) => {
-      if (other !== pal) setTimeout(() => pikoHop(other, 900), 160 * Math.abs(i - j));
-    });
+    if (reduceMotion) pikoHop(pal, 1400); else pikoWave(i);
   });
   pal.addEventListener('animationend', e => { if (e.animationName === 'piko-hop') pal.classList.remove('is-hop'); });
 });
 
-// だんごむし: つつくと丸まって、ころんと転がる。少したつと元に戻る
+// だんごむし: つつくと丸まって、もう一度で ころんと転がる。少したつと元に戻る
 const dangoButton = document.getElementById('dangoButton');
-if (dangoButton) {
-  let dangoTimer;
-  dangoButton.addEventListener('click', () => {
-    const wasCurled = dangoButton.classList.contains('is-curled');
-    dangoButton.classList.add('is-curled');
-    if (wasCurled) {
-      dangoButton.classList.remove('is-rolling');
-      void dangoButton.offsetWidth;
-      dangoButton.classList.add('is-rolling');
-    }
-    clearTimeout(dangoTimer);
-    dangoTimer = setTimeout(() => dangoButton.classList.remove('is-curled', 'is-rolling'), 2600);
-  });
+let dangoTimer;
+function dangoPoke() {
+  if (!dangoButton) return;
+  const wasCurled = dangoButton.classList.contains('is-curled');
+  dangoButton.classList.add('is-curled');
+  if (wasCurled) {
+    dangoButton.classList.remove('is-rolling');
+    void dangoButton.offsetWidth;
+    dangoButton.classList.add('is-rolling');
+  }
+  clearTimeout(dangoTimer);
+  dangoTimer = setTimeout(() => dangoButton.classList.remove('is-curled', 'is-rolling'), 2600);
 }
+dangoButton?.addEventListener('click', dangoPoke);
+
+// ハチ: さわると(または見えたら)急降下する
+const bee = document.querySelector('.bee');
+function beeDive() {
+  if (!bee) return;
+  bee.classList.remove('is-dive');
+  void bee.offsetWidth;
+  bee.classList.add('is-dive');
+}
+bee?.addEventListener('animationend', e => { if (e.animationName === 'bee-dive') bee.classList.remove('is-dive'); });
+bee?.parentElement.addEventListener('click', beeDive);
 
 // ねむひつじ: スカーフの色を切り替える(2枚の画像をクロスフェード)
 const nemuVisual = document.querySelector('.character-visual--nemu');
 const nemuButtons = document.querySelectorAll('.nemu-btn');
+function nemuSparkle(scarf) {
+  if (reduceMotion) return;
+  const wrap = document.querySelector('.nemu-wrap');
+  const color = scarf === 'blue' ? '#8FB5CA' : '#E39A86';
+  for (let i = 0; i < 10; i++) {
+    const sp = document.createElement('span');
+    const ang = (Math.PI * 2 * i) / 10 + Math.random() * 0.4;
+    const dist = 50 + Math.random() * 30;
+    sp.className = 'sparkle';
+    sp.style.setProperty('--c', i % 3 === 0 ? '#F3D27A' : color);
+    sp.style.setProperty('--dx', `${Math.cos(ang) * dist}px`);
+    sp.style.setProperty('--dy', `${Math.sin(ang) * dist}px`);
+    wrap.appendChild(sp);
+    sp.addEventListener('animationend', () => sp.remove());
+  }
+}
 nemuButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     nemuButtons.forEach(b => {
@@ -291,8 +320,41 @@ nemuButtons.forEach(btn => {
       b.setAttribute('aria-pressed', String(on));
     });
     nemuVisual.dataset.scarf = btn.dataset.scarf;
+    nemuSparkle(btn.dataset.scarf);
   });
 });
+
+// Cast: さわらなくても、カードが画面にしっかり入ったら「さわった」ときの動きを見せる
+// (自動で動いたときは、実績や効果音には数えない)
+{
+  const CAST_COOLDOWN = 8000; // 同じカードは8秒あけてから、また動く
+  const lastPlayed = new WeakMap();
+  const PLAYS = [
+    () => { pikoPoke(); setTimeout(() => pikoWave(0), 650); },
+    () => { dangoPoke(); setTimeout(dangoPoke, 750); setTimeout(beeDive, 400); },
+    () => {
+      const card = nemuVisual?.closest('.character-card');
+      card?.classList.add('is-waking');
+      setTimeout(() => card?.classList.remove('is-waking'), 700);
+      nemuSparkle(nemuVisual?.dataset.scarf);
+    },
+  ];
+  const cards = [...document.querySelectorAll('.character-card')];
+  if (!reduceMotion && cards.length) {
+    const castIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const now = performance.now();
+        if (now - (lastPlayed.get(e.target) || -1e9) < CAST_COOLDOWN) return;
+        lastPlayed.set(e.target, now);
+        const idx = cards.indexOf(e.target);
+        // 横に並んでいるときは、左から順に少しずつずらす
+        setTimeout(() => PLAYS[idx]?.(), 250 + idx * 350);
+      });
+    }, { threshold: 0.6 });
+    cards.forEach(c => castIO.observe(c));
+  }
+}
 
 // =========================================================
 // 空: スクロールに合わせて 夜→夜明け→昼→夕方→夜
@@ -598,27 +660,6 @@ if (finePointer && !reduceMotion) {
     });
   }
 }
-
-// ねむひつじ: スカーフを切り替えたら、その色で きらきら
-nemuButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (reduceMotion) return;
-    const wrap = document.querySelector('.nemu-wrap');
-    const color = btn.dataset.scarf === 'blue' ? '#8FB5CA' : '#E39A86';
-    for (let i = 0; i < 10; i++) {
-      const sp = document.createElement('span');
-      const ang = (Math.PI * 2 * i) / 10 + Math.random() * 0.4;
-      const dist = 50 + Math.random() * 30;
-      sp.className = 'sparkle';
-      sp.style.setProperty('--c', i % 3 === 0 ? '#F3D27A' : color);
-      sp.style.setProperty('--dx', `${Math.cos(ang) * dist}px`);
-      sp.style.setProperty('--dy', `${Math.sin(ang) * dist}px`);
-      wrap.appendChild(sp);
-      sp.addEventListener('animationend', () => sp.remove());
-    }
-  });
-});
-
 
 // =========================================================
 // How I Build

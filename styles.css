@@ -2377,3 +2377,91 @@ code{
   background: rgba(38,34,30,.4);
 }
 .timeline-item.is-lit .tl-tags li{ border-color: rgba(201,123,99,.35); }
+
+/* =========================================================
+   子ども向けゾーン: 晴れた空(ピコとけいさん と同じ色と雲)
+========================================================= */
+.kids-zone{
+  --kz-top: #bfe2ff;
+  --kz-mid: #dff0ff;
+  --kz-bottom: #eef7ff;
+  background: linear-gradient(to bottom, var(--kz-top) 0, var(--kz-mid) 520px, var(--kz-bottom) 100%);
+}
+.kids-wave{ fill: var(--kz-top); }
+.kids-wave--bottom{ fill: var(--kz-bottom); }
+/* 雲の帯は、上のほうで ゆっくり左右に流れる */
+.kids-sky{ position:absolute; left:0; right:0; top: 0; height: 320px; overflow: hidden; pointer-events: none; }
+.kids-sky-band{
+  position:absolute; top: 10px; left: -10%; right: -10%;
+  height: 100%;
+  background: url(assets/images/characters/sky_clouds.webp) center top / 1400px auto repeat-x;
+  opacity: .95;
+  animation: sky-drift 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes sky-drift{
+  from{ transform: translateX(-5%); }
+  to  { transform: translateX(5%); }
+}
+/* 飾りの雲は、画面の横をゆっくり流れていく(奥のほうが遅い) */
+.deco--cloud1, .deco--cloud2{ animation: cloud-across linear infinite; }
+.deco--cloud1{ left: 0; animation-duration: 70s; animation-delay: -22s; }
+.deco--cloud2{ left: 0; right: auto; animation-duration: 95s; animation-delay: -60s; }
+@keyframes cloud-across{
+  from{ translate: -260px 0; }
+  to  { translate: calc(100vw + 40px) 0; }
+}
+.kids-zone .projects-subhead--kids, .kids-lead{ text-shadow: 0 1px 0 rgba(255,255,255,.6); }
+
+/* =========================================================
+   Cast: 紹介文の下の絵(ハチ・月で眠る ねむひつじ)
+========================================================= */
+.cast-extra{
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line-strong);
+}
+/* ハチ: 2コマを切り替えて はばたき、ふわふわ浮く */
+.bee{
+  position: relative;
+  width: 92px; height: 112px;
+  margin: 4px auto 0;
+  animation: bee-hover 2.6s ease-in-out infinite;
+}
+.bee-frame{ position:absolute; left:0; bottom:0; width: 100%; height: auto; filter: drop-shadow(0 6px 6px rgba(0,0,0,.25)); }
+.bee-frame--a{ animation: bee-flap-a .16s linear infinite; }
+.bee-frame--b{ animation: bee-flap-b .16s linear infinite; }
+@keyframes bee-flap-a{ 0%, 49.9%{ opacity: 1; } 50%, 100%{ opacity: 0; } }
+@keyframes bee-flap-b{ 0%, 49.9%{ opacity: 0; } 50%, 100%{ opacity: 1; } }
+@keyframes bee-hover{
+  0%,100%{ transform: translate(0, 0) rotate(-3deg); }
+  50%{ transform: translate(6px, -8px) rotate(3deg); }
+}
+.bee.is-dive{ animation: bee-dive .9s cubic-bezier(.5,0,.3,1); }
+@keyframes bee-dive{
+  0%{ transform: none; }
+  35%{ transform: translate(-14px, -18px) rotate(-12deg); }
+  65%{ transform: translate(18px, 14px) rotate(14deg) scale(1.08); }
+  100%{ transform: none; }
+}
+/* 月で眠る ねむひつじ: ゆりかごのように ゆっくり揺れる */
+.nemu-moon{
+  display:block;
+  width: 150px; height: auto;
+  margin: 0 auto;
+  transform-origin: 50% 85%;
+  animation: moon-rock 6s ease-in-out infinite;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.3));
+}
+@keyframes moon-rock{
+  0%,100%{ transform: rotate(-4deg) translateY(0); }
+  50%{ transform: rotate(4deg) translateY(-4px); }
+}
+
+/* Cast の自動の動き: ねむひつじが少し起きる */
+.character-card.is-waking .character-visual--nemu{ animation: nemu-wake .5s var(--ease-bounce); }
+@media (max-width: 760px){
+  /* 目玉のカードも、スマホでは他のカードと同じ小さなボタン2つに */
+  .project-card--wide .kids-actions{ grid-template-columns: 1fr 1fr; }
+  .project-card--wide .kids-actions .kids-btn{ padding: 8px 6px; font-size: .78rem; }
+}
