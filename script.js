@@ -223,9 +223,26 @@ if (finePointer && !reduceMotion) {
 // キャラクター
 // =========================================================
 // ピコ: つつくと「？」が「！」になって、びよんと伸びる
-// ピコたち: つつくと にっこり顔になって ぴょんと跳ねる。となりの子も少し遅れて つられて跳ねる
+// ピコ(SVG): つつくと「？」が「！」になって、びよんと伸びる
 const pikoButton = document.getElementById('pikoButton');
-const pikoPals = pikoButton ? [...pikoButton.querySelectorAll('.piko-pal')] : [];
+const piko = pikoButton && pikoButton.querySelector('.piko');
+if (piko) {
+  let pikoTimer;
+  pikoButton.addEventListener('click', () => {
+    piko.classList.remove('is-boing');
+    void piko.getBoundingClientRect(); // アニメを最初から再生しなおす
+    piko.classList.add('is-boing', 'is-surprised');
+    clearTimeout(pikoTimer);
+    pikoTimer = setTimeout(() => piko.classList.remove('is-surprised'), 1200);
+  });
+  piko.addEventListener('animationend', e => {
+    if (e.animationName === 'piko-boing') piko.classList.remove('is-boing');
+  });
+}
+
+// ピコと仲間達: つつくと にっこり顔になって ぴょんと跳ねる。となりの子も少し遅れて つられて跳ねる
+const pikoTrio = document.getElementById('pikoTrio');
+const pikoPals = pikoTrio ? [...pikoTrio.querySelectorAll('.piko-pal')] : [];
 function pikoHop(pal, happyMs) {
   pal.classList.remove('is-hop');
   void pal.offsetWidth; // アニメを最初から再生しなおす
@@ -554,6 +571,20 @@ if (finePointer && !reduceMotion) {
     });
   });
 
+  // ピコの目が、ポインターのほうを見る
+  const pikoLook = document.querySelector('.piko-look');
+  if (pikoLook) {
+    window.addEventListener('pointermove', e => {
+      const r = pikoButton.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      const d = Math.hypot(dx, dy) || 1;
+      const k = Math.min(1, d / 300) * 3; // 最大3(SVGの単位)
+      pikoLook.style.transform = `translate(${(dx / d * k).toFixed(2)}px, ${(dy / d * k).toFixed(2)}px)`;
+    }, { passive: true });
+  }
+
   // ヒーローの光の玉が、ポインターに少しついてくる
   const orb = document.querySelector('.hero-orb');
   const hero = document.getElementById('hero');
@@ -690,6 +721,143 @@ if (logTrack) {
       if (entries[0].isIntersecting) { countUp(lv); obs.disconnect(); }
     }, { threshold: 0.6 }).observe(lv);
   }
+}
+
+
+// =========================================================
+// スマホ: 長い部分の折りたたみ(zutsurun の設定画面と同じ手ざわり)
+//  - 行のどこを押しても開閉。右の丸ボタンは1回転して ⌄ と ✕ が入れ替わる
+//  - 中身は高さ 0 ⇔ 中身の高さ を 0.36秒でなめらかに変える(下の要素も一緒に動く)
+//  - PCでは折りたたまず、いつも全部見せる
+// =========================================================
+const foldMq = window.matchMedia('(max-width: 760px)');
+const FOLD_MS = 360;
+const CHEVRON = '<svg class="spin-closed" viewBox="0 0 24 24" width="16" height="16"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CROSS = '<svg class="spin-open" viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+
+function foldSummary(el) {
+  if (el.matches('.timeline')) {
+    const years = [...el.querySelectorAll('.timeline-year')].map(y => y.textContent.trim());
+    return `${years[0]} 〜 ${years[years.length - 1]}・${years.length}件`;
+  }
+  if (el.matches('.skills-grid')) {
+    return [...el.querySelectorAll('li')].slice(0, 4).map(li => li.textContent.trim()).join(' / ') + ' ほか';
+  }
+  if (el.matches('.cycle')) return [...el.querySelectorAll('h4')].map(h => h.textContent.trim()).join(' → ');
+  if (el.matches('.log-track')) return 'v1 はじまり 〜 v155 いま';
+  if (el.matches('.case-detail')) {
+    const r = el.querySelectorAll('.case-flow dd');
+    return r.length ? r[r.length - 1].textContent.trim() : '';
+  }
+  return '';
+}
+
+const folds = [];
+document.querySelectorAll('[data-fold]').forEach((el, i) => {
+  const body = document.createElement('div');
+  body.className = 'fold-body';
+  body.id = `fold-${i}`;
+  el.before(body);
+  body.appendChild(el);
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'fold-toggle';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', body.id);
+  const summary = foldSummary(el);
+  btn.innerHTML = `<span class="fold-text"><span class="fold-label">${el.dataset.fold}</span>${summary ? `<span class="fold-summary">${summary}</span>` : ''}</span>`
+    + `<span class="row-open-btn" aria-hidden="true"><span class="spin-icon">${CHEVRON}${CROSS}</span></span>`;
+  body.before(btn);
+  const f = { btn, body, open: false, timer: 0 };
+  folds.push(f);
+  btn.addEventListener('click', () => setFold(f, !f.open));
+});
+
+function setFold(f, open, instant) {
+  f.open = open;
+  f.btn.setAttribute('aria-expanded', String(open));
+  f.btn.classList.toggle('is-open', open);
+  f.body.classList.toggle('is-open', open);
+  f.body.inert = !open;
+  clearTimeout(f.timer);
+  if (instant || reduceMotion) {
+    f.body.style.height = open ? '' : '0px';
+    return;
+  }
+  // 今の高さ → 目標の高さ へ動かし、開き終わったら auto に戻す(中身が変わっても切れない)
+  const from = f.body.getBoundingClientRect().height;
+  f.body.style.height = `${from}px`;
+  void f.body.offsetHeight;
+  f.body.style.height = open ? `${f.body.scrollHeight}px` : '0px';
+  if (open) {
+    f.timer = setTimeout(() => { f.body.style.height = ''; requestTick(); }, FOLD_MS + 20);
+    // 開いた中身の「ふわっと出る」演出を、すぐに見せる
+    f.body.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  } else {
+    f.timer = setTimeout(requestTick, FOLD_MS + 20);
+  }
+}
+
+function applyFoldMode() {
+  folds.forEach(f => {
+    if (foldMq.matches) {
+      setFold(f, false, true);
+      f.body.classList.add('is-foldable');
+    } else {
+      f.body.classList.remove('is-foldable');
+      f.body.inert = false;
+      f.body.style.height = '';
+    }
+  });
+  requestTick();
+}
+applyFoldMode();
+foldMq.addEventListener?.('change', applyFoldMode);
+
+// =========================================================
+// スマホ: 下のナビ(今いるセクションのチップ + 次へボタン)
+// =========================================================
+const dock = document.getElementById('sectionDock');
+const dockChips = document.getElementById('dockChips');
+const dockNext = document.getElementById('dockNext');
+const dockNextName = document.getElementById('dockNextName');
+if (dock) {
+  sections.forEach(sec => {
+    const a = document.createElement('a');
+    a.href = `#${sec.id}`;
+    a.className = 'dock-chip';
+    a.dataset.target = sec.id;
+    a.textContent = sec.dataset.label || sec.id;
+    dockChips.appendChild(a);
+  });
+  const chips = [...dockChips.querySelectorAll('.dock-chip')];
+  let dockId = null;
+  const updateDock = () => {
+    if (currentId === dockId) return;
+    dockId = currentId;
+    const idx = sections.findIndex(s => s.id === currentId);
+    chips.forEach((c, i) => {
+      c.classList.toggle('is-current', i === idx);
+      c.classList.toggle('is-seen', i < idx);
+      if (i === idx) c.setAttribute('aria-current', 'location'); else c.removeAttribute('aria-current');
+    });
+    const cur = chips[idx];
+    if (cur) {
+      // 今のチップが真ん中に来るように、横にすべらせる
+      dockChips.scrollTo({ left: cur.offsetLeft - (dockChips.clientWidth - cur.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+    const next = sections[idx + 1];
+    dock.classList.toggle('is-last', !next);
+    dockNextName.textContent = next ? (next.dataset.label || next.id) : 'Top';
+    dockNext.querySelector('.dock-next-label').textContent = next ? '次へ' : '先頭へ';
+    dockNext.setAttribute('aria-label', next ? `次のセクション ${next.dataset.label} へ` : 'ページの先頭へ');
+  };
+  scrollHooks.push(updateDock);
+  dockNext.addEventListener('click', () => {
+    const idx = sections.findIndex(s => s.id === currentId);
+    const next = sections[idx + 1] || sections[0];
+    next.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  });
 }
 
 onScroll();

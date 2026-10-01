@@ -13,7 +13,7 @@ const ACHIEVEMENTS = [
   { id: 'deepdive',  icon: '🔍', name: '深掘りさん',         desc: 'Works の「詳しく」を3つとも開いた' },
   { id: 'builder',   icon: '🛠️', name: 'つくりかた見学',     desc: 'How I Build の3つのアプリを全部見た' },
   { id: 'play',      icon: '🎮', name: 'あそんでみた',       desc: '個人開発のアプリを開いてみた' },
-  { id: 'piko',      icon: '🫧', name: 'ピコたちと なかよし', desc: '3色のピコを全部つついた' },
+  { id: 'piko',      icon: '🫧', name: 'ピコと仲間達と なかよし', desc: 'ピコと仲間達の3匹を全部つついた' },
   { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
   { id: 'nemu',      icon: '🧣', name: 'おきがえ',           desc: 'ねむひつじのスカーフを切り替えた' },
   { id: 'night',     icon: '🌙', name: 'おやすみなさい',     desc: '夜まで、ページの最後まで読んだ' },
@@ -25,7 +25,7 @@ const ACHIEVEMENTS = [
 const ACORN_IDS = ['hero', 'skills', 'works', 'kids', 'notes'];
 const ACORN_IMG = 'assets/images/characters/acorn.png';
 const STORE_KEY = 'yoshidam:quest:v1';
-const TOAST_MS = 3600;
+const TOAST_MS = window.innerWidth <= 600 ? 2400 : 3600; // スマホは短めに
 
 // ---------------------------------------------------------
 // 記録の読み書き(localStorage が使えない環境でも動くように)

@@ -1027,6 +1027,26 @@ button.character-visual{ cursor: pointer; transition: transform .3s var(--ease-b
 button.character-visual:hover{ transform: scale(1.05); }
 button.character-visual:active{ transform: scale(.95); }
 
+.character-visual--piko{ background: radial-gradient(circle at 50% 40%, #EAF4FF, var(--kids-sky)); overflow: visible; }
+.piko{ animation: piko-float 3.2s ease-in-out infinite; overflow: visible; }
+@keyframes piko-float{
+  0%,100%{ transform: translateY(0); }
+  50%{ transform: translateY(-5px); }
+}
+.piko-bang{ display:none; }
+.piko.is-surprised .piko-hatena{ display:none; }
+.piko.is-surprised .piko-bang{ display:inline; }
+.piko.is-boing{ animation: piko-boing .65s ease-in-out; transform-origin: 50% 92%; }
+@keyframes piko-boing{
+  0%  { transform: scale(1,1); }
+  18% { transform: scale(.75,1.48); }
+  38% { transform: scale(1.18,.8); }
+  55% { transform: scale(.9,1.14); }
+  72% { transform: scale(1.06,.94); }
+  88% { transform: scale(.98,1.03); }
+  100%{ transform: scale(1,1); }
+}
+
 .character-visual--dango{ background: radial-gradient(circle at 50% 40%, #FFF3D0, var(--kids-yellow)); }
 .dango-img{
   position:absolute;
@@ -1372,6 +1392,14 @@ button.character-visual:active{ transform: scale(.95); }
 /* =========================================================
    キャラクターの反応(追加)
 ========================================================= */
+/* ピコ: 視線と まばたき */
+.piko-look{ transition: transform .25s var(--ease); }
+.piko-eyes{ transform-box: fill-box; transform-origin: center; animation: piko-blink 4.6s infinite; }
+@keyframes piko-blink{
+  0%, 92%, 100%{ transform: scaleY(1); }
+  95%{ transform: scaleY(.1); }
+}
+
 /* ねむひつじ: Zzz がふわふわ上がる。さわると止まって起きる */
 .nemu-wrap{ position: relative; width: 132px; margin: 0 auto; }
 .nemu-zzz{
@@ -2043,17 +2071,29 @@ code{
 .project-card--calm:nth-of-type(2):hover .phone{ transform: rotate(0) translateY(-6px); }
 
 /* =========================================================
-   ピコたち(3色)
+   ピコと仲間達(ピコとけいさん に登場する3匹)
 ========================================================= */
+.piko-friends{
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line-strong);
+}
+.piko-friends-title{
+  font-family: var(--font-round);
+  font-size: .9rem;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.piko-friends-note{ font-size: .78rem !important; margin-top: 6px !important; }
 .piko-trio{
   display:flex; align-items:flex-end; justify-content:center;
   gap: 2px;
-  height: 132px;
-  margin: 0 auto 20px;
+  height: 100px;
+  margin: 0 auto;
 }
 .piko-pal{
   position: relative;
-  width: 64px;
+  width: 54px;
   padding: 0;
   border: none;
   background: none;
@@ -2066,7 +2106,7 @@ code{
   transform-origin: 50% 100%;
   animation: piko-idle 3.4s ease-in-out infinite;
 }
-.piko-pal--blue{ width: 76px; z-index: 1; order: 2; } /* まんなかの子は少し大きく */
+.piko-pal--blue{ width: 62px; z-index: 1; order: 2; } /* まんなかの子は少し大きく */
 .piko-pal--blue .piko-body{ animation-delay: -.6s; }
 .piko-pal--pink{ order: 1; }
 .piko-pal--pink .piko-body{ animation-delay: -1.7s; }
@@ -2136,3 +2176,178 @@ code{
 .to-top svg{ color: var(--moon); transition: transform .6s var(--ease-bounce); }
 .to-top:hover{ border-color: var(--moon); background: rgba(243,210,122,.06); }
 .to-top:hover svg{ transform: translateY(-4px) rotate(-20deg); }
+
+/* =========================================================
+   折りたたみ(スマホのみ)。zutsurun の ExpandRow と同じ手ざわり
+========================================================= */
+.fold-toggle{ display: none; }
+.fold-body.is-foldable{
+  overflow: hidden;
+  opacity: 0;
+  transition: height .36s cubic-bezier(.22,1,.36,1), opacity .29s cubic-bezier(.22,1,.36,1);
+}
+.fold-body.is-foldable.is-open{ opacity: 1; }
+
+@media (max-width: 760px){
+  .fold-toggle{
+    display:flex; align-items:center; gap: 12px;
+    width: 100%;
+    margin: 4px 0 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: rgba(38,34,30,.55);
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .3s, background .3s;
+  }
+  .fold-toggle.is-open{ border-color: var(--line-strong); background: rgba(38,34,30,.8); }
+  .fold-toggle:active{ background: rgba(48,42,36,.9); }
+  .fold-text{ flex: 1; min-width: 0; display:flex; flex-direction: column; gap: 2px; }
+  .fold-label{ font-size: .86rem; font-weight: 700; }
+  .fold-summary{
+    font-size: .74rem; color: var(--text-muted);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .fold-body.is-foldable > *{ margin-top: 14px; }
+  /* 子ども向けゾーン・カードの中では明るい色に */
+  .case-card .fold-toggle{ background: rgba(0,0,0,.14); }
+}
+
+/* 右の丸ボタン: 押すと1秒かけて1回転し、⌄ と ✕ がふわっと入れ替わる */
+.row-open-btn{
+  flex: none;
+  display:inline-grid; place-items:center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  color: var(--text-muted);
+  transition: color .3s, border-color .3s;
+}
+.fold-toggle.is-open .row-open-btn{ color: var(--accent); border-color: var(--accent); }
+.spin-icon{ display:inline-grid; transition: transform 1s cubic-bezier(.45,0,.25,1); }
+.spin-icon > svg{ grid-area: 1 / 1; transition: opacity .45s ease .2s; }
+.spin-icon .spin-open{ opacity: 0; }
+.fold-toggle.is-open .spin-icon{ transform: rotate(360deg); }
+.fold-toggle.is-open .spin-icon .spin-closed{ opacity: 0; }
+.fold-toggle.is-open .spin-icon .spin-open{ opacity: 1; }
+
+/* =========================================================
+   スマホの下のナビ
+========================================================= */
+.section-dock{ display: none; }
+@media (max-width: 900px){
+  .section-dock{
+    position: fixed; z-index: 95;
+    left: 10px; right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    display:flex; align-items:center; gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(24,22,26,.86);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    transition: transform .4s var(--ease), opacity .3s;
+  }
+  html.nav-open .section-dock{ transform: translateY(140%); opacity: 0; }
+  .dock-chips{
+    flex: 1; min-width: 0;
+    display:flex; gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+    padding: 0 10px;
+  }
+  .dock-chips::-webkit-scrollbar{ display: none; }
+  .dock-chip{
+    flex: none;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: .76rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    transition: background .3s, color .3s;
+  }
+  .dock-chip.is-seen{ color: #CFC5B8; }
+  .dock-chip.is-current{ background: var(--accent); color: var(--bg); font-weight: 700; }
+  .dock-next{
+    flex: none;
+    display:inline-flex; align-items:center; gap: 4px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(243,210,122,.16);
+    color: var(--moon);
+    font-size: .76rem;
+    cursor: pointer;
+  }
+  .dock-next-label{ opacity: .8; }
+  .dock-next-name{ font-weight: 700; }
+  .section-dock.is-last .dock-next svg{ transform: rotate(180deg); }
+  /* 下のナビの分だけ、ページの最後とお知らせを上げる */
+  body{ padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+  .toast-stack{ bottom: calc(76px + env(safe-area-inset-bottom)); }
+}
+
+/* =========================================================
+   スマホでは、カードを短くする(画面の左に小さな画面、右に説明)
+========================================================= */
+@media (max-width: 760px){
+  .project-card--calm{
+    grid-template-columns: 92px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 18px 16px;
+  }
+  .project-card--calm .phone{ max-width: none; margin: 0; border-radius: 16px; padding: 4px; transform: none !important; }
+  .project-card--calm .phone img{ border-radius: 12px; }
+  .project-card--calm .phone::after{ height: 6px; top: 8px; }
+  .project-card--calm .project-body h4{ font-size: 1.05rem; }
+  .project-card--calm .fold-toggle, .project-card--calm .fold-body{ grid-column: 1 / -1; }
+
+  .projects-row--kids{ gap: 14px; }
+  .project-card--kids, .project-card--wide{
+    display:grid;
+    grid-template-columns: 92px 1fr;
+    gap: 14px;
+    padding: 18px 16px;
+    align-items: start;
+  }
+  .project-card--kids .phone--kids,
+  .project-card--wide .phone--kids{ width: 100%; margin: 0; border-radius: 16px; padding: 3px; }
+  .phone--kids img{ border-radius: 13px; }
+  .phone--kids::after{ height: 5px; top: 7px; }
+  .project-card--kids h4, .project-card--wide h4{ font-size: 1rem; }
+  .project-card--kids .project-body > p{ font-size: .82rem; margin-bottom: 10px; }
+  .project-card--kids .tag-list{ display: none; } /* 技術タグは PC だけ */
+  .project-card--kids .status-badge{ font-size: .66rem; margin-bottom: 6px; }
+
+  /* キャラクターは横にスワイプして見る */
+  .character-list{
+    display:flex; gap: 14px;
+    max-width: none;
+    margin: 0 -24px;
+    padding: 4px 24px 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .character-list::-webkit-scrollbar{ display: none; }
+  .character-card{ flex: 0 0 82%; scroll-snap-align: center; }
+}
+
+/* スマホのお知らせは1行の小さな形にして、本文をなるべく隠さない */
+@media (max-width: 600px){
+  .toast{ min-width: 0; padding: 7px 12px 7px 7px; gap: 8px; border-radius: 999px; }
+  .toast-icon{ width: 28px; height: 28px; border-radius: 50%; font-size: .9rem; }
+  .toast-desc{ display: none; }
+  .toast-kicker{ display: none; }
+  .toast-title{ font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .toast-title::before{ content: "🏅 "; }
+  .section{ padding: 64px 0; }
+  .section-lead{ margin-bottom: 32px; }
+}

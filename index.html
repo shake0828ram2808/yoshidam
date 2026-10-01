@@ -155,7 +155,7 @@
         </div>
       </div>
 
-      <ol class="timeline" data-todo="経歴(年・内容)">
+      <ol class="timeline" data-todo="経歴(年・内容)" data-fold="経歴を見る">
         <!-- ▼ 経歴はダミーです。実際の年数・内容に差し替えてください -->
         <li class="timeline-item">
           <span class="timeline-year">2020</span>
@@ -195,7 +195,7 @@
       <p class="section-kicker">02</p>
       <h2 class="section-title">Skills</h2>
       <button type="button" class="acorn" data-acorn="skills" aria-label="かくれた どんぐり" style="right:2%;top:-8px;--rot:14deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
-      <div class="skills-grid" data-todo="技術スタック">
+      <div class="skills-grid" data-todo="技術スタック" data-fold="技術スタックを見る">
         <!-- ▼ スキルはダミーです。実際の技術スタックに差し替えてください -->
         <div class="skill-group">
           <h3>Frontend</h3>
@@ -233,6 +233,7 @@
             <h3>マルチリポジトリからモノレポへ</h3>
             <ul class="tag-list"><li>pnpm workspaces</li><li>CI共通化</li><li>依存管理</li></ul>
           </header>
+          <div class="case-detail" data-fold="課題・やったこと・結果を見る">
           <dl class="case-flow">
             <div><dt>課題</dt><dd>フロントエンド資産が複数のリポジトリに分かれ、同じ修正を何度も入れる・バージョンがずれる状態だった。</dd></div>
             <div><dt>やったこと</dt><dd>モノレポ構成に統合し、依存関係を一元管理。CIの設定を共通化した。</dd></div>
@@ -249,6 +250,7 @@
             <summary>なぜモノレポを選んだか</summary>
             <p data-todo="判断の理由">ほかの選択肢(共通パッケージを別リポジトリで公開する、git submodule など)と比べ、変更が1つのPRで完結し、レビューしやすい点を重視した。</p>
           </details>
+          </div>
           <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
         </article>
 
@@ -258,6 +260,7 @@
             <h3>npm から pnpm への移行</h3>
             <ul class="tag-list"><li>pnpm</li><li>CI高速化</li><li>移行計画</li></ul>
           </header>
+          <div class="case-detail" data-fold="課題・やったこと・結果を見る">
           <dl class="case-flow">
             <div><dt>課題</dt><dd>node_modules が肥大化し、インストールとCIに時間がかかっていた。</dd></div>
             <div><dt>やったこと</dt><dd>pnpmへ移行し、ワークスペースの設計を見直した。移行手順を段階に分けて、影響範囲を小さく保った。</dd></div>
@@ -274,6 +277,7 @@
             <summary>ハマったところ</summary>
             <p data-todo="移行でハマった点">幽霊依存(package.json に書かれていないのに動いていた依存)が表に出たので、ひとつずつ明示的に追加して解消した。</p>
           </details>
+          </div>
           <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
         </article>
 
@@ -283,6 +287,7 @@
             <h3>AI駆動開発への挑戦</h3>
             <ul class="tag-list"><li>Claude Code</li><li>開発フロー設計</li><li>チーム導入</li></ul>
           </header>
+          <div class="case-detail" data-fold="課題・やったこと・結果を見る">
           <dl class="case-flow">
             <div><dt>課題</dt><dd>AIツールを個人では使っていても、チームの開発フローには組み込めていなかった。</dd></div>
             <div><dt>やったこと</dt><dd>Claude Codeをチーム開発に取り入れ、設計レビューや実装の一部を任せるフローを構築した。</dd></div>
@@ -292,6 +297,7 @@
             <summary>個人開発での使い方</summary>
             <p>リポジトリごとに CLAUDE.md で設計方針・編集ルール・確認手順を書き、方針決定は自分、確定した実装はAIに任せる、という役割分担で開発している。</p>
           </details>
+          </div>
           <a href="#" class="text-link" data-todo="note記事のURL">note記事を読む <span aria-hidden="true">→</span></a>
           <button type="button" class="acorn" data-acorn="works" aria-label="かくれた どんぐり" style="right:18px;bottom:16px;--rot:-8deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
         </article>
@@ -316,12 +322,14 @@
           <p class="status-badge">Web版 公開中 / iOS 準備中</p>
           <h4>頭痛手帳</h4>
           <p>気圧による頭痛などの痛みと服薬を記録し、直近30日の服薬日数を目安の範囲内で「やりくり」できるようにするアプリ。キャラクター「ねむひつじ」が寄り添います。</p>
+          <div class="project-more" data-fold="技術・見どころ">
           <ul class="tag-list"><li>React</li><li>TypeScript</li><li>Vite</li><li>Capacitor</li><li>Cloudflare</li></ul>
           <ul class="project-points">
             <li>保存処理をリポジトリ層にまとめ、Web と iOS で切り替え</li>
             <li>服薬カウントの計算ロジックに単体テスト</li>
             <li>健康データは端末の外に送らない設計</li>
           </ul>
+          </div>
           <a href="https://zutsurun.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
         </div>
       </article>
@@ -333,6 +341,7 @@
           <p class="status-badge">Web 公開中 / 自分用</p>
           <h4>AWS 認定 学習カレンダー</h4>
           <p>AWS 認定3資格(AI Practitioner / Cloud Practitioner / Solutions Architect)を、受験日までに取るための学習計画アプリ。スマホひとつで、思いついたその場で Claude Code に頼む「バイブコーディング」で作りました。</p>
+          <div class="project-more" data-fold="技術・見どころ">
           <ul class="tag-list"><li>React 19</li><li>TypeScript</li><li>Tailwind CSS</li><li>zustand</li><li>PWA</li></ul>
           <ul class="project-points">
             <li>学習範囲をロードマップで表示し、分野ごとの進み具合が分かる</li>
@@ -340,6 +349,7 @@
             <li>カレンダーはドラッグ&amp;ドロップで予定を動かせる(タッチ対応)</li>
             <li>確認問題 593問と、本番形式の演習つき</li>
           </ul>
+          </div>
           <a href="https://mystudy.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
         </div>
       </article>
@@ -443,7 +453,7 @@
 
       <!-- AI駆動開発のサイクル。画面に入ると、1つずつ順に光る -->
       <h3 class="craft-subhead">AI駆動開発のサイクル</h3>
-      <ol class="cycle" id="cycle">
+      <ol class="cycle" id="cycle" data-fold="5つのステップを見る">
         <li class="cycle-step"><span class="cycle-no">1</span><h4>ルールを書く</h4><p>リポジトリごとに <code>CLAUDE.md</code> を置き、目的・守ること・確認の手順を書く。</p></li>
         <li class="cycle-step"><span class="cycle-no">2</span><h4>役割を分ける</h4><p>方針や設計の判断は自分。仕様が決まった実装や単純作業はAIに任せる。</p></li>
         <li class="cycle-step"><span class="cycle-no">3</span><h4>自動で確かめる</h4><p>単体テストと、スマホサイズのスクリーンショット(Playwright)で確認する。</p></li>
@@ -467,7 +477,7 @@
             <li><b>健康データは端末の外に出さない。</b>天気APIに送る位置情報も、地域程度に丸める。</li>
             <li><b>仲間との共有はサーバー側でも検証。</b>Cloudflare Workers + D1。パスワードは PBKDF2 でハッシュ化。</li>
           </ul>
-          <figure class="code-card"><figcaption>src/storage/keyValueStore.ts</figcaption><pre><code>export interface KeyValueStore {
+          <figure class="code-card" data-fold="コードを見る"><figcaption>src/storage/keyValueStore.ts</figcaption><pre><code>export interface KeyValueStore {
   get(key: string): Promise&lt;string | null&gt;;
   set(key: string, value: string): Promise&lt;void&gt;;
   remove(key: string): Promise&lt;void&gt;;
@@ -482,7 +492,7 @@
             <li><b>文言は1つの表から。</b><code>TEXT.md</code> の表をビルド時に読み込み、日本語/ひらがなを切り替え。</li>
             <li><b>素材づくりも自動化。</b>画像生成から背景の切り抜き、組み込みまでをスクリプトで。</li>
           </ul>
-          <figure class="code-card"><figcaption>tools/src/game.js(効果音の定義・抜粋)</figcaption><pre><code>const SE = {
+          <figure class="code-card" data-fold="コードを見る"><figcaption>tools/src/game.js(効果音の定義・抜粋)</figcaption><pre><code>const SE = {
   tap:    ()=&gt;{ tone({f0:660, f1:880,  dur:0.06, type:&#x27;sine&#x27;}); },
   pickup: ()=&gt;{ tone({f0:880, f1:1320, dur:0.09, type:&#x27;triangle&#x27;}); },
   roll:   ()=&gt;{ noise({f0:900, f1:280, dur:0.3}); },
@@ -495,7 +505,7 @@
             <li><b>シリーズで使い回す。</b>けいさん・くく・めくって の3本を iOS で配信。くくで作ったキャラの部品を めくって でも使い、共通ライブラリへ集約中。</li>
             <li><b>ビルドで1ファイルに。</b>共通部分はビルド時に埋め込み、Capacitor で iOS アプリ化。</li>
           </ul>
-          <figure class="code-card"><figcaption>shared/piko.js の使い方(抜粋)</figcaption><pre><code>// 各アプリは参照するだけ。キャラの変更は shared/ の1か所で
+          <figure class="code-card" data-fold="コードを見る"><figcaption>shared/piko.js の使い方(抜粋)</figcaption><pre><code>// 各アプリは参照するだけ。キャラの変更は shared/ の1か所で
 initPiko({ prefix: &#x27;home&#x27;, size: 120 });
 buildPikoVariantSVG({ color: &#x27;pink&#x27;, face: FACES.niko });
 setPikoMouth(&#x27;home&#x27;, &#x27;A&#x27;);   // 口パク
@@ -510,7 +520,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
           <p class="devlog-level"><span>改善リリース</span><b>v<span data-count="155">155</span></b></p>
         </div>
         <p class="devlog-lead">遊んでみて気づいたことを、すぐ直す。その積み重ねの主な節目です。</p>
-        <ol class="log-track" id="logTrack">
+        <ol class="log-track" id="logTrack" data-fold="11の節目を見る">
           <li class="log-item" style="--i:0">
             <button type="button" class="log-dot" aria-describedby="log-0"><span>v1</span></button>
             <div class="log-card" id="log-0" role="tooltip"><b><em class="log-v">v1</em>はじまり</b><span>チャットで作った試作を、アプリの骨組み(モック)に移した</span></div>
@@ -569,29 +579,59 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
 
       <div class="character-list">
         <article class="character-card" data-tilt>
-          <!-- ピコの3色。つつくと にっこり顔になって、ぴょんと跳ねる -->
-          <div class="piko-trio" id="pikoButton" role="group" aria-label="ピコたち">
-            <button type="button" class="piko-pal piko-pal--blue" data-color="blue" aria-label="水色のピコをつつく">
-              <span class="piko-body">
-                <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_blue_normal.png" alt="" width="180" height="216" loading="lazy">
-                <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_blue_happy.png" alt="" width="180" height="216" loading="lazy">
-              </span>
-            </button>
-            <button type="button" class="piko-pal piko-pal--pink" data-color="pink" aria-label="ピンクのピコをつつく">
-              <span class="piko-body">
-                <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_pink_normal.png" alt="" width="180" height="216" loading="lazy">
-                <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_pink_happy.png" alt="" width="180" height="216" loading="lazy">
-              </span>
-            </button>
-            <button type="button" class="piko-pal piko-pal--green" data-color="green" aria-label="黄緑のピコをつつく">
-              <span class="piko-body">
-                <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_green_normal.png" alt="" width="180" height="216" loading="lazy">
-                <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_green_happy.png" alt="" width="180" height="216" loading="lazy">
-              </span>
-            </button>
-          </div>
+          <button type="button" class="character-visual character-visual--piko" id="pikoButton" aria-label="ピコをつつく">
+            <!-- ピコのSVG(pikotto/shared/piko.js の buildPikoSVG と同じ見た目) -->
+            <svg class="piko" viewBox="0 0 100 100" width="96" height="96" aria-hidden="true">
+              <defs>
+                <radialGradient id="pkBody" cx="42%" cy="35%" r="58%"><stop offset="0%" stop-color="#fff"/><stop offset="60%" stop-color="#b8d9ff"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
+                <radialGradient id="pkEye" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#6699ff"/><stop offset="100%" stop-color="#003399"/></radialGradient>
+                <radialGradient id="pkHat" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#ddeeff"/><stop offset="60%" stop-color="#88bbee"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
+                <radialGradient id="pkBrim" cx="40%" cy="30%" r="65%"><stop offset="0%" stop-color="#d0e8ff"/><stop offset="55%" stop-color="#7ab0ee"/><stop offset="100%" stop-color="#4488cc"/></radialGradient>
+                <filter id="pkShadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0055aa" flood-opacity="0.18"/></filter>
+              </defs>
+              <circle cx="50" cy="54" r="38" fill="url(#pkBody)" filter="url(#pkShadow)"/>
+              <ellipse cx="28" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
+              <ellipse cx="72" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
+              <g class="piko-look"><g class="piko-eyes">
+                <g transform="translate(37 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
+                <g transform="translate(63 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="-1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
+              </g></g>
+              <path class="piko-mouth" d="M 45,60 C 46,62 48,62 50,60 C 52,62 54,62 55,60" fill="none" stroke="#334" stroke-width="2.2" stroke-linecap="round"/>
+              <g transform="translate(17 5) rotate(30 50 22)">
+                <ellipse cx="50" cy="21" rx="13" ry="6" fill="url(#pkBrim)"/>
+                <circle cx="50" cy="16" r="3.5" fill="url(#pkHat)"/>
+                <path class="piko-hatena" d="M 50,13 L 50,11.5 A 4.5 4.5 0 1 0 45.5,7" fill="none" stroke="url(#pkHat)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path class="piko-bang" d="M 46.5,4 A 3.5,2.5 0 0,1 53.5,4 Q 53,6 51.5,9 A 1.5,1.5 0 0,1 48.5,9 Q 47,6 46.5,4 Z" fill="#FFD000" stroke="#AA7700" stroke-width="1.2"/>
+              </g>
+            </svg>
+          </button>
           <h3>ピコ</h3>
-          <p>「けいさん」「くく」「めくって」のピコのシリーズに登場するガイド役。水色・ピンク・黄緑の3人。つつくと、にっこりします。</p>
+          <p>「けいさん」「くく」「めくって」のピコのシリーズに登場するガイド役。SVGアニメーションで動き、つつくと「？」が「！」になります。</p>
+          <div class="piko-friends">
+            <h4 class="piko-friends-title">ピコと仲間達</h4>
+            <!-- ピコと仲間達(ピコとけいさん に登場)。つつくと にっこり顔になって、ぴょんと跳ねる -->
+            <div class="piko-trio" id="pikoTrio" role="group" aria-label="ピコと仲間達">
+              <button type="button" class="piko-pal piko-pal--blue" data-color="blue" aria-label="水色のピコをつつく">
+                <span class="piko-body">
+                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_blue_normal.png" alt="" width="180" height="216" loading="lazy">
+                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_blue_happy.png" alt="" width="180" height="216" loading="lazy">
+                </span>
+              </button>
+              <button type="button" class="piko-pal piko-pal--pink" data-color="pink" aria-label="ピンクのピコをつつく">
+                <span class="piko-body">
+                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_pink_normal.png" alt="" width="180" height="216" loading="lazy">
+                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_pink_happy.png" alt="" width="180" height="216" loading="lazy">
+                </span>
+              </button>
+              <button type="button" class="piko-pal piko-pal--green" data-color="green" aria-label="黄緑のピコをつつく">
+                <span class="piko-body">
+                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_green_normal.png" alt="" width="180" height="216" loading="lazy">
+                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_green_happy.png" alt="" width="180" height="216" loading="lazy">
+                </span>
+              </button>
+            </div>
+            <p class="piko-friends-note">「ピコとけいさん1年生」にだけ登場する、水色・ピンク・黄緑の3匹。つつくと、にっこりします。</p>
+          </div>
         </article>
 
         <article class="character-card" data-tilt>
@@ -730,6 +770,12 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
     <button type="button" class="quest-reset" id="questReset">記録を消す</button>
   </div>
 </dialog>
+
+<!-- スマホ用: 今いるセクションと、次へのボタン(JSで中身を作る) -->
+<nav class="section-dock" id="sectionDock" aria-label="セクションの移動">
+  <div class="dock-chips" id="dockChips"></div>
+  <button type="button" class="dock-next" id="dockNext"><span class="dock-next-label">次へ</span><span class="dock-next-name" id="dockNextName"></span><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M10 4v12m0 0-5-5m5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</nav>
 
 <!-- 実績やどんぐりのお知らせ -->
 <div class="toast-stack" id="toastStack" role="status" aria-live="polite"></div>
