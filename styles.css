@@ -2361,3 +2361,19 @@ code{
   /* 1行が画面幅に収まるよう、文字を少しだけ小さく */
   .contact-lead{ font-size: min(.98rem, 3.55vw); }
 }
+
+/* 経歴の技術タグ */
+.tl-tags{
+  list-style:none;
+  display:flex; flex-wrap: wrap; gap: 6px;
+  margin: 10px 0 0; padding: 0;
+}
+.tl-tags li{
+  font-size: .72rem; line-height: 1;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-muted);
+  background: rgba(38,34,30,.4);
+}
+.timeline-item.is-lit .tl-tags li{ border-color: rgba(201,123,99,.35); }
