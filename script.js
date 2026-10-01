@@ -1107,6 +1107,8 @@ if (dock) {
   scrollHooks.push(updateDock);
   // 「先頭へ」は、少しスクロールしたら左下に いつも出しておく
   const dockTop = document.getElementById('dockTop');
+  // 最初の画面(ヒーロー)では、下のメニューと「次へ」を引っこめて、ヒーローのボタンを見せる
+  scrollHooks.push((y, vh) => document.documentElement.classList.toggle('at-hero', y < vh * 0.35));
   scrollHooks.push((y, vh) => dockTop?.classList.toggle('is-shown', y > vh * 0.6));
   // フッターに「先頭へもどる」があるので、見えている間は浮いている方を引っこめる
   const footerEl = document.querySelector('.site-footer');

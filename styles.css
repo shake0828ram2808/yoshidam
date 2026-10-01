@@ -2755,7 +2755,7 @@ code{
 ========================================================= */
 /* 日本語の見出しは約物を詰めて、引き締める */
 h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
-.hero-title{ letter-spacing: .04em; line-height: 1.22; }
+.hero-title{ letter-spacing: .04em; line-height: 1.18; font-size: clamp(2.5rem, 6.4vw, 4.6rem); }
 
 /* セクションの見出し: 番号 + 細い線、大きく太いタイトル、背景に大きな白抜きの番号 */
 .section-inner{ position: relative; }
@@ -2872,4 +2872,15 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
 @media (max-width: 760px){
   .project-card--calm .project-body > p:not(.status-badge){ font-size: .88rem; line-height: 1.75; }
   .project-card--calm .status-badge{ font-size: .7rem; padding: 4px 10px; }
+}
+/* スマホ: 最初の画面に「つくったものを見る」まで収める */
+@media (max-width: 560px){
+  .hero{ padding-top: calc(var(--header-h) + 28px); justify-content: flex-start; }
+  .hero-title{ font-size: clamp(2.3rem, 10.5vw, 2.9rem); margin-bottom: 20px; }
+  .hero-lead{ font-size: .92rem; line-height: 1.85; }
+}
+/* ヒーローにいる間は、下のメニューと「次へ」を下に引っこめておく(スクロールしたら ふわっと出る) */
+@media (max-width: 900px){
+  html.at-hero .section-dock{ transform: translateY(140%); opacity: 0; pointer-events: none; }
+  html.at-hero .dock-next{ opacity: 0; transform: translateY(10px) scale(.92); pointer-events: none; }
 }
