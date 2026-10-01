@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>よしだ | エンジニアポートフォリオ</title>
+<meta name="description" content="よしだのエンジニアポートフォリオ。実務での開発の工夫と、個人開発アプリの紹介。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<header class="site-header" id="siteHeader">
+  <a href="#hero" class="brand">よしだ</a>
+  <nav class="main-nav" id="mainNav">
+    <a href="#about">About</a>
+    <a href="#works">Works</a>
+    <a href="#projects">Projects</a>
+    <a href="#characters">Characters</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#notes">Notes</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="hero" class="hero">
+    <div class="hero-orb" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Web Engineer</p>
+      <h1 class="hero-title">
+        <span class="hero-line" style="--d:0">つくる理由は、</span>
+        <span class="hero-line" style="--d:1">いつも誰かの</span>
+        <span class="hero-line" style="--d:2">「ちょっと嬉しい」。</span>
+      </h1>
+      <p class="hero-lead">
+        業務ではモノレポ化やAI駆動開発に取り組みながら、<br class="br-pc">
+        休日は子どもと一緒に考えたゲームや学習アプリをつくっています。
+      </p>
+      <a href="#projects" class="hero-cta">つくったものを見る</a>
+    </div>
+    <a href="#about" class="scroll-hint" aria-label="下へスクロール"><span></span></a>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="section about">
+    <div class="section-inner">
+      <h2 class="section-title">About</h2>
+      <div class="about-grid">
+        <div class="about-photo">
+          <img src="assets/images/yoshida-avatar.jpg" alt="よしだのアイコン" loading="lazy">
+        </div>
+        <div class="about-body">
+          <p class="about-lead">
+            <!-- ▼ ここは実際のプロフィール文に差し替えてください -->
+            Webアプリケーションエンジニア。業務では既存プロダクトの開発基盤の改善や新しい開発フローの導入を担当。個人では「誰かの日常にちょっと寄り添うアプリ」をテーマに、子ども向けから健康管理まで幅広く作っています。
+          </p>
+        </div>
+      </div>
+
+      <ol class="timeline">
+        <!-- ▼ 経歴はダミーです。実際の年数・内容に差し替えてください -->
+        <li class="timeline-item">
+          <span class="timeline-year">2020</span>
+          <div class="timeline-content">
+            <h3>Web受託開発企業に入社</h3>
+            <p>フロントエンド・バックエンドの両面を担当し、複数のクライアントワークに従事。</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">2023</span>
+          <div class="timeline-content">
+            <h3>自社プロダクトチームへ異動</h3>
+            <p>開発基盤の整備を主導。リポジトリのモノレポ化、npmからpnpmへの移行などを実施。</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">2025</span>
+          <div class="timeline-content">
+            <h3>AI駆動開発の導入に挑戦</h3>
+            <p>Claude Codeを用いた開発フローをチームに提案・導入。並行して個人開発でも積極的に活用。</p>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <span class="timeline-year">現在</span>
+          <div class="timeline-content">
+            <h3>次のキャリアを模索中</h3>
+            <p>これまでの実務経験と個人開発の両方を活かせる環境を探しています。</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills" class="section skills">
+    <div class="section-inner">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <!-- ▼ スキルはダミーです。実際の技術スタックに差し替えてください -->
+        <div class="skill-group">
+          <h3>Frontend</h3>
+          <ul><li>TypeScript</li><li>React / Next.js</li><li>Vue.js</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Backend</h3>
+          <ul><li>Node.js</li><li>Go</li><li>REST API 設計</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Infra / Tooling</h3>
+          <ul><li>AWS</li><li>Docker</li><li>pnpm workspaces</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>AI-driven dev</h3>
+          <ul><li>Claude Code</li><li>プロンプト設計</li><li>エージェント運用フロー構築</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORKS (実務PR) ============ -->
+  <section id="works" class="section works">
+    <div class="section-inner">
+      <h2 class="section-title">Works</h2>
+      <p class="section-lead">業務の中で取り組んだ、開発体験を良くするための工夫です。</p>
+
+      <div class="works-list">
+        <article class="work-card">
+          <h3>マルチリポジトリからモノレポへ</h3>
+          <p>複数リポジトリに分散していたフロントエンド資産をモノレポ構成に統合。依存関係の一元管理とCIの共通化により、リリースサイクルを短縮しました。</p>
+          <a href="#" class="work-link">note記事を読む →</a>
+        </article>
+        <article class="work-card">
+          <h3>npm から pnpm への移行</h3>
+          <p>node_modulesの肥大化とインストール速度の課題を解消するため、pnpmへ移行。ワークスペース設計を見直し、CI実行時間を短縮しました。</p>
+          <a href="#" class="work-link">note記事を読む →</a>
+        </article>
+        <article class="work-card">
+          <h3>AI駆動開発への挑戦</h3>
+          <p>Claude Codeをチーム開発に取り入れ、設計レビューや実装の一部を任せるフローを構築。導入の壁と、実際に効果のあった使い方をまとめています。</p>
+          <a href="#" class="work-link">note記事を読む →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="section projects">
+    <div class="section-inner">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-lead">個人で企画から開発まで手がけたアプリです。</p>
+
+      <h3 class="projects-subhead projects-subhead--calm">じっくり向き合うアプリ</h3>
+      <div class="projects-row projects-row--calm">
+        <article class="project-card project-card--calm">
+          <div class="project-thumb">
+            <img src="assets/images/nemuhitsuji-sleeping.png" alt="頭痛手帳のイメージ" loading="lazy">
+          </div>
+          <div class="project-body">
+            <h4>頭痛手帳</h4>
+            <p>痛みと服薬を記録し、直近30日の服薬日数を管理できるアプリ。キャラクター「ねむひつじ」が寄り添います。</p>
+            <a href="https://zutsurun.shake0828ram.workers.dev/" class="project-link" target="_blank" rel="noopener">アプリを見る →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ポップトーンに切り替わるブロック -->
+    <div class="kids-zone">
+      <div class="section-inner">
+        <h3 class="projects-subhead projects-subhead--kids">子どもと楽しむアプリ</h3>
+        <div class="projects-row projects-row--kids">
+          <article class="project-card project-card--kids">
+            <div class="project-thumb project-thumb--kids">
+              <span class="kids-emoji" aria-hidden="true">🐛</span>
+            </div>
+            <div class="project-body">
+              <h4>だんごむしのぼうけん</h4>
+              <p>子どもと一緒に考えたストーリーをもとにした、だんごむしが主人公の冒険ゲーム。</p>
+              <a href="https://nigerun.shake0828ram.workers.dev/" class="project-link project-link--kids" target="_blank" rel="noopener">あそんでみる →</a>
+            </div>
+          </article>
+          <article class="project-card project-card--kids">
+            <div class="project-thumb project-thumb--kids">
+              <span class="kids-emoji" aria-hidden="true">🔢</span>
+            </div>
+            <div class="project-body">
+              <h4>ピコとけいさん1年生</h4>
+              <p>キャラクター「ピコ」と一緒に、たし算・ひき算を練習できる知育アプリ。</p>
+              <a href="https://tasurun.shake0828ram.workers.dev/" class="project-link project-link--kids" target="_blank" rel="noopener">あそんでみる →</a>
+            </div>
+          </article>
+          <article class="project-card project-card--kids">
+            <div class="project-thumb project-thumb--kids">
+              <span class="kids-emoji" aria-hidden="true">✨</span>
+            </div>
+            <div class="project-body">
+              <h4>Claude Codeで作った学習アプリ</h4>
+              <p>スマホひとつで、思いついたその場でコードを書く「バイブコーディング」で開発した学習アプリ。</p>
+              <a href="#" class="project-link project-link--kids">詳しくはnoteで →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHARACTERS ============ -->
+  <section id="characters" class="section characters">
+    <div class="section-inner">
+      <h2 class="section-title">Characters</h2>
+      <p class="section-lead">アプリに登場するキャラクターたちです。</p>
+
+      <div class="character-list">
+        <article class="character-card">
+          <div class="character-visual character-visual--piko">
+            <span class="kids-emoji kids-emoji--lg" aria-hidden="true">🟢</span>
+          </div>
+          <h3>ピコ</h3>
+          <p>「ピコとけいさん1年生」のガイド役。SVGアニメーションで動くキャラクターで、黄緑・水色・ピンクの仲間もいます。</p>
+        </article>
+
+        <article class="character-card">
+          <div class="character-visual character-visual--dango">
+            <span class="kids-emoji kids-emoji--lg" aria-hidden="true">🐛</span>
+          </div>
+          <h3>だんごむし</h3>
+          <p>「だんごむしのぼうけん」の主人公。丸まったり歩いたり、子どもと一緒に考えた動きで冒険します。</p>
+        </article>
+
+        <article class="character-card character-card--nemu">
+          <div class="character-visual">
+            <img id="nemuImage" src="assets/images/nemuhitsuji-sitting.png" alt="ねむひつじ" loading="lazy">
+          </div>
+          <h3>ねむひつじ</h3>
+          <p>「頭痛手帳」に登場する、赤いスカーフの女の子と青いスカーフの男の子。気分に合わせて切り替えて使えます。</p>
+          <div class="nemu-toggle" role="group" aria-label="ねむひつじの性別切り替え">
+            <button type="button" class="nemu-btn is-active" data-scarf="red">女の子</button>
+            <button type="button" class="nemu-btn" data-scarf="blue">男の子</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section id="certifications" class="section certifications">
+    <div class="section-inner">
+      <h2 class="section-title">Certifications</h2>
+      <!-- ▼ 資格はダミーです。実際の取得状況に差し替えてください -->
+      <div class="cert-list">
+        <div class="cert-badge">
+          <h3>AWS Certified Solutions Architect – Associate</h3>
+          <p>取得年:2025</p>
+          <a href="#" class="work-link">受験レポを読む →</a>
+        </div>
+        <div class="cert-badge">
+          <h3>AWS Certified Developer – Associate</h3>
+          <p>学習中</p>
+          <a href="#" class="work-link">受験レポを読む →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NOTES ============ -->
+  <section id="notes" class="section notes">
+    <div class="section-inner">
+      <h2 class="section-title">Notes</h2>
+      <p class="section-lead">開発の工夫やキャリアについて、noteで書いています。</p>
+      <div class="notes-list">
+        <!-- ▼ 記事リンクはダミーです。公開後に差し替えてください -->
+        <a href="#" class="note-card">
+          <h3>モノレポ移行で変わった、チームの開発体験</h3>
+          <p>複数リポジトリの分断をどう解消したか</p>
+        </a>
+        <a href="#" class="note-card">
+          <h3>npmからpnpmへ。移行の記録</h3>
+          <p>手順・ハマった点・効果測定まで</p>
+        </a>
+        <a href="#" class="note-card">
+          <h3>AI駆動開発、はじめの一歩</h3>
+          <p>チームにClaude Codeを導入して分かったこと</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" class="section contact">
+    <div class="section-inner">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-lead">お気軽にご連絡ください。</p>
+      <div class="contact-links">
+        <a href="https://x.com/pik0389" class="contact-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>@pik0389</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2026 よしだ</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
