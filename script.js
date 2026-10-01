@@ -372,6 +372,25 @@ if (eggStage) {
   }, { threshold: 0.5 }).observe(eggButton);
 }
 
+// ほかの色のたまご: 育たず、ばらばらのタイミングで ゆらゆら揺れるだけ
+{
+  const others = [...document.querySelectorAll('.egg-other')];
+  if (others.length && !reduceMotion) {
+    const wobble = egg => {
+      egg.style.setProperty('--amp', `${6 + Math.random() * 10}deg`);
+      egg.style.setProperty('--dur', `${0.7 + Math.random() * 0.6}s`);
+      egg.classList.remove('is-wobble');
+      void egg.offsetWidth;
+      egg.classList.add('is-wobble');
+      setTimeout(() => wobble(egg), 1500 + Math.random() * 4000);
+    };
+    others.forEach(egg => {
+      egg.addEventListener('animationend', () => egg.classList.remove('is-wobble'));
+      setTimeout(() => wobble(egg), Math.random() * 3000);
+    });
+  }
+}
+
 // スマホの Cast: 前後ボタン・ドット・枚数で、左右に動かせることを見せる
 const castList = document.getElementById('castList');
 const castPager = document.getElementById('castPager');

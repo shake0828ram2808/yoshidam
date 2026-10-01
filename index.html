@@ -168,14 +168,6 @@
             <p>教科や商品ごとに約20種類に増えていたプログラムを、1つのSPAとして再設計してAWSへ移行。動画だけでなく音声・PDF・外部リンクもまとめて見られる「コンテンツハブ」に一新。</p>
             <ul class="tl-results"><li>約20種 → 1つのSPA</li><li>リリース1年で7万人以上が利用</li></ul>
             <ul class="tl-tags"><li>Vue.js</li><li>JavaScript</li><li>jQuery</li><li>HTML/CSS</li><li>Express</li><li>AWS</li><li>Backlog</li><li>Teams</li></ul>
-            <details class="case-more tl-more">
-              <summary>背景・実施・成果を読む</summary>
-              <dl class="tl-detail">
-                <dt>背景</dt><dd>自社サーバー上の動画閲覧サービスは、教科や商品ごとにプログラムが複製・加工され、約20種類に膨れ上がっていた。コードの保守や機能追加の負荷が高かった。</dd>
-                <dt>実施</dt><dd>約20種のプログラムを1つのSPAとして再設計・開発し、AWS環境へマイグレーション。現場のニーズに応え、動画だけでなく音声・PDF・外部リンクなどを一元的に再生・閲覧できる基盤へ改修。原稿フォーマットの統一とQRコードの一本化を実施。対応教材が急増したため、原稿データの取り込みから検証・本番反映までを定期的に行う自動運用の仕組みを構築・運用。</dd>
-                <dt>成果</dt><dd>統合によって運用保守性が大きく向上。データ反映の自動化で社内の業務効率を大幅に改善。乱立していたアクセス先(QRコード)を1つに集約し、サービスのブランド力と利用者の利便性を向上。リリースから1年で7万人以上が利用する主要プロダクトに成長。</dd>
-              </dl>
-            </details>
           </div>
         </li>
         <li class="timeline-item">
@@ -185,14 +177,6 @@
             <p>既存のプリント作成サービスの問題データから、Googleフォームのテストを自動で作れるWebサービスを設計・開発。特定の教科に依存しない「教科共通システム」としてAWS上に構築。</p>
             <ul class="tl-results"><li>1年で約5,000人・延べ1万回以上の利用</li></ul>
             <ul class="tl-tags"><li>TypeScript</li><li>Vue.js</li><li>Vite</li><li>Node.js</li><li>Bootstrap</li><li>AWS Lambda</li><li>S3</li><li>Google Cloud Functions</li></ul>
-            <details class="case-more tl-more">
-              <summary>背景・実施・成果を読む</summary>
-              <dl class="tl-detail">
-                <dt>背景</dt><dd>既存のプリント作成サービスが持つ問題データを活用し、現場のニーズに応える新しいオンラインテスト作成機能を提供する企画が上がった。</dd>
-                <dt>実施</dt><dd>既存の問題データからGoogleフォームのテストを自動生成できるWebサービスを設計・開発・リリース。将来プリント作成サービスの統合先になる基盤を見据え、特定の教科に依存しない「教科共通システム」としてAWS上にアーキテクチャを設計・構築。</dd>
-                <dt>成果</dt><dd>自社サーバーへのアクセス負荷を軽減し、運用・保守コストを大幅に削減。リリースから1年でユーザー数5,000人弱、延べ1万回以上利用される主力プロダクトに成長。</dd>
-              </dl>
-            </details>
           </div>
         </li>
         <li class="timeline-item">
@@ -202,14 +186,6 @@
             <p>教科ごとに8つ乱立していた類似サービスを、企画編集8名と要件をすり合わせながら、全教科で共通に使えるシステムとしてAWS上に統合・再設計。</p>
             <ul class="tl-results"><li>8サービス → 1つに統合</li><li>16,000人以上の基盤をトラブルなく移行</li></ul>
             <ul class="tl-tags"><li>TypeScript</li><li>Vue.js</li><li>Vite</li><li>C#</li><li>Express</li><li>AWS Lambda</li><li>S3</li><li>CloudFront</li><li>IIS</li><li>Figma</li></ul>
-            <details class="case-more tl-more">
-              <summary>背景・実施・成果を読む</summary>
-              <dl class="tl-detail">
-                <dt>背景</dt><dd>教科ごとに8つの類似サービスが自社サーバー上で乱立し、保守の負荷とインフラへの依存が課題になっていた。</dd>
-                <dt>実施</dt><dd>企画編集8名と要件をすり合わせ、AWS上で全教科が共通に利用できるシステムへ統合・再設計。</dd>
-                <dt>成果</dt><dd>ユーザー数16,000人以上の基盤を、トラブルなくAWSへ移行。物理サーバーへの依存から脱却し、運用保守コストを削減。教科間でUIを統一して一貫した体験を提供し、新機能を全教科へ一括で展開できるように。</dd>
-              </dl>
-            </details>
           </div>
         </li>
         <li class="timeline-item">
@@ -227,14 +203,6 @@
             <p>小学校の先生向けWeb投影教材を、TypeScript × Vue.js で再開発・統合。Claude Code などを使ったAI駆動開発で進め、その手順をレガシーマイグレーションの手順書にまとめて社内に共有。勉強会も開催し、個人開発でも積極的に活用。</p>
             <ul class="tl-results"><li>5つのサービス → 1つのモダン環境</li></ul>
             <ul class="tl-tags"><li>TypeScript</li><li>Vue.js</li><li>Bootstrap</li><li>Vitest</li><li>Playwright</li><li>S3</li><li>CloudFront</li><li>CloudWatch</li><li>Figma</li><li>Claude Code</li><li>GitHub Copilot</li></ul>
-            <details class="case-more tl-more">
-              <summary>背景・実施・成果を読む</summary>
-              <dl class="tl-detail">
-                <dt>背景</dt><dd>古くなった4つのプロジェクト(と別リポジトリにある派生プロジェクト)が、レガシー技術への依存で保守性・拡張性の限界に達し、運用の負荷が課題になっていた。</dd>
-                <dt>実施</dt><dd>TypeScript × Vue.js で再開発と統合を推進。jQuery 依存からの脱却、UIフレームワークの最新化、型安全性の確保、テストの自動化、共通処理の整理を網羅的に実施。生成AIツールを使ったAI駆動開発で、開発のスピードと品質を高めた。計画の手順は、汎用的なレガシーマイグレーションの手順書として磨き込み、社内に共有中。</dd>
-                <dt>成果</dt><dd>5つの個別サービスを1つのモダンな環境へ集約し、保守性と開発体験を大きく向上。実践的な手順書を整え、組織全体の技術の標準化とナレッジの底上げに貢献。</dd>
-              </dl>
-            </details>
           </div>
         </li>
       </ol>
@@ -249,7 +217,7 @@
       <div class="skills-grid" data-fold="技術スタックを見る">
         <div class="skill-group">
           <h3>Frontend</h3>
-          <ul><li>TypeScript</li><li>JavaScript</li><li>Vue.js</li><li>jQuery</li><li>HTML/CSS</li><li>Bootstrap</li><li>Vite</li></ul>
+          <ul><li>TypeScript</li><li>JavaScript</li><li>Vue.js</li><li>jQuery</li><li>HTML/CSS</li><li>Bootstrap</li><li>Vite</li><li>React<span class="skill-indie" aria-label="個人開発で使用">*</span></li><li>Tailwind CSS<span class="skill-indie" aria-label="個人開発で使用">*</span></li></ul>
         </div>
         <div class="skill-group">
           <h3>Backend</h3>
@@ -257,7 +225,7 @@
         </div>
         <div class="skill-group">
           <h3>Cloud</h3>
-          <ul><li>AWS(S3・CloudFront・Lambda・CloudWatch)</li><li>Google Cloud(Cloud Functions)</li><li>Cloudflare Workers</li></ul>
+          <ul><li>AWS(S3・CloudFront・Lambda・CloudWatch)</li><li>Google Cloud(Cloud Functions)</li><li>Cloudflare Workers<span class="skill-indie" aria-label="個人開発で使用">*</span></li></ul>
         </div>
         <div class="skill-group">
           <h3>Test / Tools</h3>
@@ -268,10 +236,11 @@
           <ul><li>Claude Code</li><li>GitHub Copilot</li><li>AI駆動開発の手順化</li><li>社内勉強会の開催</li></ul>
         </div>
         <div class="skill-group">
-          <h3>Indie apps</h3>
-          <ul><li>React</li><li>Capacitor(iOSアプリ化)</li><li>Tailwind CSS</li><li>WebAudio・SVGアニメ</li></ul>
+          <h3>Mobile / Media</h3>
+          <ul><li>Capacitor(iOSアプリ化)<span class="skill-indie" aria-label="個人開発で使用">*</span></li><li>WebAudio<span class="skill-indie" aria-label="個人開発で使用">*</span></li><li>SVGアニメーション<span class="skill-indie" aria-label="個人開発で使用">*</span></li></ul>
         </div>
       </div>
+      <p class="skills-note"><span class="skill-indie">*</span> は個人開発で使っている技術です。</p>
     </div>
   </section>
 
@@ -661,6 +630,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
           </button>
           <h3>たまご</h3>
           <p>「ピコとくく」で育てる、緑のたまご。九九の「れんしゅう」で段をクリアするたびに、ひびが入って生まれ、少しずつ大きくなっていきます。</p>
+          <div class="egg-others" aria-label="ほかの色のたまご"><img class="egg-other" src="assets/images/characters/egg/egg_pink_intact.png" alt="ピンクのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_blue_intact.png" alt="あおのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_purple_intact.png" alt="むらさきのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_orange_intact.png" alt="オレンジのたまご" loading="lazy"><img class="egg-other" src="assets/images/characters/egg/egg_silver_intact.png" alt="ぎんのたまご" loading="lazy"></div>
           <div class="egg-progress">
             <ol class="egg-dots" aria-hidden="true"><li data-step="0" title="たまご"></li><li data-step="1" title="ひびが入る"></li><li data-step="2" title="もう少し"></li><li data-step="3" title="うまれる!"></li><li data-step="4" title="うまれたて"></li><li data-step="5" title="あかちゃん"></li><li data-step="6" title="こども"></li><li data-step="7" title="おとな"></li></ol>
             <p class="egg-label" id="eggLabel" aria-live="polite">たまご</p>

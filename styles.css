@@ -2656,28 +2656,30 @@ code{
   rotate: 45deg;
   background: var(--moon);
 }
-.tl-more{ margin: 12px 0 0; border-top: none; padding-top: 0; }
-.tl-more summary{ font-size: .8rem; color: var(--text-muted); }
-.tl-detail{
-  display:grid; grid-template-columns: auto 1fr; gap: 6px 12px;
-  margin: 10px 0 0 28px;
-  font-size: .84rem;
-  line-height: 1.75;
-}
-.tl-detail dt{
-  font-size: .72rem; font-weight: 700;
-  padding: 2px 8px; height: fit-content;
-  border-radius: 6px;
-  background: var(--bg-elevated-2);
-  color: var(--accent);
-}
-.tl-detail dd{ margin: 0; color: var(--text-muted); }
-@media (max-width: 600px){
-  .tl-detail{ grid-template-columns: 1fr; margin-left: 0; }
-  .tl-detail dt{ width: fit-content; }
-}
-
 /* スキルは6つのまとまり。PCは3列 */
 .skills-grid{ grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 800px){ .skills-grid{ grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px){ .skills-grid{ grid-template-columns: 1fr; } }
+
+/* Skills: 個人開発で使っている技術の印 */
+.skill-indie{ color: var(--moon); margin-left: 2px; font-weight: 700; }
+.skills-note{ margin: 14px 0 0; font-size: .78rem; color: var(--text-muted); }
+
+/* たまご: みどり以外のたまごは育たず、ときどき ゆらゆら揺れるだけ(JSで .is-wobble をランダムに付ける) */
+.egg-others{
+  display:flex; justify-content:center; align-items:flex-end; gap: 10px;
+  margin-top: 14px;
+}
+.egg-other{
+  width: 30px; height: auto;
+  transform-origin: 50% 90%;
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,.25));
+}
+.egg-other.is-wobble{ animation: egg-other-wobble var(--dur, .9s) ease-in-out; }
+@keyframes egg-other-wobble{
+  0%,100%{ transform: rotate(0); }
+  20%{ transform: rotate(calc(var(--amp, 10deg) * -1)); }
+  45%{ transform: rotate(var(--amp, 10deg)); }
+  70%{ transform: rotate(calc(var(--amp, 10deg) * -.5)); }
+  85%{ transform: rotate(calc(var(--amp, 10deg) * .3)); }
+}
