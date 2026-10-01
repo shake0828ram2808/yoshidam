@@ -32,10 +32,11 @@
 - 数字(ヒーローの実績・Works の Before/After)は、本番でも小さく「仮」と表示されます。
   実際の値に差し替えたら、その要素の `data-todo` を消してください。
 
-## 公開前にやること
+## 公開先
 
-- `index.html` の `og:url` と `og:image` を、公開URLの絶対パス(`https://〜`)に差し替える
-- `404.html` はサイトのルートに置かれる前提で `/assets/...` を参照しています
+- GitHub Pages: https://shake0828ram2808.github.io/yoshidam/
+- `index.html` の `og:url` と `og:image` は、この公開URLの絶対パスで書いています(URLが変わったら差し替える)
+- `404.html` は `/yoshidam/assets/...` を参照しています(公開先のパスが変わったら合わせる)
 
 ## 遊びの要素(game.js)
 
