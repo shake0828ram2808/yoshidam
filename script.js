@@ -1108,6 +1108,11 @@ if (dock) {
   // 「先頭へ」は、少しスクロールしたら左下に いつも出しておく
   const dockTop = document.getElementById('dockTop');
   scrollHooks.push((y, vh) => dockTop?.classList.toggle('is-shown', y > vh * 0.6));
+  // フッターに「先頭へもどる」があるので、見えている間は浮いている方を引っこめる
+  const footerEl = document.querySelector('.site-footer');
+  if (dockTop && footerEl && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => dockTop.classList.toggle('is-footer', e.isIntersecting)).observe(footerEl);
+  }
   dockTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
   dockNext.addEventListener('click', () => {
     const idx = sections.findIndex(s => s.id === currentId);

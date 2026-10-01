@@ -2825,3 +2825,51 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   opacity: .06;
   pointer-events: none;
 }
+
+/* =========================================================
+   磨き込み(2): Contact を「最後の主役」に
+========================================================= */
+.contact .section-lead{ margin-bottom: 36px; }
+.contact-links{ margin-bottom: 56px; }
+.contact-link{
+  gap: 16px;
+  padding: 16px 18px 16px 28px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), #e8a27e);
+  color: #1d1a17;
+  font-weight: 700;
+  box-shadow: 0 14px 40px -14px rgba(201,123,99,.7);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.contact-link:hover{ color: #1d1a17; background: linear-gradient(135deg, var(--accent), #e8a27e); box-shadow: 0 20px 50px -14px rgba(201,123,99,.85); }
+.contact-link-text{ display:flex; flex-direction:column; align-items:flex-start; line-height: 1.2; font-size: 1.15rem; letter-spacing: .02em; }
+.contact-link-text small{ font-size: .7rem; font-weight: 500; letter-spacing: .08em; opacity: .72; margin-bottom: 3px; }
+.contact-link-arrow{
+  display:grid; place-items:center;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(29,26,23,.14);
+  font-size: 1.05rem;
+  transition: transform .35s var(--ease);
+}
+.contact-link:hover .contact-link-arrow{ transform: translateX(4px) rotate(-45deg); }
+/* どんぐりの記録は、連絡先のあとの「おまけ」として少し控えめに */
+.contact .quest-result{ margin-bottom: 0; }
+
+/* スマホ: About の小見出しは、セクション見出しと同じく左にそろえる */
+@media (max-width: 760px){
+  /* 写真と小見出しを横に並べて、間延びさせない */
+  .about-grid{ grid-template-columns: 92px 1fr; gap: 20px; justify-items: start; text-align: left; }
+  .about-photo img{ width: 92px; height: 92px; box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--line); }
+  .about-grid .about-body{ width: 100%; }
+}
+/* フッターの「先頭へもどる」が見えているあいだは、浮いている「先頭へ」を隠す(重複させない) */
+.dock-top.is-shown.is-footer{ opacity: 0; pointer-events: none; transform: translateY(8px); }
+/* スマホ: 数行にわたるリード文は、中央寄せだと行頭がそろわず読みにくいので左寄せ */
+@media (max-width: 560px){
+  .hero-lead{ text-align: left; font-size: .98rem; }
+}
+/* スマホ: アプリカードの説明は、細い列でも読みやすい大きさに */
+@media (max-width: 760px){
+  .project-card--calm .project-body > p:not(.status-badge){ font-size: .88rem; line-height: 1.75; }
+  .project-card--calm .status-badge{ font-size: .7rem; padding: 4px 10px; }
+}
