@@ -2683,3 +2683,20 @@ code{
   70%{ transform: rotate(calc(var(--amp, 10deg) * -.5)); }
   85%{ transform: rotate(calc(var(--amp, 10deg) * .3)); }
 }
+
+/* ほかの色のたまごは、カードの下の空いたところを埋めるように大きめに並べる */
+.character-card--egg{ display:flex; flex-direction: column; }
+.character-card--egg .egg-others{
+  flex: 1;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 12px 16px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line-strong);
+}
+.character-card--egg .egg-other{ width: 46px; }
+@media (max-width: 760px){
+  .character-card--egg .egg-others{ gap: 14px 20px; }
+  .character-card--egg .egg-other{ width: 54px; }
+}
