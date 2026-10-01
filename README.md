@@ -62,7 +62,7 @@
 
 ## メニューの構成
 
-About・Apps・Focus・Cast・Certs・Notes・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。
+About・Certs・Apps・Focus・Cast・Notes・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。
 - About は、ヒーロー・経歴(`#about`)・スキル(`#skills`)のまとまり。経歴とスキルの section には `data-group="hero"` を付け、
   メニューでは About の一部として扱う。
 - Works(業務での工夫)は note の記事を書いてから戻す予定。HTML は git の履歴(コミット 08ff222 まで)に残っている。

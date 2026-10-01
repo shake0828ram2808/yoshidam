@@ -476,9 +476,9 @@ if (castList && castPager) {
 // =========================================================
 // ページ内の目印ごとの「時間の進み具合(0〜1)」
 const SKY_ANCHORS = [
-  ['hero', 0], ['about', 0.16], ['skills', 0.32],
-  ['projects', 0.56], ['kidsZone', 0.70], ['craft', 0.76], ['characters', 0.83],
-  ['certifications', 0.90], ['notes', 0.95], ['contact', 1],
+  ['hero', 0], ['about', 0.16], ['skills', 0.30], ['certifications', 0.38],
+  ['projects', 0.56], ['kidsZone', 0.70], ['craft', 0.78], ['characters', 0.86],
+  ['notes', 0.95], ['contact', 1],
 ];
 // 時間の進み具合ごとの空の色。文字が読めるよう、どれも暗めにしてある
 const SKY_KEYS = [
