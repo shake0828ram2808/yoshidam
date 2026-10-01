@@ -20,6 +20,7 @@ const ACHIEVEMENTS = [
   { id: 'explorer',  icon: '🧭', name: 'ぜんぶ見た',         desc: 'すべてのセクションを訪れた' },
   { id: 'acorn1',    icon: '🌰', name: 'はじめての どんぐり', desc: 'かくれた どんぐりを1つ見つけた' },
   { id: 'acorn5',    icon: '👑', name: 'どんぐりマスター',   desc: 'どんぐりを5つ全部見つけた' },
+  { id: 'wish',      icon: '🌠', name: 'ねがいごと',         desc: '流れ星が流れている間に、画面をタップした', secret: true },
   { id: 'konami',    icon: '🕹️', name: 'ひみつのコマンド',   desc: '↑↑↓↓←→←→BA', secret: true },
 ];
 const ACORN_IDS = ['hero', 'skills', 'kids', 'focus', 'notes'];
@@ -297,6 +298,9 @@ document.querySelectorAll('.nemu-btn').forEach(b => b.addEventListener('click', 
     if (step === 7 && pokedToAdult >= 3) unlock('egg'); // 少なくとも何回かは自分で育てた
   });
 }
+
+// 流れ星が流れている間にタップしたら、ひみつの実績(script.js の meteorActive を見る)
+document.addEventListener('pointerdown', () => { if (typeof meteorActive !== 'undefined' && meteorActive) unlock('wish'); });
 
 // ひみつのコマンド ↑↑↓↓←→←→BA
 {

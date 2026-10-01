@@ -638,6 +638,74 @@ scrollHooks.push((y, vh) => {
 });
 
 // =========================================================
+// 流れ星: 星が見えている夜の間だけ、ときどき流れる
+// (「ピコとくく」の せいちょう画面と同じ描き方: 白→あたたかい色の尾と、先の光る玉)
+// =========================================================
+const meteorCanvas = document.getElementById('skyMeteor');
+const METEOR_MIN_GAP = 6000;   // 次の流れ星までの間隔(ミリ秒)
+const METEOR_MAX_GAP = 14000;
+const METEOR_NIGHT = 0.45;     // 星の見え方(--stars)がこれ以上のときだけ流す
+let meteorActive = false;
+if (meteorCanvas && !reduceMotion) {
+  const ctx2d = meteorCanvas.getContext('2d');
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const fit = () => {
+    meteorCanvas.width = Math.round(window.innerWidth * dpr);
+    meteorCanvas.height = Math.round(window.innerHeight * dpr);
+    ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  fit();
+  window.addEventListener('resize', fit);
+
+  const launch = () => {
+    const W = window.innerWidth, H = window.innerHeight;
+    const night = parseFloat(sky.style.getPropertyValue('--stars') || '1');
+    if (document.hidden || night < METEOR_NIGHT) return schedule();
+    const angle = Math.PI / 5 + Math.random() * Math.PI / 7;
+    const m = {
+      x0: Math.random() * W * 0.65,
+      y0: H * 0.02 + Math.random() * H * 0.28,
+      angle,
+      speed: (W * 0.55 + Math.random() * W * 0.25) / 1000,
+      tail: Math.max(70, W * 0.10 + Math.random() * W * 0.07),
+      dur: 650 + Math.random() * 400,
+      born: performance.now(),
+    };
+    meteorActive = true;
+    const draw = now => {
+      const age = now - m.born;
+      ctx2d.clearRect(0, 0, W, H);
+      if (age >= m.dur) { meteorActive = false; return schedule(); }
+      const alpha = Math.sin((age / m.dur) * Math.PI);
+      const dist = m.speed * age;
+      const sx = m.x0 + Math.cos(m.angle) * dist;
+      const sy = m.y0 + Math.sin(m.angle) * dist;
+      const tx = sx - Math.cos(m.angle) * m.tail;
+      const ty = sy - Math.sin(m.angle) * m.tail;
+      const grad = ctx2d.createLinearGradient(tx, ty, sx, sy);
+      grad.addColorStop(0, 'rgba(255,255,255,0)');
+      grad.addColorStop(0.6, `rgba(255,245,210,${(alpha * 0.55).toFixed(2)})`);
+      grad.addColorStop(1, `rgba(255,255,255,${alpha.toFixed(2)})`);
+      ctx2d.beginPath();
+      ctx2d.moveTo(tx, ty);
+      ctx2d.lineTo(sx, sy);
+      ctx2d.strokeStyle = grad;
+      ctx2d.lineWidth = 1.8;
+      ctx2d.lineCap = 'round';
+      ctx2d.stroke();
+      ctx2d.beginPath();
+      ctx2d.arc(sx, sy, 1.5 + alpha * 1.5, 0, Math.PI * 2);
+      ctx2d.fillStyle = `rgba(255,255,255,${alpha.toFixed(2)})`;
+      ctx2d.fill();
+      requestAnimationFrame(draw);
+    };
+    requestAnimationFrame(draw);
+  };
+  const schedule = () => setTimeout(launch, METEOR_MIN_GAP + Math.random() * (METEOR_MAX_GAP - METEOR_MIN_GAP));
+  setTimeout(launch, 3000); // 最初は3秒後
+}
+
+// =========================================================
 // 見出しを1文字ずつ出す
 // =========================================================
 document.querySelectorAll('.section-title, [data-split]').forEach(el => {

@@ -37,6 +37,8 @@
 <div class="sky" id="sky" aria-hidden="true">
   <div class="sky-glow"></div>
   <div class="sky-stars" id="skyStars"></div>
+  <!-- 流れ星(夜の間だけ、ときどき) -->
+  <canvas class="sky-meteor" id="skyMeteor"></canvas>
   <!-- 月と太陽は別々に動かす(入れ替わりで位置が飛ばないように) -->
   <div class="sky-body sky-body--moon" id="skyMoon">
     <svg class="sky-moon" viewBox="0 0 100 100"><defs><radialGradient id="moonGrad" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#FFF4CF"/><stop offset="100%" stop-color="#F3D27A"/></radialGradient></defs><path d="M62 10a42 42 0 1 0 28 62A34 34 0 0 1 62 10z" fill="url(#moonGrad)"/></svg>
