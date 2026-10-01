@@ -229,23 +229,49 @@ html.show-todo [data-todo]::before{
 
 @media (max-width: 900px){
   .nav-toggle{ display:flex; }
+  /* スマホのメニューは画面いっぱい。項目が上から順に すっと出てくる */
   .main-nav{
     position:fixed;
-    inset: var(--header-h) 0 auto 0;
+    left: 0; right: 0; top: var(--header-h);
+    height: calc(100svh - var(--header-h));
     flex-direction: column;
+    justify-content: center;
     gap: 0;
-    background: rgba(28,26,23,0.97);
-    padding: 8px 28px 20px;
-    border-bottom: 1px solid var(--line);
-    transform: translateY(-8px);
+    background: rgba(20,19,26,0.97);
+    padding: 24px 32px 64px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .3s var(--ease), transform .3s var(--ease);
+    transition: opacity .35s var(--ease);
   }
-  .main-nav.is-open{ opacity: 1; transform: none; pointer-events: auto; }
-  .main-nav a{ padding: 12px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .main-nav.is-open{ opacity: 1; pointer-events: auto; }
+  .main-nav a{
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .4s var(--ease), transform .5s var(--ease), color .25s;
+  }
+  .main-nav.is-open a{ opacity: 1; transform: none; }
+  .main-nav.is-open a:nth-child(1){ transition-delay: 60ms; }
+  .main-nav.is-open a:nth-child(2){ transition-delay: 105ms; }
+  .main-nav.is-open a:nth-child(3){ transition-delay: 150ms; }
+  .main-nav.is-open a:nth-child(4){ transition-delay: 195ms; }
+  .main-nav.is-open a:nth-child(5){ transition-delay: 240ms; }
+  .main-nav.is-open a:nth-child(6){ transition-delay: 285ms; }
+  .main-nav.is-open a:nth-child(7){ transition-delay: 330ms; }
+  .main-nav.is-open a:nth-child(8){ transition-delay: 375ms; }
+  .main-nav a.is-current{ color: var(--accent); }
   .nav-indicator{ display:none; }
 }
+html.nav-open{ overflow: hidden; }
+
+/* 下へ読んでいる間はヘッダーを引っこめる */
+.site-header.is-hidden{ transform: translateY(-100%); }
+.site-header.is-hidden .scroll-progress{ transform: translateY(1px); } /* 読んだ量のバーだけは画面の上端に残す */
 
 /* =========================================================
    右端の現在地ドット
@@ -1001,26 +1027,6 @@ button.character-visual{ cursor: pointer; transition: transform .3s var(--ease-b
 button.character-visual:hover{ transform: scale(1.05); }
 button.character-visual:active{ transform: scale(.95); }
 
-.character-visual--piko{ background: radial-gradient(circle at 50% 40%, #EAF4FF, var(--kids-sky)); overflow: visible; }
-.piko{ animation: piko-float 3.2s ease-in-out infinite; overflow: visible; }
-@keyframes piko-float{
-  0%,100%{ transform: translateY(0); }
-  50%{ transform: translateY(-5px); }
-}
-.piko-bang{ display:none; }
-.piko.is-surprised .piko-hatena{ display:none; }
-.piko.is-surprised .piko-bang{ display:inline; }
-.piko.is-boing{ animation: piko-boing .65s ease-in-out; transform-origin: 50% 92%; }
-@keyframes piko-boing{
-  0%  { transform: scale(1,1); }
-  18% { transform: scale(.75,1.48); }
-  38% { transform: scale(1.18,.8); }
-  55% { transform: scale(.9,1.14); }
-  72% { transform: scale(1.06,.94); }
-  88% { transform: scale(.98,1.03); }
-  100%{ transform: scale(1,1); }
-}
-
 .character-visual--dango{ background: radial-gradient(circle at 50% 40%, #FFF3D0, var(--kids-yellow)); }
 .dango-img{
   position:absolute;
@@ -1217,21 +1223,21 @@ button.character-visual:active{ transform: scale(.95); }
   width: 84px; height: 84px;
   margin: -42px 0 0 -42px;
   will-change: transform;
+  backface-visibility: hidden;
 }
 .sky-moon, .sky-sun{
   position:absolute; inset: 0;
   width: 100%; height: 100%;
-  transition: opacity .8s var(--ease);
 }
 .sky-moon{ filter: drop-shadow(0 0 22px rgba(243,210,122,.45)); opacity: .85; }
 .sky-sun{
   border-radius: 50%;
   background: radial-gradient(circle at 45% 40%, #FFF3C4, #F6C36A 60%, #EE9C55);
   box-shadow: 0 0 60px 18px rgba(246,195,106,.35), 0 0 140px 50px rgba(246,195,106,.14);
-  opacity: 0;
+  opacity: .9;
 }
-.sky-body.is-sun .sky-moon{ opacity: 0; }
-.sky-body.is-sun .sky-sun{ opacity: .9; }
+/* 出番でないほうは、画面の外で見えなくしておく(JSで .is-off) */
+.sky-body.is-off{ visibility: hidden; }
 
 /* ヘッダーの時計 */
 .sky-clock{
@@ -1366,14 +1372,6 @@ button.character-visual:active{ transform: scale(.95); }
 /* =========================================================
    キャラクターの反応(追加)
 ========================================================= */
-/* ピコ: 視線と まばたき */
-.piko-look{ transition: transform .25s var(--ease); }
-.piko-eyes{ transform-box: fill-box; transform-origin: center; animation: piko-blink 4.6s infinite; }
-@keyframes piko-blink{
-  0%, 92%, 100%{ transform: scaleY(1); }
-  95%{ transform: scaleY(.1); }
-}
-
 /* ねむひつじ: Zzz がふわふわ上がる。さわると止まって起きる */
 .nemu-wrap{ position: relative; width: 132px; margin: 0 auto; }
 .nemu-zzz{
@@ -2043,3 +2041,98 @@ code{
 .project-card--calm + .project-card--calm{ margin-top: 24px; }
 .project-card--calm:nth-of-type(2) .phone{ transform: rotate(3deg); }
 .project-card--calm:nth-of-type(2):hover .phone{ transform: rotate(0) translateY(-6px); }
+
+/* =========================================================
+   ピコたち(3色)
+========================================================= */
+.piko-trio{
+  display:flex; align-items:flex-end; justify-content:center;
+  gap: 2px;
+  height: 132px;
+  margin: 0 auto 20px;
+}
+.piko-pal{
+  position: relative;
+  width: 64px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+/* 動かすのは中の絵だけ(ボタンの位置は動かさないので、押す場所がずれない) */
+.piko-body{
+  position: relative;
+  display:block;
+  transform-origin: 50% 100%;
+  animation: piko-idle 3.4s ease-in-out infinite;
+}
+.piko-pal--blue{ width: 76px; z-index: 1; order: 2; } /* まんなかの子は少し大きく */
+.piko-pal--blue .piko-body{ animation-delay: -.6s; }
+.piko-pal--pink{ order: 1; }
+.piko-pal--pink .piko-body{ animation-delay: -1.7s; }
+.piko-pal--green{ order: 3; }
+.piko-pal--green .piko-body{ animation-delay: -2.6s; }
+.piko-face{ display:block; width: 100%; height: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,.25)); }
+.piko-face--happy{ position:absolute; left:0; bottom:0; opacity: 0; }
+.piko-pal.is-happy .piko-face--happy{ opacity: 1; }
+.piko-pal.is-happy .piko-face--normal{ opacity: 0; }
+.piko-pal:hover{ filter: brightness(1.06); }
+.piko-pal:focus-visible{ outline-offset: 2px; border-radius: 50%; }
+@keyframes piko-idle{
+  0%,100%{ translate: 0 0; }
+  50%{ translate: 0 -4px; }
+}
+.piko-pal.is-hop .piko-body{ animation: piko-hop .7s cubic-bezier(.33,0,.66,1); }
+@keyframes piko-hop{
+  0%  { transform: scale(1,1) translateY(0); }
+  15% { transform: scale(1.18,.78) translateY(0); }
+  42% { transform: scale(.9,1.12) translateY(-30px); }
+  65% { transform: scale(1.2,.75) translateY(0); }
+  80% { transform: scale(.95,1.05) translateY(-8px); }
+  100%{ transform: scale(1,1) translateY(0); }
+}
+
+/* =========================================================
+   効果音ボタン・フッター
+========================================================= */
+.sound-toggle{
+  display:grid; place-items:center;
+  width: 34px; height: 34px;
+  margin-left: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color .3s, border-color .3s, background .3s;
+}
+.sound-toggle:hover{ color: var(--text); border-color: var(--line-strong); }
+.sound-toggle .sound-wave{ display:none; }
+.sound-toggle[aria-pressed="true"]{ color: var(--moon); border-color: rgba(243,210,122,.35); }
+.sound-toggle[aria-pressed="true"] .sound-wave{ display:inline; }
+.sound-toggle[aria-pressed="true"] .sound-off{ display:none; }
+@media (max-width: 900px){
+  .sound-toggle{ margin: 0 6px 0 0; }
+  .quest-chip{ margin-right: 6px; }
+}
+@media (max-width: 380px){
+  .sky-clock{ display:none; } /* とても狭い画面では時計を省く */
+}
+
+.site-footer{ display:flex; flex-direction: column; align-items:center; gap: 8px; padding-top: 44px; }
+.site-footer p{ margin: 0; }
+.footer-note{ font-size: .74rem; opacity: .8; }
+.to-top{
+  display:inline-flex; align-items:center; gap: 8px;
+  margin-bottom: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font-size: .82rem;
+  transition: border-color .3s, background .3s;
+}
+.to-top svg{ color: var(--moon); transition: transform .6s var(--ease-bounce); }
+.to-top:hover{ border-color: var(--moon); background: rgba(243,210,122,.06); }
+.to-top:hover svg{ transform: translateY(-4px) rotate(-20deg); }

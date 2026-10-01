@@ -19,6 +19,7 @@ const mainNav = document.getElementById('mainNav');
 
 function setNavOpen(isOpen) {
   mainNav.classList.toggle('is-open', isOpen);
+  document.documentElement.classList.toggle('nav-open', isOpen);
   navToggle.setAttribute('aria-expanded', String(isOpen));
   navToggle.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
 }
@@ -85,12 +86,19 @@ const timelineItems = timeline ? [...timeline.querySelectorAll('.timeline-item')
 const scrollHooks = [];
 
 let ticking = false;
+let lastHeaderY = 0;
 function onScroll() {
   const y = window.scrollY;
   const vh = window.innerHeight;
   const max = document.documentElement.scrollHeight - vh;
 
   header.classList.toggle('is-scrolled', y > 20);
+  // 下へ読み進めている間はヘッダーを隠し、少しでも上へ戻ったら出す(メニューを開いているときは隠さない)
+  if (Math.abs(y - lastHeaderY) > 6) {
+    const hide = y > lastHeaderY && y > vh * 0.8 && !mainNav.classList.contains('is-open');
+    header.classList.toggle('is-hidden', hide);
+    lastHeaderY = y;
+  }
   progress.style.setProperty('--p', max > 0 ? (y / max).toFixed(4) : 0);
 
   // 画面の上から 35% の位置にあるセクションを「現在地」にする
@@ -215,21 +223,26 @@ if (finePointer && !reduceMotion) {
 // キャラクター
 // =========================================================
 // ピコ: つつくと「？」が「！」になって、びよんと伸びる
+// ピコたち: つつくと にっこり顔になって ぴょんと跳ねる。となりの子も少し遅れて つられて跳ねる
 const pikoButton = document.getElementById('pikoButton');
-const piko = pikoButton && pikoButton.querySelector('.piko');
-if (piko) {
-  let pikoTimer;
-  pikoButton.addEventListener('click', () => {
-    piko.classList.remove('is-boing');
-    void piko.getBoundingClientRect(); // アニメを最初から再生しなおす
-    piko.classList.add('is-boing', 'is-surprised');
-    clearTimeout(pikoTimer);
-    pikoTimer = setTimeout(() => piko.classList.remove('is-surprised'), 1200);
-  });
-  piko.addEventListener('animationend', e => {
-    if (e.animationName === 'piko-boing') piko.classList.remove('is-boing');
-  });
+const pikoPals = pikoButton ? [...pikoButton.querySelectorAll('.piko-pal')] : [];
+function pikoHop(pal, happyMs) {
+  pal.classList.remove('is-hop');
+  void pal.offsetWidth; // アニメを最初から再生しなおす
+  pal.classList.add('is-hop', 'is-happy');
+  clearTimeout(pal._t);
+  pal._t = setTimeout(() => pal.classList.remove('is-happy'), happyMs);
 }
+pikoPals.forEach((pal, i) => {
+  pal.addEventListener('click', () => {
+    pikoHop(pal, 1400);
+    if (reduceMotion) return;
+    pikoPals.forEach((other, j) => {
+      if (other !== pal) setTimeout(() => pikoHop(other, 900), 160 * Math.abs(i - j));
+    });
+  });
+  pal.addEventListener('animationend', e => { if (e.animationName === 'piko-hop') pal.classList.remove('is-hop'); });
+});
 
 // だんごむし: つつくと丸まって、ころんと転がる。少したつと元に戻る
 const dangoButton = document.getElementById('dangoButton');
@@ -287,7 +300,8 @@ const SUN_FROM = 0.38;
 const SUN_TO = 0.86;
 
 const sky = document.getElementById('sky');
-const skyBody = document.getElementById('skyBody');
+const skyMoon = document.getElementById('skyMoon');
+const skySun = document.getElementById('skySun');
 const skyStars = document.getElementById('skyStars');
 const skyClockText = document.getElementById('skyClockText');
 const skyClockIcon = document.getElementById('skyClockIcon');
@@ -317,12 +331,23 @@ const mixHex = (a, b, t) => {
 };
 const clamp01 = v => Math.min(1, Math.max(0, v));
 
-function skyPhase(y, vh) {
-  const probe = y + vh * 0.5;
-  const pts = SKY_ANCHORS
+// 目印の位置(ページの上からの距離)は、毎回測らずに覚えておく。大きさが変わったら測り直す
+let skyAnchorTops = [];
+function measureSkyAnchors() {
+  const y = window.scrollY;
+  skyAnchorTops = SKY_ANCHORS
     .map(([id, ph]) => { const el = document.getElementById(id); return el ? [el.getBoundingClientRect().top + y, ph] : null; })
     .filter(Boolean);
-  if (probe <= pts[0][0]) return 0;
+}
+measureSkyAnchors();
+window.addEventListener('load', measureSkyAnchors);
+if (window.ResizeObserver) new ResizeObserver(() => { measureSkyAnchors(); requestTick(); }).observe(document.body);
+
+// スクロール位置から「時間の進み具合(0〜1)」を求める
+function skyPhase(y, vh) {
+  const probe = y + vh * 0.5;
+  const pts = skyAnchorTops;
+  if (!pts.length || probe <= pts[0][0]) return 0;
   for (let i = 0; i < pts.length - 1; i++) {
     const [y0, p0] = pts[i], [y1, p1] = pts[i + 1];
     if (probe < y1) return lerp(p0, p1, (probe - y0) / (y1 - y0));
@@ -340,47 +365,80 @@ function formatHour(h) {
   return `${hh < 12 ? '午前' : '午後'} ${hh % 12 === 0 && hh >= 12 ? 12 : hh % 12}:${mm}`;
 }
 
+// 空の描画。スクロールで決まるのは「目標の時刻」だけで、表示はそこへ なめらかに追いつく。
+// (区切りごとに高さが違っても、月や色の動きが急に変わらない)
+const SKY_FOLLOW_MS = 180; // 追いつく速さ(小さいほど きびきび)
+const easeInOut = u => u * u * (3 - 2 * u);
+let skyTarget = 0;
+let skyShown = -1;
+let skyRaf = 0;
+let skyLast = 0;
 let lastClock = '';
-scrollHooks.push((y, vh) => {
-  const ph = skyPhase(y, vh);
+
+function placeBody(el, x, y, on) {
+  el.classList.toggle('is-off', !on);
+  if (on) el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`;
+}
+
+function renderSky(ph) {
+  const vh = window.innerHeight;
   let k = SKY_KEYS.length - 2;
   for (let i = 0; i < SKY_KEYS.length - 1; i++) { if (ph <= SKY_KEYS[i + 1].at) { k = i; break; } }
   const a = SKY_KEYS[k], b = SKY_KEYS[k + 1];
   const t = clamp01((ph - a.at) / (b.at - a.at));
-  const top = mixHex(a.top, b.top, t);
   const bottom = mixHex(a.bottom, b.bottom, t);
-  sky.style.setProperty('--sky-top', top);
+  sky.style.setProperty('--sky-top', mixHex(a.top, b.top, t));
   sky.style.setProperty('--sky-bottom', bottom);
   document.body.style.setProperty('--sky-bottom', bottom);
   sky.style.setProperty('--stars', lerp(a.stars, b.stars, t).toFixed(3));
   sky.style.setProperty('--glow', mixHex(a.glow, b.glow, t));
   sky.style.setProperty('--glow-a', lerp(a.glowA, b.glowA, t).toFixed(3));
 
-  // 月・太陽の位置(画面に対する割合)
+  // 月と太陽(画面に対する割合)。どちらも画面の外まで出てから消えるので、位置は飛ばない
   const W = window.innerWidth;
-  let x, yy, isSun = false;
-  if (ph < SUN_FROM) {           // 月が右下へ沈む
-    const u = ph / SUN_FROM;
-    // スマホでは見出しと重ならないよう、右上の端に寄せる
-    const narrow = W < 600;
-    x = lerp(narrow ? 0.88 : 0.82, 1.08, u); yy = lerp(narrow ? 0.1 : 0.18, 0.95, u * u);
-  } else if (ph < SUN_TO) {      // 太陽が左から昇って右へ沈む
-    const u = (ph - SUN_FROM) / (SUN_TO - SUN_FROM);
-    x = lerp(-0.06, 1.06, u); yy = 1.0 - Math.sin(Math.PI * u) * 0.85;
-    isSun = true;
-  } else {                       // 月が左下から昇る
-    const u = (ph - SUN_TO) / (1 - SUN_TO);
-    x = lerp(-0.06, 0.16, u); yy = lerp(0.95, 0.2, Math.sqrt(u));
+  const narrow = W < 600;
+  if (ph < SUN_FROM) {            // 月が右下へ沈む
+    const u = easeInOut(ph / SUN_FROM);
+    placeBody(skyMoon, lerp(narrow ? 0.88 : 0.82, 1.12, u) * W, lerp(narrow ? 0.1 : 0.18, 1.15, u * u) * vh, true);
+  } else if (ph >= SUN_TO) {      // 月が左下から昇る
+    const u = easeInOut((ph - SUN_TO) / (1 - SUN_TO));
+    placeBody(skyMoon, lerp(-0.12, 0.16, u) * W, lerp(1.15, 0.2, u) * vh, true);
+  } else {
+    placeBody(skyMoon, 0, 0, false);
   }
-  skyBody.style.transform = `translate(${(x * W).toFixed(1)}px, ${(yy * vh).toFixed(1)}px)`;
-  skyBody.classList.toggle('is-sun', isSun);
+  if (ph > SUN_FROM && ph < SUN_TO) { // 太陽が左から昇って右へ沈む(弧を描く)
+    const u = (ph - SUN_FROM) / (SUN_TO - SUN_FROM);
+    placeBody(skySun, lerp(-0.12, 1.12, u) * W, (1.15 - Math.sin(Math.PI * u) * 1.0) * vh, true);
+  } else {
+    placeBody(skySun, 0, 0, false);
+  }
 
+  const isSun = ph > SUN_FROM && ph < SUN_TO;
   const clock = formatHour(lerp(a.hour, b.hour, t));
   if (clock !== lastClock) {
     lastClock = clock;
     skyClockText.textContent = clock;
     skyClockIcon.setAttribute('d', isSun ? SUN_PATH : MOON_PATH);
   }
+}
+
+function skyLoop(now) {
+  const dt = Math.min(64, now - (skyLast || now));
+  skyLast = now;
+  const diff = skyTarget - skyShown;
+  if (reduceMotion || skyShown < 0 || Math.abs(diff) < 0.0004) {
+    skyShown = skyTarget;
+  } else {
+    skyShown += diff * (1 - Math.exp(-dt / SKY_FOLLOW_MS));
+  }
+  renderSky(skyShown);
+  if (skyShown !== skyTarget) skyRaf = requestAnimationFrame(skyLoop);
+  else { skyRaf = 0; skyLast = 0; }
+}
+
+scrollHooks.push((y, vh) => {
+  skyTarget = skyPhase(y, vh);
+  if (!skyRaf) skyRaf = requestAnimationFrame(skyLoop);
 });
 
 // =========================================================
@@ -495,20 +553,6 @@ if (finePointer && !reduceMotion) {
       card.style.setProperty('--ry', '0deg');
     });
   });
-
-  // ピコの目が、ポインターのほうを見る
-  const pikoLook = document.querySelector('.piko-look');
-  if (pikoLook) {
-    window.addEventListener('pointermove', e => {
-      const r = pikoButton.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) return;
-      const dx = e.clientX - (r.left + r.width / 2);
-      const dy = e.clientY - (r.top + r.height / 2);
-      const d = Math.hypot(dx, dy) || 1;
-      const k = Math.min(1, d / 300) * 3; // 最大3(SVGの単位)
-      pikoLook.style.transform = `translate(${(dx / d * k).toFixed(2)}px, ${(dy / d * k).toFixed(2)}px)`;
-    }, { passive: true });
-  }
 
   // ヒーローの光の玉が、ポインターに少しついてくる
   const orb = document.querySelector('.hero-orb');

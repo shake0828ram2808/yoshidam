@@ -13,7 +13,7 @@ const ACHIEVEMENTS = [
   { id: 'deepdive',  icon: '🔍', name: '深掘りさん',         desc: 'Works の「詳しく」を3つとも開いた' },
   { id: 'builder',   icon: '🛠️', name: 'つくりかた見学',     desc: 'How I Build の3つのアプリを全部見た' },
   { id: 'play',      icon: '🎮', name: 'あそんでみた',       desc: '個人開発のアプリを開いてみた' },
-  { id: 'piko',      icon: '❗', name: 'ピコと なかよし',    desc: 'ピコを3回つついた' },
+  { id: 'piko',      icon: '🫧', name: 'ピコたちと なかよし', desc: '3色のピコを全部つついた' },
   { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
   { id: 'nemu',      icon: '🧣', name: 'おきがえ',           desc: 'ねむひつじのスカーフを切り替えた' },
   { id: 'night',     icon: '🌙', name: 'おやすみなさい',     desc: '夜まで、ページの最後まで読んだ' },
@@ -35,10 +35,10 @@ function loadQuest() {
     const raw = localStorage.getItem(STORE_KEY);
     if (raw) {
       const d = JSON.parse(raw);
-      return { seen: d.seen || [], ach: d.ach || {}, acorns: d.acorns || [], piko: d.piko || 0, details: d.details || [] };
+      return { seen: d.seen || [], ach: d.ach || {}, acorns: d.acorns || [], piko: Array.isArray(d.piko) ? d.piko : [], details: d.details || [] };
     }
   } catch (e) { /* 読めなければ はじめから */ }
-  return { seen: [], ach: {}, acorns: [], piko: 0, details: [] };
+  return { seen: [], ach: {}, acorns: [], piko: [], details: [] };
 }
 function saveQuest() {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(quest)); } catch (e) { /* 保存できなくても遊べる */ }
@@ -150,6 +150,7 @@ function unlock(id) {
   saveQuest();
   renderQuest();
   bumpChip();
+  document.dispatchEvent(new CustomEvent('quest:unlock', { detail: { id } }));
   // ページの途中へ一気に移動したときなど、同時に解除されたものは1枚にまとめる
   pendingAch.push(a);
   clearTimeout(achTimer);
@@ -281,11 +282,11 @@ document.querySelectorAll('.projects a[target="_blank"]').forEach(a => {
 });
 
 // キャラクター
-document.getElementById('pikoButton')?.addEventListener('click', () => {
-  quest.piko += 1;
-  saveQuest();
-  if (quest.piko >= 3) unlock('piko');
-});
+document.querySelectorAll('.piko-pal').forEach(pal => pal.addEventListener('click', () => {
+  if (!Array.isArray(quest.piko)) quest.piko = []; // 古い記録(回数)からの移行
+  if (!quest.piko.includes(pal.dataset.color)) { quest.piko.push(pal.dataset.color); saveQuest(); }
+  if (quest.piko.length >= 3) unlock('piko');
+}));
 document.getElementById('dangoButton')?.addEventListener('click', () => {
   // 1回目で丸まり、丸まったまま もう1回で転がる
   if (document.getElementById('dangoButton').classList.contains('is-rolling')) unlock('dango');
@@ -325,7 +326,7 @@ document.getElementById('questClose').addEventListener('click', () => questPanel
 questPanel.addEventListener('click', e => { if (e.target === questPanel) questPanel.close(); });
 document.getElementById('questReset').addEventListener('click', () => {
   if (!window.confirm('冒険の記録(実績とどんぐり)を消して、はじめからにしますか?')) return;
-  quest = { seen: [], ach: {}, acorns: [], piko: 0, details: [] };
+  quest = { seen: [], ach: {}, acorns: [], piko: [], details: [] };
   saveQuest();
   renderQuest();
 });
