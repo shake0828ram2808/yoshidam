@@ -3023,3 +3023,38 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
 .craft .craft-subhead{ font-size: .95rem; letter-spacing: .04em; }
 .section-title + .focus-subhead{ margin-top: 36px; }
 @media (max-width: 760px){ .section-title + .focus-subhead{ margin-top: 24px; } }
+
+/* =========================================================
+   アプリのカードの高さをそろえる(並んだカードは同じ高さ・ボタンは下にそろえる)
+========================================================= */
+/* PC: 子どもと楽しむアプリ(縦長のカード) */
+@media (min-width: 761px){
+  .projects-row--kids{ align-items: stretch; }
+  .project-card--kids:not(.project-card--wide) .project-body{ flex: 1; display: flex; flex-direction: column; }
+  .project-card--kids:not(.project-card--wide) .kids-actions{ margin-top: auto; }
+}
+/* PC: 自分が便利なアプリ(2枚) / スマホ: 横スワイプのカード
+   説明の段(3段目)が余りを受け持ち、その下の折りたたみ・リンクは下にそろう */
+@media (min-width: 1000px){
+  .app-list{ align-items: stretch; }
+  .app-list .project-card--calm{ grid-template-areas: var(--card-areas); grid-template-rows: var(--card-rows); }
+}
+@media (max-width: 760px){
+  .app-list, .projects-row--kids{ align-items: stretch; }
+  .app-list .project-card, .projects-row--kids .project-card{ grid-template-areas: var(--card-areas); grid-template-rows: var(--card-rows); }
+}
+/* カードの中の置き場所を名前で決める(説明の段 desc が余りを受け持つ) */
+.app-list .project-card, .projects-row--kids .project-card{
+  --card-areas: "phone badge" "phone title" "desc desc" "toggle toggle" "fold fold" "link link";
+  --card-rows: auto auto 1fr auto auto auto;
+}
+@media (min-width: 1000px), (max-width: 760px){
+  .app-list .phone, .projects-row--kids .phone{ grid-area: phone; }
+  .app-list .status-badge, .projects-row--kids .status-badge{ grid-area: badge; }
+  .app-list .project-card h4, .projects-row--kids .project-card h4{ grid-area: title; }
+  .app-list .project-body > p:not(.status-badge), .projects-row--kids .project-body > p:not(.status-badge){ grid-area: desc; }
+  .app-list .fold-toggle{ grid-area: toggle; }
+  .app-list .fold-body{ grid-area: fold; }
+  .app-list .text-link, .projects-row--kids .kids-actions{ grid-area: link; }
+  .projects-row--kids .tag-list{ grid-area: fold; }
+}
