@@ -3070,3 +3070,18 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .cycle{ padding: 12px 0 0 12px; }
   .cycle::before{ left: 37px; top: 38px; }
 }
+
+/* スマホのアプリカード: スクショを左に大きく、状態・名前・説明は右の列にそろえる(ボタン類はその下に全幅) */
+@media (max-width: 760px){
+  .app-list .project-card, .projects-row--kids .project-card{
+    --card-areas: "phone badge" "phone title" "phone desc" "toggle toggle" "fold fold" "link link";
+    --card-rows: auto auto 1fr auto auto auto;
+    grid-template-columns: 42% 1fr;
+    column-gap: 16px;
+  }
+  .app-list .phone, .projects-row--kids .phone{ width: 100%; margin: 0 0 16px; }
+  .app-list .status-badge, .projects-row--kids .status-badge{ align-self: start; white-space: normal; font-size: .66rem; }
+  .app-list .project-card h4, .projects-row--kids .project-card h4{ margin-bottom: 8px; font-size: .98rem; line-height: 1.4; }
+  .app-list .project-body > p:not(.status-badge),
+  .projects-row--kids .project-body > p:not(.status-badge){ font-size: .8rem; line-height: 1.7; margin-bottom: 16px; }
+}
