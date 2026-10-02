@@ -3058,3 +3058,10 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .app-list .text-link, .projects-row--kids .kids-actions{ grid-area: link; }
   .projects-row--kids .tag-list{ grid-area: fold; }
 }
+
+/* Focus「AI駆動開発の実践」: スマホでは サイクル・設計の工夫・開発ログ を折りたたみにして、最初は1画面ほどに収める
+   (折りたたみのボタンが見出しを兼ねるので、元の小見出しは隠す) */
+@media (max-width: 760px){
+  .craft-subhead--fold, .devlog-head{ display: none; }
+  .craft .fold-toggle{ margin-bottom: 12px; }
+}

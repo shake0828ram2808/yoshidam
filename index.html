@@ -61,7 +61,6 @@
     <a href="#projects">Apps</a>
     <a href="#characters">Cast</a>
     <a href="#craft">Focus</a>
-    <a href="#notes">Notes</a>
     <a href="#contact">Contact</a>
     <span class="nav-indicator" aria-hidden="true"></span>
   </nav>
@@ -415,6 +414,7 @@
       <p class="section-kicker">03</p>
       <h2 class="section-title">Cast</h2>
       <p class="section-lead">アプリに登場するキャラクターたちです。さわってみてください。</p>
+      <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:2%;top:8px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
 
       <div class="character-list" id="castList">
         <article class="character-card" data-tilt>
@@ -566,8 +566,8 @@
       <p class="craft-note">個人開発は、AIと役割を分けながら進めています。</p>
 
       <!-- AI駆動開発のサイクル。画面に入ると、1つずつ順に光る -->
-      <h4 class="craft-subhead">サイクル</h4>
-      <ol class="cycle" id="cycle" data-fold="5つのステップを見る">
+      <h4 class="craft-subhead craft-subhead--fold">サイクル</h4>
+      <ol class="cycle" id="cycle" data-fold="サイクル">
         <li class="cycle-step"><span class="cycle-no">1</span><h4>ルールを書く</h4><p>リポジトリごとに <code>CLAUDE.md</code> を置き、目的・守ること・確認の手順を書く。</p></li>
         <li class="cycle-step"><span class="cycle-no">2</span><h4>役割を分ける</h4><p>方針や設計の判断は自分。仕様が決まった実装や単純作業はAIに任せる。</p></li>
         <li class="cycle-step"><span class="cycle-no">3</span><h4>自動で確かめる</h4><p>単体テストと、スマホサイズのスクリーンショット(Playwright)で確認する。</p></li>
@@ -575,8 +575,9 @@
         <li class="cycle-step"><span class="cycle-no">5</span><h4>記録して、くり返す</h4><p>変更履歴と資料を毎回更新。次の会話でもAIが経緯をたどれる。</p></li>
       </ol>
 
-      <!-- 設計の見どころ(アプリごとのタブ) -->
-      <h4 class="craft-subhead">設計の見どころ</h4>
+      <!-- 設計の工夫(アプリごとのタブ) -->
+      <h4 class="craft-subhead craft-subhead--fold">設計の工夫</h4>
+      <div class="craft-design" data-fold="設計の工夫" data-fold-summary="保守性・層の分け方・テスト">
       <div class="craft-tabs" role="tablist" aria-label="アプリを選ぶ">
         <button type="button" role="tab" id="tab-zutsu" aria-controls="panel-zutsu" aria-selected="true">頭痛手帳</button>
         <button type="button" role="tab" id="tab-nige" aria-controls="panel-nige" aria-selected="false" tabindex="-1">だんごむし</button>
@@ -626,16 +627,18 @@ setPikoMouth(&#x27;home&#x27;, &#x27;A&#x27;);   // 口パク
 playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
         </div>
       </div>
+      </div>
 
       <!-- 開発ログ: だんごむしのぼうけん v1 → v155 -->
       <div class="devlog">
         <button type="button" class="acorn" data-acorn="focus" aria-label="かくれた どんぐり" style="right:-6px;top:-40px;--rot:16deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
         <div class="devlog-head">
-          <h4 class="craft-subhead">開発ログ: だんごむしのぼうけん</h4>
+          <h4 class="craft-subhead craft-subhead--fold">開発ログ: だんごむしのぼうけん</h4>
           <p class="devlog-level"><span>改善リリース</span><b>v<span data-count="155">155</span></b></p>
         </div>
+        <div class="devlog-body" data-fold="開発ログ" data-fold-summary="だんごむしのぼうけん v1 〜 v155">
         <p class="devlog-lead">遊んでみて気づいたことを、すぐ直す。その積み重ねの主な節目です。</p>
-        <ol class="log-track" id="logTrack" data-fold="11の節目を見る">
+        <ol class="log-track" id="logTrack">
           <li class="log-item" style="--i:0">
             <button type="button" class="log-dot" aria-describedby="log-0"><span>v1</span></button>
             <div class="log-card" id="log-0" role="tooltip"><b><em class="log-v">v1</em>はじまり</b><span>チャットで作った試作を、アプリの骨組み(モック)に移した</span></div>
@@ -681,6 +684,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
             <div class="log-card" id="log-10" role="tooltip"><b><em class="log-v">v155</em>いま</b><span>遊んで気づいたことをもとに、今も改善中</span></div>
           </li>
         </ol>
+        </div>
       </div>
     </div>
   </section>
@@ -688,12 +692,12 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
 
 
   <!-- ============ NOTES ============ -->
-  <section id="notes" class="section notes" data-label="Notes">
+  <!-- Notes は note の記事を公開するまで非表示(hidden を外せば戻る) -->
+  <section id="notes" class="section notes" data-label="Notes" hidden>
     <div class="section-inner">
       <p class="section-kicker">05</p>
       <h2 class="section-title">Notes</h2>
       <p class="section-lead">業務や個人開発での工夫を、noteで書いていく予定です。公開したら、ここから読めるようにします。</p>
-      <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:-4px;top:-46px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
       <!-- ▼ 記事を公開したら、各カードを <a href="記事のURL" class="note-card"> に置き換えてください -->
       <div class="notes-list" data-todo="note記事のURL・タイトル">
         <div class="note-card is-upcoming">

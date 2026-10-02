@@ -31,7 +31,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') setNavOpen(f
 // 現在地の表示(ヘッダーの下線・右端のドット)
 // =========================================================
 // メニューに出すセクション。data-group が付いたもの(経歴・スキル)は、そのグループ(About)の一部として扱う
-const allSections = [...document.querySelectorAll('main > section[id]')];
+const allSections = [...document.querySelectorAll('main > section[id]:not([hidden])')];
 const sections = allSections.filter(sec => !sec.dataset.group);
 const navLinks = [...mainNav.querySelectorAll('a')];
 const indicator = mainNav.querySelector('.nav-indicator');
@@ -487,8 +487,8 @@ function setupCarousel(list, label) {
 // ページ内の目印ごとの「時間の進み具合(0〜1)」
 const SKY_ANCHORS = [
   ['hero', 0], ['about', 0.16], ['skills', 0.30], ['certifications', 0.38],
-  ['projects', 0.56], ['kidsZone', 0.70], ['characters', 0.78], ['craft', 0.86],
-  ['notes', 0.95], ['contact', 1],
+  ['projects', 0.56], ['kidsZone', 0.70], ['characters', 0.78], ['craft', 0.88],
+  ['contact', 1],
 ];
 // 時間の進み具合ごとの空の色。文字が読めるよう、どれも暗めにしてある
 const SKY_KEYS = [
@@ -994,6 +994,7 @@ const CHEVRON = '<svg class="spin-closed" viewBox="0 0 24 24" width="16" height=
 const CROSS = '<svg class="spin-open" viewBox="0 0 24 24" width="16" height="16"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
 
 function foldSummary(el) {
+  if (el.dataset.foldSummary) return el.dataset.foldSummary;
   if (el.matches('.timeline')) {
     // 年の数字だけを読む(横の小さな期間の文字は含めない)
     const years = [...el.querySelectorAll('.timeline-year')].map(y => y.firstChild.textContent.trim());
@@ -1007,7 +1008,6 @@ function foldSummary(el) {
     return `${years[0]} 〜 ${years[years.length - 1]}・${years.length}件`;
   }
   if (el.matches('.cycle')) return [...el.querySelectorAll('h4')].map(h => h.textContent.trim()).join(' → ');
-  if (el.matches('.log-track')) return 'v1 はじまり 〜 v155 いま';
   if (el.matches('.case-detail')) {
     const r = el.querySelectorAll('.case-flow dd');
     return r.length ? r[r.length - 1].textContent.trim() : '';
