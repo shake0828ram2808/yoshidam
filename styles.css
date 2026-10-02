@@ -543,25 +543,6 @@ html.nav-open{ overflow: hidden; }
 /* =========================================================
    About
 ========================================================= */
-.about-grid{
-  display:grid;
-  grid-template-columns: 132px 1fr;
-  gap: 36px;
-  align-items:center;
-  margin-bottom: 64px;
-}
-.about-photo img{
-  width: 132px; height: 132px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid var(--line);
-  box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px var(--line);
-}
-
-
-@media (max-width: 560px){
-  .about-grid{ grid-template-columns: 1fr; text-align:center; justify-items:center; }
-}
 
 .timeline{
   list-style:none;
@@ -2311,8 +2292,6 @@ code{
 
 /* About(ヒーロー)の下の経歴・Contact の文 */
 .devlog{ position: relative; }
-.about-sub{ margin: 0; color: var(--text-muted); font-size: .9rem; }
-.about-grid{ margin-bottom: 40px; }
 .contact-lead span{ display: block; white-space: nowrap; }
 @media (max-width: 600px){
   /* 1行が画面幅に収まるよう、文字を少しだけ小さく */
@@ -2676,7 +2655,6 @@ code{
   color: var(--accent);
   margin-bottom: 2px;
 }
-.about .about-grid{ margin-top: 24px; }
 /* About の中の続き(Skills・Certs)は、上の余白を詰めて ひとまとまりに見せる */
 .section[data-group="hero"] + .section[data-group="hero"]{ padding-top: 24px; }
 .section.about, .section.skills{ padding-bottom: 56px; }
@@ -2855,13 +2833,6 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
 /* どんぐりの記録は、連絡先のあとの「おまけ」として少し控えめに */
 .contact .quest-result{ margin-bottom: 0; }
 
-/* スマホ: About の小見出しは、セクション見出しと同じく左にそろえる */
-@media (max-width: 760px){
-  /* 写真と小見出しを横に並べて、間延びさせない */
-  .about-grid{ grid-template-columns: 92px 1fr; gap: 20px; justify-items: start; text-align: left; }
-  .about-photo img{ width: 92px; height: 92px; box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--line); }
-  .about-grid .about-body{ width: 100%; }
-}
 /* フッターの「先頭へもどる」が見えているあいだは、浮いている「先頭へ」を隠す(重複させない) */
 .dock-top.is-shown.is-footer{ opacity: 0; pointer-events: none; transform: translateY(8px); }
 /* スマホ: 数行にわたるリード文は、中央寄せだと行頭がそろわず読みにくいので左寄せ */
@@ -2885,25 +2856,39 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   html.at-hero .dock-next{ opacity: 0; transform: translateY(10px) scale(.92); pointer-events: none; }
 }
 
-/* キャッチコピーは1行で見せる(「工夫と」「効率と」「持続性」が順に浮かび上がる) */
-.hero-title{ white-space: nowrap; font-size: clamp(2rem, 8.4vw, 5.2rem); letter-spacing: .03em; }
-.hero-title .hero-line{ display: inline-block; }
+/* ヒーロー: 左にアイコン、右にキャッチコピー3行(「工夫と」「効率と」「持続性」が順に浮かび上がる) */
+.hero-head{
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(20px, 3.4vw, 44px);
+  margin-bottom: 30px;
+}
+.hero-avatar{
+  flex: 0 0 auto;
+  width: clamp(104px, 15vw, 196px); height: auto; aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  box-shadow: 0 0 0 6px var(--bg), 0 0 0 7px var(--line-strong), 0 24px 60px -20px rgba(201,123,99,.45);
+  opacity: 0;
+  transform: scale(.9);
+  animation: avatar-in .9s var(--ease) .15s forwards;
+}
+@keyframes avatar-in{ to{ opacity: 1; transform: scale(1); } }
+.hero-head .hero-title{
+  text-align: left;
+  margin: 0;
+  font-size: clamp(2.6rem, 6vw, 4.8rem);
+  line-height: 1.16;
+  letter-spacing: .04em;
+}
 @media (max-width: 560px){
-  .hero-title{ font-size: min(8.4vw, 2.6rem); }
+  .hero-head{ gap: 20px; margin-bottom: 22px; }
+  .hero-head .hero-title{ font-size: clamp(2.3rem, 11vw, 2.9rem); }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-avatar{ animation: none; opacity: 1; transform: none; }
 }
 
-/* About: Career の見出しも Skills・Certs と同じ左の位置にそろえ、写真は右に置く */
-.about .about-grid{ grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
-.about .about-grid .about-photo{ order: 2; }
-.about .about-grid .about-body{ order: 1; }
-.about .about-grid .about-photo img{ width: 112px; height: 112px; }
-@media (max-width: 760px){
-  .about .about-grid{ grid-template-columns: 1fr auto; gap: 16px; justify-items: stretch; }
-  .about .about-grid .about-photo img{ width: 84px; height: 84px; }
-}
-@media (max-width: 560px){
-  .about .about-grid{ text-align: left; }
-}
 
 /* =========================================================
    Focus: 3つの問い
@@ -2956,4 +2941,78 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .questions{ grid-template-columns: 1fr; gap: 12px; margin-bottom: 56px; }
   .question{ padding: 20px 20px 18px; }
   .question h3 br{ display: none; }
+}
+
+/* =========================================================
+   Apps: 「自分が便利なアプリ」「子どもと楽しむアプリ」も横に並べる
+========================================================= */
+/* PC: 自分が便利なアプリは2枚を横に並べる */
+@media (min-width: 1000px){
+  .app-list{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; align-items: start; }
+  .app-list .project-card--calm + .project-card--calm{ margin-top: 0; }
+  /* 上に「画面+状態+名前」、下に説明を全幅で */
+  .app-list .project-card--calm{
+    display: grid; grid-template-columns: 112px 1fr;
+    column-gap: 24px; row-gap: 0; align-content: start; align-items: start;
+    padding: 30px 30px 28px;
+  }
+  .app-list .project-body{ display: contents; }
+  .app-list .phone{ grid-column: 1; grid-row: 1 / 3; width: 112px; margin: 0 0 22px; }
+  .app-list .status-badge{ grid-column: 2; grid-row: 1; align-self: end; justify-self: start; margin-bottom: 8px; }
+  .app-list .project-card h4{ grid-column: 2; grid-row: 2; align-self: start; }
+  .app-list .project-body > :not(.status-badge):not(h4){ grid-column: 1 / -1; }
+}
+/* スマホ: Cast と同じく、横にスワイプして見る */
+@media (max-width: 760px){
+  .app-list, .projects-row--kids{
+    display: flex; gap: 14px;
+    max-width: none;
+    margin: 0 -24px;
+    padding: 4px 24px 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    align-items: flex-start;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 84%, rgba(0,0,0,.35) 100%);
+            mask-image: linear-gradient(90deg, #000 0, #000 84%, rgba(0,0,0,.35) 100%);
+  }
+  .app-list::-webkit-scrollbar, .projects-row--kids::-webkit-scrollbar{ display: none; }
+  .app-list > *, .projects-row--kids > *{ flex: 0 0 84%; scroll-snap-align: center; }
+  .app-list .project-card--calm + .project-card--calm{ margin-top: 0; }
+  .app-list.is-end, .projects-row--kids.is-end{ -webkit-mask-image: none; mask-image: none; }
+  .app-list.is-nudge, .projects-row--kids.is-nudge{ animation: cast-nudge 1.1s var(--ease) 2; }
+  /* 子どもゾーン(明るい背景)の操作部品 */
+  .kids-zone .cast-arrow{ background: rgba(255,255,255,.75); border-color: rgba(60,50,40,.18); color: var(--kids-ink); }
+  .kids-zone .cast-dots button{ background: rgba(60,50,40,.2); }
+  .kids-zone .cast-dots button.is-current{ background: var(--accent); }
+  .kids-zone .cast-count{ color: var(--kids-ink); opacity: .7; }
+}
+
+/* =========================================================
+   About: スマホで1画面におおむね収める
+========================================================= */
+@media (max-width: 760px){
+  .section.about{ padding-top: 64px; }
+  .section.about, .section.skills{ padding-bottom: 20px; }
+  .section[data-group="hero"] + .section[data-group="hero"]{ padding-top: 20px; }
+  .section.certifications{ padding-bottom: 64px; }
+  .about .section-title{ margin-bottom: 18px; }
+  .about-subhead{ margin-bottom: 10px; }
+  .skills-note{ margin-top: 8px; }
+}
+/* スマホのアプリカード: 上に「小さな画面+状態+名前」、下に説明を全幅で(細い列で縦に伸びないように) */
+@media (max-width: 760px){
+  .app-list .project-card, .projects-row--kids .project-card{
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    column-gap: 14px; row-gap: 0;
+    align-content: start;
+    padding: 18px 18px 16px;
+  }
+  .app-list .project-body, .projects-row--kids .project-body{ display: contents; }
+  .app-list .phone, .projects-row--kids .phone{ grid-column: 1; grid-row: 1 / 3; width: 68px; align-self: start; margin: 0 0 14px; }
+  .app-list .status-badge, .projects-row--kids .status-badge{ grid-column: 2; grid-row: 1; align-self: end; justify-self: start; margin-bottom: 6px; white-space: nowrap; }
+  .app-list .project-card h4, .projects-row--kids .project-card h4{ grid-column: 2; grid-row: 2; align-self: start; margin-bottom: 14px; }
+  .app-list .project-body > :not(.status-badge):not(h4),
+  .projects-row--kids .project-body > :not(.status-badge):not(h4){ grid-column: 1 / -1; }
 }

@@ -91,9 +91,15 @@
     <div class="hero-orb" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="hero-eyebrow">Web Engineer / Indie App Maker</p>
-      <h1 class="hero-title">
-        <span class="hero-line" style="--d:0">工夫と</span><span class="hero-line" style="--d:1">効率と</span><span class="hero-line" style="--d:2"><em class="hero-em">持続性</em></span>
-      </h1>
+      <!-- アイコン(左)とキャッチコピー3行(右) -->
+      <div class="hero-head">
+        <img class="hero-avatar" src="assets/images/yoshida-avatar.jpg" alt="よしだのアイコン" width="400" height="400">
+        <h1 class="hero-title">
+          <span class="hero-line" style="--d:0">工夫と</span>
+          <span class="hero-line" style="--d:1">効率と</span>
+          <span class="hero-line" style="--d:2"><em class="hero-em">持続性</em></span>
+        </h1>
+      </div>
       <p class="hero-lead">
         Webアプリケーションエンジニア。<br class="br-pc">業務では、教師や児童生徒向けのwebサービスの開発運用をしています。<br class="br-pc">
         休日は子どもと一緒に考えたゲームや学習アプリをつくっています。
@@ -135,15 +141,7 @@
     <div class="section-inner">
       <p class="section-kicker">01</p>
       <h2 class="section-title">About</h2>
-      <div class="about-grid">
-        <div class="about-photo">
-          <img src="assets/images/yoshida-avatar.jpg" alt="よしだのアイコン" width="400" height="400" loading="lazy">
-        </div>
-        <div class="about-body">
-          <h3 class="about-subhead"><span>About /</span>Career</h3>
-          <p class="about-sub">これまでの歩み</p>
-        </div>
-      </div>
+      <h3 class="about-subhead"><span>About /</span>Career</h3>
 
       <ol class="timeline" data-fold="経歴を見る">
         <li class="timeline-item">
@@ -241,7 +239,7 @@
   <section id="certifications" class="section certifications" data-label="Certs" data-group="hero">
     <div class="section-inner">
       <h3 class="about-subhead"><span>About /</span>Certs</h3>
-      <ul class="cert-rows">
+      <ul class="cert-rows" data-fold="資格を見る">
         <li class="cert-row">
           <span class="cert-year">2015</span>
           <span class="cert-name">基本情報技術者試験</span>
@@ -280,46 +278,48 @@
       <h2 class="section-title">Apps</h2>
       <p class="section-lead">個人で企画から開発まで手がけたアプリです。</p>
 
-      <h3 class="projects-subhead projects-subhead--calm">じっくり向き合うアプリ</h3>
-      <article class="project-card project-card--calm" data-tilt>
-        <div class="phone" aria-hidden="true">
-          <img src="assets/images/projects/zutsurun.webp" alt="" width="390" height="844" loading="lazy">
-        </div>
-        <div class="project-body">
-          <p class="status-badge">Web版 公開中 / iOS 準備中</p>
-          <h4>頭痛手帳</h4>
-          <p>気圧による頭痛などの痛みと服薬を記録し、直近30日の服薬日数を目安の範囲内で「やりくり」できるようにするアプリ。キャラクター「ねむひつじ」が寄り添います。</p>
-          <div class="project-more" data-fold="技術・見どころ">
-          <ul class="tag-list"><li>React</li><li>TypeScript</li><li>Vite</li><li>Capacitor</li><li>Cloudflare</li></ul>
-          <ul class="project-points">
-            <li>保存処理をリポジトリ層にまとめ、Web と iOS で切り替え</li>
-            <li>服薬カウントの計算ロジックに単体テスト</li>
-            <li>健康データは端末の外に送らない設計</li>
-          </ul>
+      <h3 class="projects-subhead projects-subhead--calm">自分が便利なアプリ</h3>
+      <div class="app-list" id="calmList">
+        <article class="project-card project-card--calm" data-tilt>
+          <div class="phone" aria-hidden="true">
+            <img src="assets/images/projects/zutsurun.webp" alt="" width="390" height="844" loading="lazy">
           </div>
-          <a href="https://zutsurun.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>
-      <article class="project-card project-card--calm" data-tilt>
-        <div class="phone" aria-hidden="true">
-          <img src="assets/images/projects/mystudy.webp" alt="" width="390" height="844" loading="lazy">
-        </div>
-        <div class="project-body">
-          <p class="status-badge">Web 公開中 / 自分用</p>
-          <h4>AWS 認定 学習カレンダー</h4>
-          <p>AWS 認定3資格(AI Practitioner / Cloud Practitioner / Solutions Architect)を、受験日までに取るための学習計画アプリ。スマホひとつで、思いついたその場で Claude Code に頼む「バイブコーディング」で作りました。</p>
-          <div class="project-more" data-fold="技術・見どころ">
-          <ul class="tag-list"><li>React 19</li><li>TypeScript</li><li>Tailwind CSS</li><li>zustand</li><li>PWA</li></ul>
-          <ul class="project-points">
-            <li>学習範囲をロードマップで表示し、分野ごとの進み具合が分かる</li>
-            <li>受験日から逆算して、平日・休日の学習時間に合わせて予定を自動で割り当て</li>
-            <li>カレンダーはドラッグ&amp;ドロップで予定を動かせる(タッチ対応)</li>
-            <li>確認問題 593問と、本番形式の演習つき</li>
-          </ul>
+          <div class="project-body">
+            <p class="status-badge">Web版 公開中 / iOS 準備中</p>
+            <h4>頭痛手帳</h4>
+            <p>気圧による頭痛などの痛みと服薬を記録し、直近30日の服薬日数を目安の範囲内で「やりくり」できるようにするアプリ。キャラクター「ねむひつじ」が寄り添います。</p>
+            <div class="project-more" data-fold="技術・見どころ">
+            <ul class="tag-list"><li>React</li><li>TypeScript</li><li>Vite</li><li>Capacitor</li><li>Cloudflare</li></ul>
+            <ul class="project-points">
+              <li>保存処理をリポジトリ層にまとめ、Web と iOS で切り替え</li>
+              <li>服薬カウントの計算ロジックに単体テスト</li>
+              <li>健康データは端末の外に送らない設計</li>
+            </ul>
+            </div>
+            <a href="https://zutsurun.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
           </div>
-          <a href="https://mystudy.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
-        </div>
-      </article>
+        </article>
+        <article class="project-card project-card--calm" data-tilt>
+          <div class="phone" aria-hidden="true">
+            <img src="assets/images/projects/mystudy.webp" alt="" width="390" height="844" loading="lazy">
+          </div>
+          <div class="project-body">
+            <p class="status-badge">Web 公開中 / 自分用</p>
+            <h4>AWS 認定 学習カレンダー</h4>
+            <p>AWS 認定3資格(AI Practitioner / Cloud Practitioner / Solutions Architect)を、受験日までに取るための学習計画アプリ。スマホひとつで、思いついたその場で Claude Code に頼む「バイブコーディング」で作りました。</p>
+            <div class="project-more" data-fold="技術・見どころ">
+            <ul class="tag-list"><li>React 19</li><li>TypeScript</li><li>Tailwind CSS</li><li>zustand</li><li>PWA</li></ul>
+            <ul class="project-points">
+              <li>学習範囲をロードマップで表示し、分野ごとの進み具合が分かる</li>
+              <li>受験日から逆算して、平日・休日の学習時間に合わせて予定を自動で割り当て</li>
+              <li>カレンダーはドラッグ&amp;ドロップで予定を動かせる(タッチ対応)</li>
+              <li>確認問題 593問と、本番形式の演習つき</li>
+            </ul>
+            </div>
+            <a href="https://mystudy.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
     </div>
 
     <!-- ポップトーンに切り替わるブロック -->
@@ -347,7 +347,7 @@
       <div class="section-inner">
         <h3 class="projects-subhead projects-subhead--kids" data-split="bounce">子どもと楽しむアプリ</h3>
         <p class="kids-lead">4本を App Store で配信中です。</p>
-        <div class="projects-row--kids">
+        <div class="projects-row--kids" id="kidsList">
           <article class="project-card project-card--kids project-card--wide" data-tilt>
             <div class="phone phone--kids" aria-hidden="true">
               <img src="assets/images/projects/nigerun.webp" alt="" width="390" height="844" loading="lazy">
@@ -533,13 +533,6 @@
           <div class="egg-others" aria-label="ほかの色のたまご"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_pink_intact.png" alt="ピンクのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_blue_intact.png" alt="あおのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_purple_intact.png" alt="むらさきのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_orange_intact.png" alt="オレンジのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_silver_intact.png" alt="ぎんのたまご" loading="lazy"></div>
         </article>
       </div>
-      <!-- スマホのみ: カルーセルの操作(前へ・どこにいるか・次へ) -->
-      <div class="cast-pager" id="castPager">
-        <button type="button" class="cast-arrow" data-dir="-1" aria-label="前のキャラクター"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="cast-dots" id="castDots"></div>
-        <span class="cast-count" id="castCount" aria-live="polite">1 / 4</span>
-        <button type="button" class="cast-arrow" data-dir="1" aria-label="次のキャラクター"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      </div>
     </div>
   </section>
 
@@ -548,10 +541,15 @@
     <div class="section-inner">
       <p class="section-kicker">04</p>
       <h2 class="section-title">Focus</h2>
-      <p class="section-lead">作る前に、いつも3つ問いかけています。</p>
+      <p class="section-lead">気をつけている考え方</p>
 
       <!-- 3つの問い(ヒーローの「工夫と効率と持続性」と対応) -->
       <ol class="questions">
+        <li class="question">
+          <span class="question-tag">工夫 <i>/</i> UX</span>
+          <h3>本当に、<br>わかりやすいか。</h3>
+          <p>使う人の目線で。迷わせない画面で。使いやすさと価値を両立します。</p>
+        </li>
         <li class="question">
           <span class="question-tag">効率 <i>/</i> 要件定義</span>
           <h3>何を作り、<br>何を作らないか。</h3>
@@ -560,12 +558,7 @@
         <li class="question">
           <span class="question-tag">持続性 <i>/</i> 保守性</span>
           <h3>未来で、<br>困らないか。</h3>
-          <p>約20種のプログラムを、1つのSPAへ集約。保守のしやすさとコストまで考えて作ります。</p>
-        </li>
-        <li class="question">
-          <span class="question-tag">工夫 <i>/</i> UX</span>
-          <h3>本当に、<br>わかりやすいか。</h3>
-          <p>営業経験から、使う人の目線で。迷わせない画面で、使いやすさと価値を両立します。</p>
+          <p>優先順位や本質を踏まえ、将来の保守性を守れる判断をします。</p>
         </li>
       </ol>
 

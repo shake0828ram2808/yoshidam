@@ -148,7 +148,7 @@ window.addEventListener('scroll', () => {
 const revealGroups = [
   '.timeline-item', '.skill-group', '.case-card', '.project-card--calm',
   '.project-card--kids', '.character-card', '.cert-row', '.note-card',
-  '.section-lead', '.about-grid'
+  '.section-lead', '.question'
 ];
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -391,53 +391,63 @@ if (eggStage) {
   }
 }
 
-// スマホの Cast: 前後ボタン・ドット・枚数で、左右に動かせることを見せる
-const castList = document.getElementById('castList');
-const castPager = document.getElementById('castPager');
-if (castList && castPager) {
-  const cards = [...castList.querySelectorAll('.character-card')];
-  const dotsBox = document.getElementById('castDots');
-  const count = document.getElementById('castCount');
-  const [prevBtn, nextBtn] = castPager.querySelectorAll('.cast-arrow');
+// スマホの横スクロール(Cast・アプリ): 前後ボタン・ドット・枚数で、左右に動かせることを見せる
+function setupCarousel(list, label) {
+  const cards = [...list.children];
+  if (cards.length < 2) return;
+  const arrow = d => `<button type="button" class="cast-arrow" aria-label="${d < 0 ? '前' : '次'}の${label}"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="${d < 0 ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6'}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+  const pager = document.createElement('div');
+  pager.className = 'cast-pager';
+  pager.innerHTML = `${arrow(-1)}<div class="cast-dots"></div><span class="cast-count" aria-live="polite"></span>${arrow(1)}`;
+  list.after(pager);
+  const dotsBox = pager.querySelector('.cast-dots');
+  const count = pager.querySelector('.cast-count');
+  const [prevBtn, nextBtn] = pager.querySelectorAll('.cast-arrow');
   cards.forEach((c, i) => {
     const b = document.createElement('button');
     b.type = 'button';
-    b.setAttribute('aria-label', `${c.querySelector('h3').textContent}へ`);
-    b.addEventListener('click', () => goCast(i));
+    b.setAttribute('aria-label', `${c.querySelector('h3, h4').textContent}へ`);
+    b.addEventListener('click', () => go(i));
     dotsBox.appendChild(b);
   });
   const dotBtns = [...dotsBox.children];
-  let castIndex = 0;
-  const goCast = i => {
+  let index = 0;
+  // カードの左端(リストの中での位置)。offsetParent に左右されないよう、画面上の位置から求める
+  const leftOf = c => c.getBoundingClientRect().left - list.getBoundingClientRect().left + list.scrollLeft;
+  const go = i => {
     const c = cards[Math.max(0, Math.min(cards.length - 1, i))];
-    castList.scrollTo({ left: c.offsetLeft - (castList.clientWidth - c.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+    list.scrollTo({ left: leftOf(c) - (list.clientWidth - c.offsetWidth) / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
-  const updateCast = () => {
-    const mid = castList.scrollLeft + castList.clientWidth / 2;
+  const update = () => {
+    const mid = list.scrollLeft + list.clientWidth / 2;
     let best = 0, bestD = Infinity;
-    cards.forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bestD) { bestD = d; best = i; } });
-    castIndex = best;
+    cards.forEach((c, i) => { const d = Math.abs(leftOf(c) + c.offsetWidth / 2 - mid); if (d < bestD) { bestD = d; best = i; } });
+    index = best;
     dotBtns.forEach((b, i) => b.classList.toggle('is-current', i === best));
     count.textContent = `${best + 1} / ${cards.length}`;
     prevBtn.disabled = best === 0;
     nextBtn.disabled = best === cards.length - 1;
-    castList.classList.toggle('is-end', best === cards.length - 1);
+    list.classList.toggle('is-end', best === cards.length - 1);
   };
-  castList.addEventListener('scroll', () => requestAnimationFrame(updateCast), { passive: true });
-  prevBtn.addEventListener('click', () => goCast(castIndex - 1));
-  nextBtn.addEventListener('click', () => goCast(castIndex + 1));
-  updateCast();
+  list.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+  prevBtn.addEventListener('click', () => go(index - 1));
+  nextBtn.addEventListener('click', () => go(index + 1));
+  update();
   // はじめて見えたときだけ、少し左へずれて戻る動きで「横に動くよ」と伝える
   if (!reduceMotion) {
     const nudgeIO = new IntersectionObserver(entries => {
       if (!entries[0].isIntersecting || !window.matchMedia('(max-width: 760px)').matches) return;
-      castList.classList.add('is-nudge');
-      castList.addEventListener('animationend', () => castList.classList.remove('is-nudge'), { once: true });
+      list.classList.add('is-nudge');
+      list.addEventListener('animationend', () => list.classList.remove('is-nudge'), { once: true });
       nudgeIO.disconnect();
     }, { threshold: 0.6 });
-    nudgeIO.observe(castList);
+    nudgeIO.observe(list);
   }
 }
+[['castList', 'キャラクター'], ['calmList', 'アプリ'], ['kidsList', 'アプリ']].forEach(([id, label]) => {
+  const el = document.getElementById(id);
+  if (el) setupCarousel(el, label);
+});
 
 // Cast: さわらなくても、カードが画面にしっかり入ったら「さわった」ときの動きを見せる
 // (自動で動いたときは、実績や効果音には数えない)
@@ -991,6 +1001,10 @@ function foldSummary(el) {
   }
   if (el.matches('.skills-grid')) {
     return [...el.querySelectorAll('li')].slice(0, 4).map(li => li.textContent.trim()).join(' / ') + ' ほか';
+  }
+  if (el.matches('.cert-rows')) {
+    const years = [...el.querySelectorAll('.cert-year')].map(y => y.textContent.trim());
+    return `${years[0]} 〜 ${years[years.length - 1]}・${years.length}件`;
   }
   if (el.matches('.cycle')) return [...el.querySelectorAll('h4')].map(h => h.textContent.trim()).join(' → ');
   if (el.matches('.log-track')) return 'v1 はじまり 〜 v155 いま';
