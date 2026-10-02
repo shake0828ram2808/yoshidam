@@ -327,9 +327,7 @@ nemuButtons.forEach(btn => {
 // たまご(ピコとくく): 8段階で育つ。見えている間は自動で育ち、つつくと1段階すすむ
 const eggStage = document.getElementById('eggStage');
 const eggButton = document.getElementById('eggButton');
-const eggLabel = document.getElementById('eggLabel');
 const eggDots = eggStage ? [...document.querySelectorAll('.egg-dots li')] : [];
-const EGG_LABELS = eggDots.map(li => li.title);
 const EGG_LAST = eggDots.length - 1;
 const EGG_STEP_MS = 1300;   // 1段階すすむ間隔
 const EGG_HOLD_MS = 2600;   // おとなになったら、少し見せてから はじめに戻る
@@ -344,7 +342,6 @@ function setEggStep(n) {
     li.classList.toggle('is-done', i < n);
     li.classList.toggle('is-current', i === n);
   });
-  eggLabel.textContent = EGG_LABELS[n] || '';
   // ひびが入るまでは ぐらぐら、生まれる瞬間は ぱっと光る
   const cls = n >= 1 && n <= 3 ? 'is-wobble' : n === 4 ? 'is-burst' : '';
   eggStage.classList.remove('is-wobble', 'is-burst');

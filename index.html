@@ -286,7 +286,7 @@
           <div class="project-body">
             <p class="status-badge">Web版 公開中 / iOS 準備中</p>
             <h4>頭痛手帳</h4>
-            <p>気圧による頭痛などの痛みと服薬を記録し、直近30日の服薬日数を目安の範囲内で「やりくり」できるようにするアプリ。キャラクター「ねむひつじ」が寄り添います。</p>
+            <p>頭痛などの痛みと服薬の管理アプリ。気圧注意報、服薬頻度注意報、薬在庫注意報、頭痛タイプの分析機能付き。</p>
             <div class="project-more" data-fold="技術・見どころ">
             <ul class="tag-list"><li>React</li><li>TypeScript</li><li>Vite</li><li>Capacitor</li><li>Cloudflare</li></ul>
             <ul class="project-points">
@@ -396,7 +396,7 @@
             <div class="project-body">
               <p class="status-badge status-badge--kids">iOS 配信中</p>
               <h4>ピコとめくって</h4>
-              <p>1〜4人で遊べる、カードめくりゲーム。2枚そろえる「そろえる」、おぼえて当てる「みつける」、時間内に全部おもてにする「めくる」の3つの遊び方。8・16・24枚から選べて、ヒントもある。</p>
+              <p>1〜4人で遊べる３つのカードめくりゲーム。ヒントやおたすけ機能で、年齢差があっても楽しめます。</p>
               <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>みんなで遊べる</li><li>Capacitor</li></ul>
               <div class="kids-actions">
                 <a href="https://apps.apple.com/us/app/%E3%83%94%E3%82%B3%E3%81%A8%E3%82%81%E3%81%8F%E3%81%A3%E3%81%A6/id6778352689" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="ピコとめくってを App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
@@ -445,7 +445,7 @@
             </svg>
           </button>
           <h3>ピコ</h3>
-          <p>「けいさん」「くく」「めくって」のピコのシリーズに登場するガイド役。SVGアニメーションで動き、つつくと「？」が「！」になります。</p>
+          <p>「けいさん」「くく」「めくって」のピコのシリーズに登場するガイド役。</p>
           <div class="piko-friends">
             <h4 class="piko-friends-title">ピコと仲間達</h4>
             <!-- ピコと仲間達(ピコとけいさん に登場)。つつくと にっこり顔になって、ぴょんと跳ねる -->
@@ -479,7 +479,7 @@
             <img class="dango-img dango-img--curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267" loading="lazy">
           </button>
           <h3>だんごむし</h3>
-          <p>「だんごむしのぼうけん」の主人公。粘土のような質感で、つつくと丸まります。子どもと一緒に考えた動きで冒険します。</p>
+          <p>「だんごむしのぼうけん」の主人公。ある日強風でとばされ、知らない場所へ。</p>
           <div class="cast-extra">
             <h4 class="piko-friends-title">ぼうけんで出会う ハチ</h4>
             <!-- 2コマを切り替えて はばたく -->
@@ -500,7 +500,7 @@
           </div>
           </div>
           <h3>ねむひつじ</h3>
-          <p>「頭痛手帳」に登場する、赤いスカーフの女の子と青いスカーフの男の子。気分に合わせて切り替えて使えます。</p>
+          <p>「頭痛手帳」に登場するひつじ。赤いスカーフの女の子、青いスカーフの男の子。</p>
           <div class="nemu-toggle" role="group" aria-label="ねむひつじの切り替え">
             <button type="button" class="nemu-btn is-active" data-scarf="red" aria-pressed="true">女の子</button>
             <button type="button" class="nemu-btn" data-scarf="blue" aria-pressed="false">男の子</button>
@@ -525,10 +525,9 @@
             </span>
           </button>
           <h3>たまご</h3>
-          <p>「ピコとくく」で育てる、緑のたまご。九九の「れんしゅう」で段をクリアするたびに、ひびが入って生まれ、少しずつ大きくなっていきます。</p>
+          <p>「ピコとくく」で育てる、緑のたまご。取り組んでメダルをもらうたび、少しずつ成長する。</p>
           <div class="egg-progress">
-            <ol class="egg-dots" aria-hidden="true"><li data-step="0" title="たまご"></li><li data-step="1" title="ひびが入る"></li><li data-step="2" title="もう少し"></li><li data-step="3" title="うまれる!"></li><li data-step="4" title="うまれたて"></li><li data-step="5" title="あかちゃん"></li><li data-step="6" title="こども"></li><li data-step="7" title="おとな"></li></ol>
-            <p class="egg-label" id="eggLabel" aria-live="polite">たまご</p>
+            <ol class="egg-dots" aria-hidden="true"><li data-step="0"></li><li data-step="1"></li><li data-step="2"></li><li data-step="3"></li><li data-step="4"></li><li data-step="5"></li><li data-step="6"></li><li data-step="7"></li></ol>
           </div>
           <div class="egg-others" aria-label="ほかの色のたまご"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_pink_intact.png" alt="ピンクのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_blue_intact.png" alt="あおのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_purple_intact.png" alt="むらさきのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_orange_intact.png" alt="オレンジのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_silver_intact.png" alt="ぎんのたまご" loading="lazy"></div>
         </article>
@@ -547,17 +546,17 @@
         <li class="question">
           <span class="question-tag">工夫 <i>/</i> UX</span>
           <h3>本当に、<br>わかりやすいか。</h3>
-          <p>使う人の目線で。迷わせない画面で。使いやすさと価値を両立します。</p>
+          <p>使う人の目線で迷わないか。ユーザーの期待とギャップはないか。価値はどこか。驚きや不足をどこに作るか。</p>
         </li>
         <li class="question">
           <span class="question-tag">効率 <i>/</i> 要件定義</span>
           <h3>何を作り、<br>何を作らないか。</h3>
-          <p>入り組んだ要件を、シンプルな仕様に絞る。優先度と時期から、日程と進捗まで見ます。</p>
+          <p>要件の本質は何か、よりシンプルな仕様に落とし込めないか。必須かオプションか、優先順位はどうか。</p>
         </li>
         <li class="question">
           <span class="question-tag">持続性 <i>/</i> 保守性</span>
           <h3>未来で、<br>困らないか。</h3>
-          <p>優先順位や本質を踏まえ、将来の保守性を守れる判断をします。</p>
+          <p>将来何が変わりうるか、増えうるか。技術負債に手を入れられないか、依存関係が正しいか。</p>
         </li>
       </ol>
 

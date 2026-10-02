@@ -2482,7 +2482,6 @@ code{
 }
 .egg-dots li.is-done{ background: #8CC07A; }
 .egg-dots li.is-current{ background: #B9E39A; transform: scale(1.4); }
-.egg-label{ margin: 8px 0 0 !important; font-family: var(--font-round); font-size: .82rem !important; color: #B9E39A !important; }
 
 /* =========================================================
    スマホの Cast: 左右に動かせることが分かるように
@@ -3064,4 +3063,10 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
 @media (max-width: 760px){
   .craft-subhead--fold, .devlog-head{ display: none; }
   .craft .fold-toggle{ margin-bottom: 12px; }
+}
+
+/* スマホのサイクル: 光る丸(拡大+外側の輪)が折りたたみの端で切れないよう、内側に余白をとる */
+@media (max-width: 760px){
+  .cycle{ padding: 12px 0 0 12px; }
+  .cycle::before{ left: 37px; top: 38px; }
 }
