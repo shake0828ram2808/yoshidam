@@ -37,9 +37,9 @@
 
 ## 公開先
 
-- GitHub Pages: https://shake0828ram2808.github.io/yoshidam/
-- `index.html` の `og:url` と `og:image` は、この公開URLの絶対パスで書いています(URLが変わったら差し替える)
-- `404.html` は `/yoshidam/assets/...` を参照しています(公開先のパスが変わったら合わせる)
+- Cloudflare Pages(ビルドなし・出力ディレクトリはリポジトリのルート)。ワーカーは使わない
+- `index.html` の `og:url` と `og:image` は、公開URLの絶対パスで書く(URLが変わったら差し替える)
+- `404.html` はサイトのルートに置かれる前提で `/assets/...` を参照しています
 
 ## 遊びの要素(game.js)
 
