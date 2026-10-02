@@ -3085,3 +3085,21 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .app-list .project-body > p:not(.status-badge),
   .projects-row--kids .project-body > p:not(.status-badge){ font-size: .8rem; line-height: 1.7; margin-bottom: 16px; }
 }
+
+/* スマホのアプリカード: 「App Store で見る」「アプリを見る」はスクショの右の列に、下寄せで置く */
+@media (max-width: 760px){
+  .app-list .project-card, .projects-row--kids .project-card{
+    --card-areas: "phone badge" "phone title" "phone desc" "phone link" "toggle toggle" "fold fold";
+    --card-rows: auto auto 1fr auto auto auto;
+  }
+  .app-list .text-link, .projects-row--kids .kids-actions{ align-self: end; margin: 0 0 16px; }
+  .projects-row--kids .kids-actions{ display: block; }
+  .projects-row--kids .kids-actions .kids-btn{ display: inline-flex; padding: 8px 12px; font-size: .72rem; white-space: nowrap; max-width: 100%; }
+  .app-list .project-body > p:not(.status-badge),
+  .projects-row--kids .project-body > p:not(.status-badge){ margin-bottom: 12px; }
+}
+@media (max-width: 760px){
+  /* 全幅指定(:not つき)より強く効かせるため、カードのクラスも重ねる */
+  .app-list .project-card .project-body > .text-link,
+  .projects-row--kids .project-card .project-body > .kids-actions{ grid-column: 2; grid-row: 4; }
+}
