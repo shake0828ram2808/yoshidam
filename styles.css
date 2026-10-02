@@ -2904,3 +2904,56 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
 @media (max-width: 560px){
   .about .about-grid{ text-align: left; }
 }
+
+/* =========================================================
+   Focus: 3つの問い
+========================================================= */
+.questions{
+  list-style: none; margin: 0 0 72px; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  counter-reset: q;
+}
+.question{
+  position: relative;
+  padding: 26px 24px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(201,123,99,.10), rgba(38,34,30,.55) 55%);
+  counter-increment: q;
+  overflow: hidden;
+  transition: transform .4s var(--ease), border-color .4s var(--ease);
+}
+.question:hover{ transform: translateY(-4px); border-color: rgba(201,123,99,.45); }
+/* 背景に、うすく大きな「?」 */
+.question::after{
+  content: "?";
+  position: absolute; right: 12px; bottom: -34px;
+  font-family: var(--font-round);
+  font-size: 9rem; font-weight: 900; line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(243,237,228,.07);
+  pointer-events: none;
+}
+.question-tag{
+  display: inline-block;
+  font-family: var(--font-round);
+  font-size: .72rem; letter-spacing: .12em;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.question-tag i{ font-style: normal; opacity: .5; margin: 0 2px; }
+.question h3{
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: .02em;
+  font-feature-settings: "palt";
+  margin: 0 0 14px;
+}
+.question p{ margin: 0; font-size: .86rem; line-height: 1.8; color: var(--text-muted); position: relative; }
+.craft-note{ margin: -8px 0 22px; font-size: .86rem; color: var(--text-muted); }
+@media (max-width: 760px){
+  .questions{ grid-template-columns: 1fr; gap: 12px; margin-bottom: 56px; }
+  .question{ padding: 20px 20px 18px; }
+  .question h3 br{ display: none; }
+}
