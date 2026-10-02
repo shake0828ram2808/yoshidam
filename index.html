@@ -95,9 +95,9 @@
       <div class="hero-head">
         <img class="hero-avatar" src="assets/images/yoshida-avatar.jpg" alt="よしだのアイコン" width="400" height="400">
         <h1 class="hero-title">
-          <span class="hero-line" style="--d:0">工夫と</span>
-          <span class="hero-line" style="--d:1">効率と</span>
-          <span class="hero-line" style="--d:2"><em class="hero-em">持続性</em></span>
+          <span class="hero-line" style="--d:0"><em class="hero-em" style="--m:0">工夫</em>と</span>
+          <span class="hero-line" style="--d:1"><em class="hero-em" style="--m:1">効率</em>と</span>
+          <span class="hero-line" style="--d:2"><em class="hero-em" style="--m:2">持続性</em></span>
         </h1>
       </div>
       <p class="hero-lead">
@@ -469,7 +469,7 @@
                 </span>
               </button>
             </div>
-            <p class="piko-friends-note">「ピコとけいさん1年生」にだけ登場する、水色・ピンク・黄緑の3匹。つつくと、にっこりします。</p>
+            <p class="piko-friends-note">「ピコとけいさん1年生」にだけ登場する、水色・ピンク・黄緑の3匹。</p>
           </div>
         </article>
 
@@ -541,9 +541,8 @@
     <div class="section-inner">
       <p class="section-kicker">04</p>
       <h2 class="section-title">Focus</h2>
-      <p class="section-lead">気をつけている考え方</p>
-
-      <!-- 3つの問い(ヒーローの「工夫と効率と持続性」と対応) -->
+      <!-- その1: 気をつけている考え方(ヒーローの「工夫と効率と持続性」と対応する3つの問い) -->
+      <h3 class="about-subhead focus-subhead"><span>Focus /</span>気をつけている考え方</h3>
       <ol class="questions">
         <li class="question">
           <span class="question-tag">工夫 <i>/</i> UX</span>
@@ -562,9 +561,12 @@
         </li>
       </ol>
 
-      <!-- AI駆動開発のサイクル。画面に入ると、1つずつ順に光る -->
-      <h3 class="craft-subhead">AI駆動開発のサイクル</h3>
+      <!-- その2: AI駆動開発の実践(サイクル・設計の見どころ・開発ログ) -->
+      <h3 class="about-subhead focus-subhead"><span>Focus /</span>AI駆動開発の実践</h3>
       <p class="craft-note">個人開発は、AIと役割を分けながら進めています。</p>
+
+      <!-- AI駆動開発のサイクル。画面に入ると、1つずつ順に光る -->
+      <h4 class="craft-subhead">サイクル</h4>
       <ol class="cycle" id="cycle" data-fold="5つのステップを見る">
         <li class="cycle-step"><span class="cycle-no">1</span><h4>ルールを書く</h4><p>リポジトリごとに <code>CLAUDE.md</code> を置き、目的・守ること・確認の手順を書く。</p></li>
         <li class="cycle-step"><span class="cycle-no">2</span><h4>役割を分ける</h4><p>方針や設計の判断は自分。仕様が決まった実装や単純作業はAIに任せる。</p></li>
@@ -574,7 +576,7 @@
       </ol>
 
       <!-- 設計の見どころ(アプリごとのタブ) -->
-      <h3 class="craft-subhead">設計の見どころ</h3>
+      <h4 class="craft-subhead">設計の見どころ</h4>
       <div class="craft-tabs" role="tablist" aria-label="アプリを選ぶ">
         <button type="button" role="tab" id="tab-zutsu" aria-controls="panel-zutsu" aria-selected="true">頭痛手帳</button>
         <button type="button" role="tab" id="tab-nige" aria-controls="panel-nige" aria-selected="false" tabindex="-1">だんごむし</button>
@@ -629,7 +631,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
       <div class="devlog">
         <button type="button" class="acorn" data-acorn="focus" aria-label="かくれた どんぐり" style="right:-6px;top:-40px;--rot:16deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
         <div class="devlog-head">
-          <h3 class="craft-subhead">開発ログ: だんごむしのぼうけん</h3>
+          <h4 class="craft-subhead">開発ログ: だんごむしのぼうけん</h4>
           <p class="devlog-level"><span>改善リリース</span><b>v<span data-count="155">155</span></b></p>
         </div>
         <p class="devlog-lead">遊んでみて気づいたことを、すぐ直す。その積み重ねの主な節目です。</p>
