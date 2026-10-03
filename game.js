@@ -82,7 +82,8 @@ function explorePercent() {
 
 function renderQuest() {
   const pct = explorePercent();
-  document.getElementById('questRing').style.setProperty('--pct', pct);
+  // 丸いメーターは、横の数字(どんぐり n/5)と同じく どんぐりの集まり具合を表す(5つで満タン)
+  document.getElementById('questRing').style.setProperty('--pct', Math.round(quest.acorns.length / ACORN_IDS.length * 100));
   document.getElementById('questAcorns').textContent = quest.acorns.length;
   document.getElementById('questPercent').textContent = pct;
   document.getElementById('questPercentSr').textContent = pct;
@@ -350,41 +351,50 @@ renderQuest();
 requestTick(); // はじめの現在地(Top)も記録する
 
 // ---------------------------------------------------------
-// ヒーローのだんごむし: スクロールすると小道を歩き、先のどんぐりを拾う(だんごむしのぼうけんと同じ2コマ歩き)
-// 1つ目のどんぐりがここで自然に入るので「1/5」と表示され、集められることが伝わる
+// だんごむしの小道: スクロールに合わせて歩く(だんごむしのぼうけんと同じ2コマ歩き・戻ると上を向く・止まると丸まる)
+// ヒーロー: 先のどんぐりを拾う(1つ目が自然に入って「1/5」と表示され、集められることが伝わる)
+// Contact の上: 最後にもう一度登場して、ページのはじめと終わりをつなぐ
 // ---------------------------------------------------------
-{
-  const track = document.getElementById('heroWalk');
+function setupWalk(track, progress, onArrive) {
   const walker = track && track.querySelector('.hw-dango');
-  const trailAcorn = track && track.querySelector('.acorn');
-  if (track && walker && trailAcorn) {
-    const STEP_PX = 16;      // この距離ごとに足を入れかえる
-    const CURL_MS = 900;     // 止まってから丸まるまで
-    let lastP = 0, travelled = 0, frameB = false, idle = 0;
-    let picked = quest.acorns.includes('hero');
-    track.classList.toggle('is-done', picked);
-    const walk = (y, vh) => {
-      const len = Math.max(0, track.clientHeight - walker.offsetHeight - 36);
-      const p = Math.min(1, Math.max(0, y / (vh * 0.4)));
-      const d = (p - lastP) * len;
-      if (!reduceMotion && Math.abs(d) > 0.3) {
-        travelled += Math.abs(d);
-        if (travelled > STEP_PX) { travelled = 0; frameB = !frameB; walker.classList.toggle('is-b', frameB); }
-        walker.classList.toggle('is-up', d < 0);
-        walker.classList.remove('is-curled');
-        clearTimeout(idle);
-        idle = setTimeout(() => walker.classList.add('is-curled'), CURL_MS);
-      }
-      lastP = p;
-      walker.style.setProperty('--hw-y', `${(p * len).toFixed(1)}px`);
-      track.classList.toggle('is-walking', p > 0.02);
-      if (p >= 0.97 && !picked) {
-        picked = true;
-        trailAcorn.click();
-        track.classList.add('is-done');
-      }
-    };
-    scrollHooks.push(walk);
-    walk(window.scrollY, window.innerHeight);
+  if (!walker) return;
+  const STEP_PX = 16;      // この距離ごとに足を入れかえる
+  const CURL_MS = 900;     // 止まってから丸まるまで
+  let lastP = 0, travelled = 0, frameB = false, idle = 0, arrived = false;
+  const walk = (y, vh) => {
+    const len = Math.max(0, track.clientHeight - walker.offsetHeight - 36);
+    const p = Math.min(1, Math.max(0, progress(y, vh)));
+    const d = (p - lastP) * len;
+    if (!reduceMotion && Math.abs(d) > 0.3) {
+      travelled += Math.abs(d);
+      if (travelled > STEP_PX) { travelled = 0; frameB = !frameB; walker.classList.toggle('is-b', frameB); }
+      walker.classList.toggle('is-up', d < 0);
+      walker.classList.remove('is-curled');
+      clearTimeout(idle);
+      idle = setTimeout(() => walker.classList.add('is-curled'), CURL_MS);
+    }
+    lastP = p;
+    walker.style.setProperty('--hw-y', `${(p * len).toFixed(1)}px`);
+    track.classList.toggle('is-walking', p > 0.02);
+    if (p >= 0.97 && !arrived) { arrived = true; onArrive?.(); }
+  };
+  scrollHooks.push(walk);
+  walk(window.scrollY, window.innerHeight);
+}
+{
+  const heroTrack = document.getElementById('heroWalk');
+  const trailAcorn = heroTrack && heroTrack.querySelector('.acorn');
+  if (heroTrack && trailAcorn) {
+    const picked = quest.acorns.includes('hero');
+    heroTrack.classList.toggle('is-done', picked);
+    setupWalk(heroTrack, (y, vh) => y / (vh * 0.4), () => {
+      if (!quest.acorns.includes('hero')) trailAcorn.click();
+      heroTrack.classList.add('is-done');
+    });
+  }
+  // Contact の上: 小道が画面の下から上がってくる間に歩く
+  const endTrack = document.getElementById('endWalk');
+  if (endTrack) {
+    setupWalk(endTrack, (y, vh) => (vh * 0.92 - endTrack.getBoundingClientRect().top) / (vh * 0.5), () => endTrack.classList.add('is-done'));
   }
 }

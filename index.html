@@ -43,6 +43,9 @@
   <div class="sky-body sky-body--moon" id="skyMoon">
     <svg class="sky-moon" viewBox="0 0 100 100"><defs><radialGradient id="moonGrad" cx="40%" cy="35%" r="70%"><stop offset="0%" stop-color="#FFF4CF"/><stop offset="100%" stop-color="#F3D27A"/></radialGradient></defs><path d="M62 10a42 42 0 1 0 28 62A34 34 0 0 1 62 10z" fill="url(#moonGrad)"/></svg>
   </div>
+</div>
+<!-- 太陽は、子どもゾーンの青空より手前に出す(文字やカードよりは奥) -->
+<div class="sky-front" aria-hidden="true">
   <div class="sky-body sky-body--sun" id="skySun"><span class="sky-sun"></span></div>
 </div>
 
@@ -730,6 +733,14 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
   <!-- ============ CONTACT ============ -->
   <section id="contact" class="section contact" data-label="Contact">
     <div class="section-inner">
+      <!-- 最後にもう一度、だんごむしが小道を歩いてくる(ヒーローと対になる) -->
+      <div class="hero-walk hero-walk--end" id="endWalk" aria-hidden="true">
+        <div class="hw-dango">
+          <img class="hw-frame hw-frame--a" src="assets/images/characters/dango_top_mid.png" alt="" width="81" height="160" loading="lazy">
+          <img class="hw-frame hw-frame--b" src="assets/images/characters/dango_top_right.png" alt="" width="81" height="160" loading="lazy">
+          <img class="hw-curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267" loading="lazy">
+        </div>
+      </div>
       <p class="section-kicker">05</p>
       <h2 class="section-title">Contact</h2>
       <p class="section-lead contact-lead"><span>読んでくださって、ありがとうございます。</span><span>面談や仕事のご相談など、お気軽にご連絡ください。</span></p>
@@ -753,6 +764,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
             <li><b>だんごむしの歩行</b>は、波の SVG を <code>getPointAtLength</code> で400点に分け、横の位置から高さと傾きを求めています。</li>
             <li><b>スクロールの処理</b>は <code>requestAnimationFrame</code> で1フレームに1回にまとめ、重くならないようにしています。</li>
             <li><b>実績とどんぐりの記録</b>は、この端末の <code>localStorage</code> にだけ保存しています。</li>
+            <li><b>だんごむしやどんぐり、星空と流れ星、流れる雲と青空など</b>は、個人開発の各アプリから登場させました。</li>
           </ul>
         </div>
       </div>

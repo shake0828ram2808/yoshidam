@@ -3283,3 +3283,29 @@ p{ text-wrap: pretty; }
   height: calc(100% - var(--pad, 7px) * 2);
   object-fit: cover; object-position: top center;
 }
+
+/* 太陽の層: 背景(空・子どもゾーンの青空)より手前、セクションの中身(z-index:1)より奥 */
+.sky-front{ position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+
+/* スマホ: Cast のカードを短くして、縦のスクロールの邪魔をしにくくする
+   (横スワイプの列でも、縦の指の動きはページのスクロールとして通す) */
+@media (max-width: 760px){
+  .character-list{ touch-action: pan-x pan-y; overscroll-behavior-x: contain; }
+  .character-card{ padding: 18px 16px 16px; }
+  .character-visual{ width: 88px; height: 88px; margin-bottom: 10px; }
+  .character-card h3{ font-size: 1rem; margin-bottom: 4px; }
+  .character-card > p{ font-size: .82rem; line-height: 1.65; margin-bottom: 0; }
+  .piko-friends, .cast-extra{ margin-top: 12px; padding-top: 10px; }
+  .piko-friends-title{ font-size: .82rem; margin-bottom: 2px; }
+  .piko-trio{ height: 64px; }
+  .piko-trio .piko-pal{ transform: scale(.75); transform-origin: 50% 100%; }
+  .bee{ width: 60px; height: 74px; margin-top: 6px; }
+  .nemu-moon{ width: 96px; }
+  .nemu-toggle{ margin-top: 8px; }
+  .character-card--egg .egg-others{ margin-top: 10px; padding-top: 10px; gap: 8px 12px; }
+  .character-card--egg .egg-other{ width: 36px; }
+}
+
+/* Contact の上の小道(どんぐりはなし。歩き終わると丸まって休む) */
+.hero-walk--end{ height: clamp(140px, 20vh, 190px); margin: 0 auto 28px; }
+.hero-walk--end::before{ bottom: 20px; }
