@@ -3189,3 +3189,23 @@ p{ text-wrap: pretty; }
   .hero-title{ font-size: min(9vw, 2.4rem); margin-bottom: 26px; }
   .hero-head{ gap: 16px; margin-bottom: 22px; }
 }
+
+/* ヒーロー(改2): アイコンは中央、その下に自己紹介(中央寄せ)、1行あけて仕事の紹介 */
+.hero-head{ margin-bottom: 20px; }
+.hero-intro{
+  margin: 0 0 1.9em;
+  text-align: center;
+  font-size: 1rem; line-height: 1.9;
+  color: var(--text);
+}
+.hero-lead{ text-align: center; }
+@media (max-width: 560px){
+  .hero-intro{ font-size: .95rem; }
+  .hero-lead{ text-align: center; }
+}
+
+/* セクションの見出し(番号・タイトル・ひとこと)は中央寄せ */
+.section-inner > .section-kicker,
+.section-inner > .section-title,
+.section-inner > .section-lead{ text-align: center; }
+.section-inner > .section-kicker{ display: flex; justify-content: center; }
