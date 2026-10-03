@@ -13,6 +13,7 @@ const ACHIEVEMENTS = [
   { id: 'builder',   icon: '🛠️', name: 'つくりかた見学',     desc: 'Focus の3つのアプリを全部見た' },
   { id: 'play',      icon: '🎮', name: 'あそんでみた',       desc: '個人開発のアプリを開いてみた' },
   { id: 'piko',      icon: '🫧', name: 'ピコと仲間達と なかよし', desc: 'ピコと仲間達の3匹を全部つついた' },
+  { id: 'walk',      icon: '🐾', name: 'おさんぽ',           desc: 'だんごむしを歩かせて、看板まで行った' },
   { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
   { id: 'nemu',      icon: '🧣', name: 'おきがえ',           desc: 'ねむひつじのスカーフを切り替えた' },
   { id: 'egg',       icon: '🥚', name: 'たまごを育てた',     desc: '自分でつついて、たまごを おとなまで育てた' },
