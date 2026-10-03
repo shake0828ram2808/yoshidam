@@ -3323,3 +3323,51 @@ p{ text-wrap: pretty; }
 .quest-secret h3{ padding-right: 40px; }
 .quest-secret-open{ display: inline-block; margin-top: 10px; margin-left: 14px; }
 .quest-secret-open[hidden]{ display: none; }
+
+/* =========================================================
+   Cast: ピコとけいさん1年生 の青空(子どもゾーンの青空から続けて、下は夜空へ溶かす)
+========================================================= */
+#projects{ padding-bottom: 0; }
+.characters{
+  position: relative;
+  /* この中だけ、明るい背景用の色に入れかえる */
+  --text: var(--kids-ink);
+  --text-muted: var(--kids-ink-muted);
+  --bg-elevated: #FFFFFF;
+  --bg-elevated-2: #EEF5FD;
+  --line: rgba(74,58,44,.10);
+  --line-strong: rgba(74,58,44,.18);
+  color: var(--text);
+  padding-top: 100px;
+}
+.cast-sky{
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    linear-gradient(to bottom, #eef7ff 0, rgba(238,247,255,0) 220px),
+    url(assets/images/characters/cast_sky.webp) center bottom / cover no-repeat,
+    #dcebfb;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 140px), transparent);
+          mask-image: linear-gradient(to bottom, #000 calc(100% - 140px), transparent);
+}
+.cast-sky-top{
+  position: absolute; top: 0; left: -10%; right: -10%; height: 300px;
+  background: url(assets/images/characters/cast_sky_top.png) center top / max(1300px, 100%) auto no-repeat;
+  animation: sky-drift 14s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.characters > .section-inner{ position: relative; z-index: 1; }
+.characters .character-card{
+  border: none;
+  box-shadow: 0 10px 0 rgba(74,58,44,.06), 0 18px 40px -18px rgba(60,90,130,.35);
+}
+.characters .section-num{ -webkit-text-stroke-color: rgba(74,58,44,.10); }
+.characters .section-kicker{ color: var(--accent); }
+.characters .cast-arrow{ background: rgba(255,255,255,.8); border-color: rgba(74,58,44,.18); color: var(--kids-ink); }
+.characters .cast-dots button{ background: rgba(74,58,44,.2); }
+.characters .cast-dots button.is-current{ background: var(--accent); }
+.characters .cast-count{ color: var(--kids-ink-muted); }
+@media (prefers-reduced-motion: reduce){ .cast-sky-top{ animation: none; } }
+@media (max-width: 760px){
+  .cast-sky-top{ background-size: 760px auto; left: -20%; right: -20%; }
+  .characters{ padding-top: 72px; }
+}
