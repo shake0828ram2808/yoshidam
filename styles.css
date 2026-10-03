@@ -171,8 +171,6 @@ html.show-todo [data-todo]::before{
   font-size: 1.05rem;
   letter-spacing: 0.04em;
 }
-.brand-moon{ color: var(--moon); transition: transform .6s var(--ease-bounce); }
-.brand:hover .brand-moon{ transform: rotate(-25deg) scale(1.1); }
 
 .main-nav{ display:flex; gap: 26px; position: relative; }
 .main-nav a{
