@@ -57,9 +57,9 @@
   </span>
   <nav class="main-nav" id="mainNav" aria-label="ページ内メニュー">
     <a href="#hero">About</a>
+    <a href="#craft">Focus</a>
     <a href="#projects">Apps</a>
     <a href="#characters">Cast</a>
-    <a href="#craft">Focus</a>
     <a href="#contact">Contact</a>
     <span class="nav-indicator" aria-hidden="true"></span>
   </nav>
@@ -102,27 +102,19 @@
         <span class="ph">仕事と個人開発、</span><span class="ph">考えていることを紹介します。</span><br>
         <span class="ph">どんぐりを拾いながら、</span><span class="ph">散歩してみてください。</span>
       </p>
-
-
-      <!-- だんごむしのお散歩: スティック(または矢印キー)で歩かせ、看板にしばらく乗るとそのセクションへ -->
-      <div class="walk" id="walk" tabindex="0" role="group" aria-label="だんごむしのお散歩。矢印キーで動かし、看板に乗るとそのセクションへ移動します">
-        <a class="walk-sign" href="#projects" data-x="18" data-y="26"><span class="walk-ring" aria-hidden="true"></span>Apps</a>
-        <a class="walk-sign" href="#characters" data-x="82" data-y="26"><span class="walk-ring" aria-hidden="true"></span>Cast</a>
-        <a class="walk-sign" href="#craft" data-x="18" data-y="74"><span class="walk-ring" aria-hidden="true"></span>Focus</a>
-        <a class="walk-sign" href="#contact" data-x="82" data-y="74"><span class="walk-ring" aria-hidden="true"></span>Contact</a>
-        <div class="walk-dango" id="walkDango" aria-hidden="true">
-          <img class="walk-frame walk-frame--a" src="assets/images/characters/dango_top_mid.png" alt="" width="81" height="160">
-          <img class="walk-frame walk-frame--b" src="assets/images/characters/dango_top_right.png" alt="" width="81" height="160">
-          <img class="walk-curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267">
+      <!-- だんごむしの小道: スクロールに合わせて歩き、先のどんぐりを拾う(1つ目は、ここで自然に拾える) -->
+      <div class="hero-walk" id="heroWalk">
+        <span class="hw-hint" aria-hidden="true">scroll</span>
+        <div class="hw-dango" aria-hidden="true">
+          <img class="hw-frame hw-frame--a" src="assets/images/characters/dango_top_mid.png" alt="" width="81" height="160">
+          <img class="hw-frame hw-frame--b" src="assets/images/characters/dango_top_right.png" alt="" width="81" height="160">
+          <img class="hw-curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267">
         </div>
-        <div class="walk-joy" id="walkJoy" aria-hidden="true"><img class="walk-knob" id="walkKnob" src="assets/images/characters/joy_knob.png" alt="" width="112" height="112"></div>
-        <p class="walk-hint" id="walkHint">スティックで歩かせて、看板へ</p>
+        <button type="button" class="acorn acorn--trail" data-acorn="hero" aria-label="どんぐりを拾う"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
       </div>
+
+
     </div>
-    <button type="button" class="acorn" data-acorn="hero" aria-label="かくれた どんぐり" style="left:7%;bottom:16%;--rot:-18deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
-    <a href="#about" class="scroll-hint" id="scrollHint" aria-label="下へスクロール">
-      <span class="scroll-hint-text">scroll</span><span class="scroll-hint-line"></span>
-    </a>
   </section>
 
   <!-- ============ ABOUT ============ -->
@@ -259,276 +251,10 @@
     </div>
   </section>
 
-  <!-- Works(業務での工夫)は、note の記事を書いてから戻す予定(git の履歴に残っています) -->
-
-  <!-- ============ PROJECTS ============ -->
-  <section id="projects" class="section projects" data-label="Apps">
-    <div class="section-inner">
-      <p class="section-kicker">02</p>
-      <h2 class="section-title">Apps</h2>
-      <p class="section-lead"><span class="ph">個人で企画から開発まで</span><span class="ph">手がけたアプリです。</span></p>
-
-      <h3 class="projects-subhead projects-subhead--calm">自分が便利なアプリ</h3>
-      <div class="app-list" id="calmList">
-        <article class="project-card project-card--calm" data-tilt>
-          <div class="phone" aria-hidden="true">
-            <img src="assets/images/projects/zutsurun.webp" alt="" width="390" height="844" loading="lazy">
-          </div>
-          <div class="project-body">
-            <p class="status-badge">iOS 準備中</p>
-            <h4>頭痛手帳</h4>
-            <p>頭痛などの痛みと服薬の管理アプリ。気圧注意報、服薬頻度注意報、薬在庫注意報、頭痛タイプの分析機能、家族や友人との共有機能付き。</p>
-            <div class="project-more" data-fold="技術・見どころ">
-            <ul class="tag-list"><li>React</li><li>TypeScript</li><li>Vite</li><li>Capacitor</li><li>Cloudflare</li></ul>
-            <ul class="project-points">
-              <li>保存処理をリポジトリ層にまとめ、Web と iOS で切り替え</li>
-              <li>服薬カウントの計算ロジックに単体テスト</li>
-              <li>健康データは端末の外に送らない設計</li>
-            </ul>
-            </div>
-            <a href="https://zutsurun.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
-        <article class="project-card project-card--calm" data-tilt>
-          <div class="phone" aria-hidden="true">
-            <img src="assets/images/projects/mystudy.webp" alt="" width="390" height="844" loading="lazy">
-          </div>
-          <div class="project-body">
-            <p class="status-badge">Web 公開中 / 自分用</p>
-            <h4>AWS 認定 学習カレンダー</h4>
-            <p>AWS 認定3資格取得用の学習計画アプリ。進捗グラフ、カレンダー、予定自動振り分け機能、ロードマップ、学習問題集つき。</p>
-            <div class="project-more" data-fold="技術・見どころ">
-            <ul class="tag-list"><li>React 19</li><li>TypeScript</li><li>Tailwind CSS</li><li>zustand</li><li>PWA</li></ul>
-            <ul class="project-points">
-              <li>学習範囲をロードマップで表示し、分野ごとの進み具合が分かる</li>
-              <li>受験日から逆算して、平日・休日の学習時間に合わせて予定を自動で割り当て</li>
-              <li>カレンダーはドラッグ&amp;ドロップで予定を動かせる(タッチ対応)</li>
-              <li>確認問題 593問と、本番形式の演習つき</li>
-            </ul>
-            </div>
-            <a href="https://mystudy.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <!-- ポップトーンに切り替わるブロック -->
-    <div class="kids-zone" id="kidsZone">
-      <!-- 上のふち: 波・ガーランド・歩くだんごむし(スクロールに合わせて歩く) -->
-      <div class="kids-edge" aria-hidden="true">
-        <svg class="kids-wave" viewBox="0 0 1440 90" preserveAspectRatio="none"><path id="kidsWavePath" d="M0,90 L0,52 C 160,10 340,6 520,34 C 700,62 880,74 1060,46 C 1220,22 1340,22 1440,40 L1440,90 Z"/></svg>
-        <svg class="bunting" viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="bunting-string" d="M0,8 Q 720,96 1440,8" fill="none"/></svg>
-        <ul class="bunting-flags" id="buntingFlags"></ul>
-        <img class="edge-dango" id="edgeDango" src="assets/images/characters/dango_side.png" alt="" width="220" height="192">
-      </div>
-      <!-- 晴れた空の雲の帯(ピコとけいさん と同じ素材)。ゆっくり左右に流れる -->
-      <div class="kids-sky" aria-hidden="true"><div class="kids-sky-band"></div></div>
-      <!-- 浮かんでいる飾り(スクロールで少しずつずれる) -->
-      <div class="kids-deco" aria-hidden="true">
-        <img class="deco deco--cloud1" src="assets/images/characters/cloud.png" alt="" width="320" height="121" style="--depth:.25">
-        <img class="deco deco--cloud2" src="assets/images/characters/cloud.png" alt="" width="320" height="121" style="--depth:.12">
-        <img class="deco deco--flower" src="assets/images/characters/flower.png" alt="" width="120" height="118" style="--depth:.35">
-        <img class="deco deco--clover" src="assets/images/characters/clover.png" alt="" width="120" height="135" style="--depth:.5">
-        <img class="deco deco--ladybug" src="assets/images/characters/ladybug.png" alt="" width="90" height="101" style="--depth:.6">
-        <img class="deco deco--star" src="assets/images/characters/star.png" alt="" width="90" height="88" style="--depth:.4">
-      </div>
-      <button type="button" class="acorn" data-acorn="kids" aria-label="かくれた どんぐり" style="left:12%;bottom:36px;--rot:22deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
-      <svg class="kids-wave kids-wave--bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L0,30 C 240,70 480,64 720,40 C 960,16 1200,20 1440,46 L1440,0 Z"/></svg>
-      <div class="section-inner">
-        <h3 class="projects-subhead projects-subhead--kids" data-split="bounce">子どもと楽しむアプリ</h3>
-        <div class="projects-row--kids" id="kidsList">
-          <article class="project-card project-card--kids project-card--wide" data-tilt>
-            <div class="phone phone--kids" aria-hidden="true">
-              <img src="assets/images/projects/nigerun.webp" alt="" width="390" height="844" loading="lazy">
-            </div>
-            <div class="project-body">
-              <p class="status-badge status-badge--kids">iOS 配信中</p>
-              <h4>だんごむしのぼうけん</h4>
-              <p>子どもと一緒に考えたストーリーをもとにした、だんごむしが主人公の冒険ゲーム。全24面・敵やいきものの図鑑つき。</p>
-              <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>WebAudio</li><li>自作ビルド</li><li>Capacitor</li></ul>
-              <div class="kids-actions">
-                <a href="https://apps.apple.com/us/app/%E3%81%A0%E3%82%93%E3%81%94%E3%82%80%E3%81%97%E3%81%AE%E3%81%BC%E3%81%86%E3%81%91%E3%82%93/id6797248230" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="だんごむしのぼうけんを App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
-              </div>
-            </div>
-          </article>
-          <article class="project-card project-card--kids" data-tilt>
-            <div class="phone phone--kids" aria-hidden="true">
-              <img src="assets/images/projects/tasurun.webp" alt="" width="390" height="844" loading="lazy">
-            </div>
-            <div class="project-body">
-              <p class="status-badge status-badge--kids">iOS 配信中</p>
-              <h4>ピコとけいさん1年生</h4>
-              <p>キャラクター「ピコ」と一緒に、たし算・ひき算・さくらんぼ算を練習できる知育アプリ。</p>
-              <ul class="tag-list tag-list--kids"><li>SVGアニメ</li><li>共通ライブラリ</li><li>Capacitor</li></ul>
-              <div class="kids-actions">
-                <a href="https://apps.apple.com/us/app/%E3%83%94%E3%82%B3%E3%81%A8%E3%81%91%E3%81%84%E3%81%95%E3%82%93%EF%BC%91%E5%B9%B4%E7%94%9F/id6783023995" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="ピコとけいさん1年生を App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
-              </div>
-            </div>
-          </article>
-          <article class="project-card project-card--kids" data-tilt>
-            <div class="phone phone--kids" aria-hidden="true">
-              <img src="assets/images/projects/kukurun.webp" alt="" width="390" height="844" loading="lazy">
-            </div>
-            <div class="project-body">
-              <p class="status-badge status-badge--kids">iOS 配信中</p>
-              <h4>ピコとくく</h4>
-              <p>ピコと九九をおぼえるアプリ。「おぼえる・れんしゅう・テスト」の3段階で、メダルを集めながら たまごを育てていく。</p>
-              <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>読み上げ</li><li>Capacitor</li></ul>
-              <div class="kids-actions">
-                <a href="https://apps.apple.com/us/app/%E3%83%94%E3%82%B3%E3%81%A8%E3%81%8F%E3%81%8F/id6761843844" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="ピコとくくを App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
-              </div>
-            </div>
-          </article>
-          <article class="project-card project-card--kids" data-tilt>
-            <div class="phone phone--kids" aria-hidden="true">
-              <img src="assets/images/projects/mekurun.webp" alt="" width="390" height="844" loading="lazy">
-            </div>
-            <div class="project-body">
-              <p class="status-badge status-badge--kids">iOS 配信中</p>
-              <h4>ピコとめくって</h4>
-              <p>1〜4人で遊べる３つのカードめくりゲーム。ヒントやおたすけ機能で、年齢差があっても楽しめます。</p>
-              <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>みんなで遊べる</li><li>Capacitor</li></ul>
-              <div class="kids-actions">
-                <a href="https://apps.apple.com/us/app/%E3%83%94%E3%82%B3%E3%81%A8%E3%82%81%E3%81%8F%E3%81%A3%E3%81%A6/id6778352689" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="ピコとめくってを App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CHARACTERS ============ -->
-  <section id="characters" class="section characters" data-label="Cast">
-    <div class="section-inner">
-      <p class="section-kicker">03</p>
-      <h2 class="section-title">Cast</h2>
-      <p class="section-lead"><span class="ph">アプリに登場するキャラクターたちです。</span><span class="ph">さわってみてください。</span></p>
-      <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:2%;top:8px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
-
-      <div class="character-list" id="castList">
-        <article class="character-card" data-tilt>
-          <button type="button" class="character-visual character-visual--piko" id="pikoButton" aria-label="ピコをつつく">
-            <!-- ピコのSVG(pikotto/shared/piko.js の buildPikoSVG と同じ見た目) -->
-            <svg class="piko" viewBox="0 0 100 100" width="96" height="96" aria-hidden="true">
-              <defs>
-                <radialGradient id="pkBody" cx="42%" cy="35%" r="58%"><stop offset="0%" stop-color="#fff"/><stop offset="60%" stop-color="#b8d9ff"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
-                <radialGradient id="pkEye" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#6699ff"/><stop offset="100%" stop-color="#003399"/></radialGradient>
-                <radialGradient id="pkHat" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#ddeeff"/><stop offset="60%" stop-color="#88bbee"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
-                <radialGradient id="pkBrim" cx="40%" cy="30%" r="65%"><stop offset="0%" stop-color="#d0e8ff"/><stop offset="55%" stop-color="#7ab0ee"/><stop offset="100%" stop-color="#4488cc"/></radialGradient>
-                <filter id="pkShadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0055aa" flood-opacity="0.18"/></filter>
-              </defs>
-              <circle cx="50" cy="54" r="38" fill="url(#pkBody)" filter="url(#pkShadow)"/>
-              <ellipse cx="28" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
-              <ellipse cx="72" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
-              <g class="piko-look"><g class="piko-eyes">
-                <g transform="translate(37 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
-                <g transform="translate(63 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="-1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
-              </g></g>
-              <path class="piko-mouth" d="M 45,60 C 46,62 48,62 50,60 C 52,62 54,62 55,60" fill="none" stroke="#334" stroke-width="2.2" stroke-linecap="round"/>
-              <g transform="translate(17 5) rotate(30 50 22)">
-                <ellipse cx="50" cy="21" rx="13" ry="6" fill="url(#pkBrim)"/>
-                <circle cx="50" cy="16" r="3.5" fill="url(#pkHat)"/>
-                <path class="piko-hatena" d="M 50,13 L 50,11.5 A 4.5 4.5 0 1 0 45.5,7" fill="none" stroke="url(#pkHat)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path class="piko-bang" d="M 46.5,4 A 3.5,2.5 0 0,1 53.5,4 Q 53,6 51.5,9 A 1.5,1.5 0 0,1 48.5,9 Q 47,6 46.5,4 Z" fill="#FFD000" stroke="#AA7700" stroke-width="1.2"/>
-              </g>
-            </svg>
-          </button>
-          <h3>ピコ</h3>
-          <p>「けいさん」「くく」「めくって」のピコのシリーズに登場するガイド役。</p>
-          <div class="piko-friends">
-            <h4 class="piko-friends-title">ピコと仲間達</h4>
-            <!-- ピコと仲間達(ピコとけいさん に登場)。つつくと にっこり顔になって、ぴょんと跳ねる -->
-            <div class="piko-trio" id="pikoTrio" role="group" aria-label="ピコと仲間達">
-              <button type="button" class="piko-pal piko-pal--blue" data-color="blue" aria-label="水色のピコをつつく">
-                <span class="piko-body">
-                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_blue_normal.png" alt="" width="180" height="216" loading="lazy">
-                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_blue_happy.png" alt="" width="180" height="216" loading="lazy">
-                </span>
-              </button>
-              <button type="button" class="piko-pal piko-pal--pink" data-color="pink" aria-label="ピンクのピコをつつく">
-                <span class="piko-body">
-                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_pink_normal.png" alt="" width="180" height="216" loading="lazy">
-                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_pink_happy.png" alt="" width="180" height="216" loading="lazy">
-                </span>
-              </button>
-              <button type="button" class="piko-pal piko-pal--green" data-color="green" aria-label="黄緑のピコをつつく">
-                <span class="piko-body">
-                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_green_normal.png" alt="" width="180" height="216" loading="lazy">
-                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_green_happy.png" alt="" width="180" height="216" loading="lazy">
-                </span>
-              </button>
-            </div>
-            <p class="piko-friends-note">「ピコとけいさん1年生」に登場する。</p>
-          </div>
-        </article>
-
-        <article class="character-card" data-tilt>
-          <button type="button" class="character-visual character-visual--dango" id="dangoButton" aria-label="だんごむしをつつく(まるまります)">
-            <img class="dango-img dango-img--walk" src="assets/images/characters/dango_front_up.png" alt="" width="230" height="215" loading="lazy">
-            <img class="dango-img dango-img--curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267" loading="lazy">
-          </button>
-          <h3>だんごむし</h3>
-          <p>「だんごむしのぼうけん」の主人公。強風に飛ばされて、知らない場所へ。</p>
-          <div class="cast-extra">
-            <h4 class="piko-friends-title">ぼうけんで出会う ハチ</h4>
-            <!-- 2コマを切り替えて はばたく -->
-            <div class="bee" aria-hidden="true">
-              <img class="bee-frame bee-frame--a" src="assets/images/characters/bee_a.png" alt="" width="220" height="274" loading="lazy">
-              <img class="bee-frame bee-frame--b" src="assets/images/characters/bee_b.png" alt="" width="220" height="258" loading="lazy">
-            </div>
-            <p class="piko-friends-note">空から急降下してくる敵キャラクター。</p>
-          </div>
-        </article>
-
-        <article class="character-card character-card--nemu" data-tilt>
-          <div class="nemu-wrap">
-          <span class="nemu-zzz" aria-hidden="true"><i>z</i><i>z</i><i>Z</i></span>
-          <div class="character-visual character-visual--nemu" data-scarf="red">
-            <img class="nemu-img nemu-img--red" src="assets/images/nemuhitsuji-sitting.png" alt="赤いスカーフのねむひつじ" width="1024" height="512" loading="lazy">
-            <img class="nemu-img nemu-img--blue" src="assets/images/nemuhitsuji-sitting-blue.png" alt="青いスカーフのねむひつじ" width="1024" height="512" loading="lazy">
-          </div>
-          </div>
-          <h3>ねむひつじ</h3>
-          <p>「頭痛手帳」などに登場するひつじ。スカーフ赤が女の子、青が男の子。</p>
-          <div class="nemu-toggle" role="group" aria-label="ねむひつじの切り替え">
-            <button type="button" class="nemu-btn is-active" data-scarf="red" aria-pressed="true">女の子</button>
-            <button type="button" class="nemu-btn" data-scarf="blue" aria-pressed="false">男の子</button>
-          </div>
-          <div class="cast-extra">
-            <img class="nemu-moon" src="assets/images/characters/nemu_moon_sleep.png" alt="月の上で眠る ねむひつじ" width="320" height="304" loading="lazy">
-          </div>
-        </article>
-
-        <article class="character-card character-card--egg" data-tilt>
-          <!-- 「ピコとくく」の緑のたまご。8段階で育つ。見えている間は自動で育ち、つつくと1段階すすむ -->
-          <button type="button" class="character-visual character-visual--egg" id="eggButton" aria-label="たまごを育てる(つつくと次へ)">
-            <span class="egg-stage" id="eggStage" data-step="0">
-              <img class="egg-frame" data-step="0" width="71" height="89" src="assets/images/characters/egg/egg_green.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="1" width="69" height="89" src="assets/images/characters/egg/egg_green_crack1.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="2" width="70" height="88" src="assets/images/characters/egg/egg_green_crack2.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="3" width="118" height="96" src="assets/images/characters/egg/egg_green_hatch.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="4" width="64" height="68" src="assets/images/characters/egg/char_green_newborn.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="5" width="70" height="59" src="assets/images/characters/egg/char_green_baby.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="6" width="78" height="97" src="assets/images/characters/egg/char_green_child.png" alt="" loading="lazy">
-              <img class="egg-frame" data-step="7" width="126" height="110" src="assets/images/characters/egg/char_green_adult.png" alt="" loading="lazy">
-            </span>
-          </button>
-          <h3>たまご</h3>
-          <p>「ピコとくく」で育てるたまご。取り組む度に少しずつ成長する。</p>
-          <div class="egg-progress">
-            <ol class="egg-dots" aria-hidden="true"><li data-step="0"></li><li data-step="1"></li><li data-step="2"></li><li data-step="3"></li><li data-step="4"></li><li data-step="5"></li><li data-step="6"></li><li data-step="7"></li></ol>
-          </div>
-          <div class="egg-others" aria-label="ほかの色のたまご"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_pink_intact.png" alt="ピンクのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_blue_intact.png" alt="あおのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_purple_intact.png" alt="むらさきのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_orange_intact.png" alt="オレンジのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_silver_intact.png" alt="ぎんのたまご" loading="lazy"></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ HOW I BUILD (つくりかた) ============ -->
   <section id="craft" class="section craft" data-label="Focus">
     <div class="section-inner">
-      <p class="section-kicker">04</p>
+      <p class="section-kicker">02</p>
       <h2 class="section-title">Focus</h2>
       <p class="section-lead"><span class="ph">考えていること、</span><span class="ph">大切にしていることを紹介します。</span></p>
       <button type="button" class="acorn" data-acorn="focus" aria-label="かくれた どんぐり" style="right:18%;top:24px;--rot:16deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
@@ -707,6 +433,273 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
     </div>
   </section>
 
+  <!-- Works(業務での工夫)は、note の記事を書いてから戻す予定(git の履歴に残っています) -->
+
+  <!-- ============ PROJECTS ============ -->
+  <section id="projects" class="section projects" data-label="Apps">
+    <div class="section-inner">
+      <p class="section-kicker">03</p>
+      <h2 class="section-title">Apps</h2>
+      <p class="section-lead"><span class="ph">個人で企画から開発まで</span><span class="ph">手がけたアプリです。</span></p>
+
+      <h3 class="projects-subhead projects-subhead--calm">自分が便利なアプリ</h3>
+      <div class="app-list" id="calmList">
+        <article class="project-card project-card--calm" data-tilt>
+          <div class="phone" aria-hidden="true">
+            <img src="assets/images/projects/zutsurun.webp" alt="" width="390" height="844" loading="lazy">
+          </div>
+          <div class="project-body">
+            <p class="status-badge">iOS 準備中</p>
+            <h4>頭痛手帳</h4>
+            <p>頭痛などの痛みと服薬の管理アプリ。気圧注意報、服薬頻度注意報、薬在庫注意報、頭痛タイプの分析機能、家族や友人との共有機能付き。</p>
+            <div class="project-more" data-fold="技術・見どころ">
+            <ul class="tag-list"><li>React</li><li>TypeScript</li><li>Vite</li><li>Capacitor</li><li>Cloudflare</li></ul>
+            <ul class="project-points">
+              <li>保存処理をリポジトリ層にまとめ、Web と iOS で切り替え</li>
+              <li>服薬カウントの計算ロジックに単体テスト</li>
+              <li>健康データは端末の外に送らない設計</li>
+            </ul>
+            </div>
+            <a href="https://zutsurun.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+        <article class="project-card project-card--calm" data-tilt>
+          <div class="phone" aria-hidden="true">
+            <img src="assets/images/projects/mystudy.webp" alt="" width="390" height="844" loading="lazy">
+          </div>
+          <div class="project-body">
+            <p class="status-badge">Web 公開中 / 自分用</p>
+            <h4>AWS 認定 学習カレンダー</h4>
+            <p>AWS 認定3資格取得用の学習計画アプリ。進捗グラフ、カレンダー、予定自動振り分け機能、ロードマップ、学習問題集つき。</p>
+            <div class="project-more" data-fold="技術・見どころ">
+            <ul class="tag-list"><li>React 19</li><li>TypeScript</li><li>Tailwind CSS</li><li>zustand</li><li>PWA</li></ul>
+            <ul class="project-points">
+              <li>学習範囲をロードマップで表示し、分野ごとの進み具合が分かる</li>
+              <li>受験日から逆算して、平日・休日の学習時間に合わせて予定を自動で割り当て</li>
+              <li>カレンダーはドラッグ&amp;ドロップで予定を動かせる(タッチ対応)</li>
+              <li>確認問題 593問と、本番形式の演習つき</li>
+            </ul>
+            </div>
+            <a href="https://mystudy.shake0828ram.workers.dev/" class="text-link" target="_blank" rel="noopener">アプリを見る <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ポップトーンに切り替わるブロック -->
+    <div class="kids-zone" id="kidsZone">
+      <!-- 上のふち: 波・ガーランド・歩くだんごむし(スクロールに合わせて歩く) -->
+      <div class="kids-edge" aria-hidden="true">
+        <svg class="kids-wave" viewBox="0 0 1440 90" preserveAspectRatio="none"><path id="kidsWavePath" d="M0,90 L0,52 C 160,10 340,6 520,34 C 700,62 880,74 1060,46 C 1220,22 1340,22 1440,40 L1440,90 Z"/></svg>
+        <svg class="bunting" viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="bunting-string" d="M0,8 Q 720,96 1440,8" fill="none"/></svg>
+        <ul class="bunting-flags" id="buntingFlags"></ul>
+        <img class="edge-dango" id="edgeDango" src="assets/images/characters/dango_side.png" alt="" width="220" height="192">
+      </div>
+      <!-- 晴れた空の雲の帯(ピコとけいさん と同じ素材)。ゆっくり左右に流れる -->
+      <div class="kids-sky" aria-hidden="true"><div class="kids-sky-band"></div></div>
+      <!-- 浮かんでいる飾り(スクロールで少しずつずれる) -->
+      <div class="kids-deco" aria-hidden="true">
+        <img class="deco deco--cloud1" src="assets/images/characters/cloud.png" alt="" width="320" height="121" style="--depth:.25">
+        <img class="deco deco--cloud2" src="assets/images/characters/cloud.png" alt="" width="320" height="121" style="--depth:.12">
+        <img class="deco deco--flower" src="assets/images/characters/flower.png" alt="" width="120" height="118" style="--depth:.35">
+        <img class="deco deco--clover" src="assets/images/characters/clover.png" alt="" width="120" height="135" style="--depth:.5">
+        <img class="deco deco--ladybug" src="assets/images/characters/ladybug.png" alt="" width="90" height="101" style="--depth:.6">
+        <img class="deco deco--star" src="assets/images/characters/star.png" alt="" width="90" height="88" style="--depth:.4">
+      </div>
+      <button type="button" class="acorn" data-acorn="kids" aria-label="かくれた どんぐり" style="left:12%;bottom:36px;--rot:22deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
+      <svg class="kids-wave kids-wave--bottom" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,0 L0,30 C 240,70 480,64 720,40 C 960,16 1200,20 1440,46 L1440,0 Z"/></svg>
+      <div class="section-inner">
+        <h3 class="projects-subhead projects-subhead--kids" data-split="bounce">子どもと楽しむアプリ</h3>
+        <div class="projects-row--kids" id="kidsList">
+          <article class="project-card project-card--kids project-card--wide" data-tilt>
+            <div class="phone phone--kids" aria-hidden="true">
+              <img src="assets/images/projects/nigerun.webp" alt="" width="390" height="844" loading="lazy">
+            </div>
+            <div class="project-body">
+              <p class="status-badge status-badge--kids">iOS 配信中</p>
+              <h4>だんごむしのぼうけん</h4>
+              <p>子どもと一緒に考えたストーリーをもとにした、だんごむしが主人公の冒険ゲーム。全24面・敵やいきものの図鑑つき。</p>
+              <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>WebAudio</li><li>自作ビルド</li><li>Capacitor</li></ul>
+              <div class="kids-actions">
+                <a href="https://apps.apple.com/us/app/%E3%81%A0%E3%82%93%E3%81%94%E3%82%80%E3%81%97%E3%81%AE%E3%81%BC%E3%81%86%E3%81%91%E3%82%93/id6797248230" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="だんごむしのぼうけんを App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+          <article class="project-card project-card--kids" data-tilt>
+            <div class="phone phone--kids" aria-hidden="true">
+              <img src="assets/images/projects/tasurun.webp" alt="" width="390" height="844" loading="lazy">
+            </div>
+            <div class="project-body">
+              <p class="status-badge status-badge--kids">iOS 配信中</p>
+              <h4>ピコとけいさん1年生</h4>
+              <p>キャラクター「ピコ」と一緒に、たし算・ひき算・さくらんぼ算を練習できる知育アプリ。</p>
+              <ul class="tag-list tag-list--kids"><li>SVGアニメ</li><li>共通ライブラリ</li><li>Capacitor</li></ul>
+              <div class="kids-actions">
+                <a href="https://apps.apple.com/us/app/%E3%83%94%E3%82%B3%E3%81%A8%E3%81%91%E3%81%84%E3%81%95%E3%82%93%EF%BC%91%E5%B9%B4%E7%94%9F/id6783023995" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="ピコとけいさん1年生を App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+          <article class="project-card project-card--kids" data-tilt>
+            <div class="phone phone--kids" aria-hidden="true">
+              <img src="assets/images/projects/kukurun.webp" alt="" width="390" height="844" loading="lazy">
+            </div>
+            <div class="project-body">
+              <p class="status-badge status-badge--kids">iOS 配信中</p>
+              <h4>ピコとくく</h4>
+              <p>ピコと九九をおぼえるアプリ。「おぼえる・れんしゅう・テスト」の3段階で、メダルを集めながら たまごを育てていく。</p>
+              <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>読み上げ</li><li>Capacitor</li></ul>
+              <div class="kids-actions">
+                <a href="https://apps.apple.com/us/app/%E3%83%94%E3%82%B3%E3%81%A8%E3%81%8F%E3%81%8F/id6761843844" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="ピコとくくを App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+          <article class="project-card project-card--kids" data-tilt>
+            <div class="phone phone--kids" aria-hidden="true">
+              <img src="assets/images/projects/mekurun.webp" alt="" width="390" height="844" loading="lazy">
+            </div>
+            <div class="project-body">
+              <p class="status-badge status-badge--kids">iOS 配信中</p>
+              <h4>ピコとめくって</h4>
+              <p>1〜4人で遊べる３つのカードめくりゲーム。ヒントやおたすけ機能で、年齢差があっても楽しめます。</p>
+              <ul class="tag-list tag-list--kids"><li>Vanilla JS</li><li>みんなで遊べる</li><li>Capacitor</li></ul>
+              <div class="kids-actions">
+                <a href="https://apps.apple.com/us/app/%E3%83%94%E3%82%B3%E3%81%A8%E3%82%81%E3%81%8F%E3%81%A3%E3%81%A6/id6778352689" class="kids-btn kids-btn--store kids-btn--only" target="_blank" rel="noopener" aria-label="ピコとめくってを App Store で見る">App Store で見る <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHARACTERS ============ -->
+  <section id="characters" class="section characters" data-label="Cast">
+    <div class="section-inner">
+      <p class="section-kicker">04</p>
+      <h2 class="section-title">Cast</h2>
+      <p class="section-lead"><span class="ph">アプリに登場するキャラクターたちです。</span><span class="ph">さわってみてください。</span></p>
+      <button type="button" class="acorn" data-acorn="notes" aria-label="かくれた どんぐり" style="right:2%;top:8px;--rot:-24deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
+
+      <div class="character-list" id="castList">
+        <article class="character-card" data-tilt>
+          <button type="button" class="character-visual character-visual--piko" id="pikoButton" aria-label="ピコをつつく">
+            <!-- ピコのSVG(pikotto/shared/piko.js の buildPikoSVG と同じ見た目) -->
+            <svg class="piko" viewBox="0 0 100 100" width="96" height="96" aria-hidden="true">
+              <defs>
+                <radialGradient id="pkBody" cx="42%" cy="35%" r="58%"><stop offset="0%" stop-color="#fff"/><stop offset="60%" stop-color="#b8d9ff"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
+                <radialGradient id="pkEye" cx="35%" cy="30%" r="65%"><stop offset="0%" stop-color="#6699ff"/><stop offset="100%" stop-color="#003399"/></radialGradient>
+                <radialGradient id="pkHat" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#ddeeff"/><stop offset="60%" stop-color="#88bbee"/><stop offset="100%" stop-color="#6aabee"/></radialGradient>
+                <radialGradient id="pkBrim" cx="40%" cy="30%" r="65%"><stop offset="0%" stop-color="#d0e8ff"/><stop offset="55%" stop-color="#7ab0ee"/><stop offset="100%" stop-color="#4488cc"/></radialGradient>
+                <filter id="pkShadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0055aa" flood-opacity="0.18"/></filter>
+              </defs>
+              <circle cx="50" cy="54" r="38" fill="url(#pkBody)" filter="url(#pkShadow)"/>
+              <ellipse cx="28" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
+              <ellipse cx="72" cy="62" rx="7" ry="5" fill="#ffaacc" fill-opacity="0.45"/>
+              <g class="piko-look"><g class="piko-eyes">
+                <g transform="translate(37 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
+                <g transform="translate(63 48)"><circle r="5.8" fill="url(#pkEye)"/><circle cx="-1.4" cy="-1.8" r="1.8" fill="#fff"/></g>
+              </g></g>
+              <path class="piko-mouth" d="M 45,60 C 46,62 48,62 50,60 C 52,62 54,62 55,60" fill="none" stroke="#334" stroke-width="2.2" stroke-linecap="round"/>
+              <g transform="translate(17 5) rotate(30 50 22)">
+                <ellipse cx="50" cy="21" rx="13" ry="6" fill="url(#pkBrim)"/>
+                <circle cx="50" cy="16" r="3.5" fill="url(#pkHat)"/>
+                <path class="piko-hatena" d="M 50,13 L 50,11.5 A 4.5 4.5 0 1 0 45.5,7" fill="none" stroke="url(#pkHat)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path class="piko-bang" d="M 46.5,4 A 3.5,2.5 0 0,1 53.5,4 Q 53,6 51.5,9 A 1.5,1.5 0 0,1 48.5,9 Q 47,6 46.5,4 Z" fill="#FFD000" stroke="#AA7700" stroke-width="1.2"/>
+              </g>
+            </svg>
+          </button>
+          <h3>ピコ</h3>
+          <p>「けいさん」「くく」「めくって」のピコのシリーズに登場するガイド役。</p>
+          <div class="piko-friends">
+            <h4 class="piko-friends-title">ピコと仲間達</h4>
+            <!-- ピコと仲間達(ピコとけいさん に登場)。つつくと にっこり顔になって、ぴょんと跳ねる -->
+            <div class="piko-trio" id="pikoTrio" role="group" aria-label="ピコと仲間達">
+              <button type="button" class="piko-pal piko-pal--blue" data-color="blue" aria-label="水色のピコをつつく">
+                <span class="piko-body">
+                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_blue_normal.png" alt="" width="180" height="216" loading="lazy">
+                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_blue_happy.png" alt="" width="180" height="216" loading="lazy">
+                </span>
+              </button>
+              <button type="button" class="piko-pal piko-pal--pink" data-color="pink" aria-label="ピンクのピコをつつく">
+                <span class="piko-body">
+                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_pink_normal.png" alt="" width="180" height="216" loading="lazy">
+                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_pink_happy.png" alt="" width="180" height="216" loading="lazy">
+                </span>
+              </button>
+              <button type="button" class="piko-pal piko-pal--green" data-color="green" aria-label="黄緑のピコをつつく">
+                <span class="piko-body">
+                  <img class="piko-face piko-face--normal" src="assets/images/characters/piko/piko_green_normal.png" alt="" width="180" height="216" loading="lazy">
+                  <img class="piko-face piko-face--happy" src="assets/images/characters/piko/piko_green_happy.png" alt="" width="180" height="216" loading="lazy">
+                </span>
+              </button>
+            </div>
+            <p class="piko-friends-note">「ピコとけいさん1年生」に登場する。</p>
+          </div>
+        </article>
+
+        <article class="character-card" data-tilt>
+          <button type="button" class="character-visual character-visual--dango" id="dangoButton" aria-label="だんごむしをつつく(まるまります)">
+            <img class="dango-img dango-img--walk" src="assets/images/characters/dango_front_up.png" alt="" width="230" height="215" loading="lazy">
+            <img class="dango-img dango-img--curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267" loading="lazy">
+          </button>
+          <h3>だんごむし</h3>
+          <p>「だんごむしのぼうけん」の主人公。強風に飛ばされて、知らない場所へ。</p>
+          <div class="cast-extra">
+            <h4 class="piko-friends-title">ぼうけんで出会う ハチ</h4>
+            <!-- 2コマを切り替えて はばたく -->
+            <div class="bee" aria-hidden="true">
+              <img class="bee-frame bee-frame--a" src="assets/images/characters/bee_a.png" alt="" width="220" height="274" loading="lazy">
+              <img class="bee-frame bee-frame--b" src="assets/images/characters/bee_b.png" alt="" width="220" height="258" loading="lazy">
+            </div>
+            <p class="piko-friends-note">空から急降下してくる敵キャラクター。</p>
+          </div>
+        </article>
+
+        <article class="character-card character-card--nemu" data-tilt>
+          <div class="nemu-wrap">
+          <span class="nemu-zzz" aria-hidden="true"><i>z</i><i>z</i><i>Z</i></span>
+          <div class="character-visual character-visual--nemu" data-scarf="red">
+            <img class="nemu-img nemu-img--red" src="assets/images/nemuhitsuji-sitting.png" alt="赤いスカーフのねむひつじ" width="1024" height="512" loading="lazy">
+            <img class="nemu-img nemu-img--blue" src="assets/images/nemuhitsuji-sitting-blue.png" alt="青いスカーフのねむひつじ" width="1024" height="512" loading="lazy">
+          </div>
+          </div>
+          <h3>ねむひつじ</h3>
+          <p>「頭痛手帳」などに登場するひつじ。スカーフ赤が女の子、青が男の子。</p>
+          <div class="nemu-toggle" role="group" aria-label="ねむひつじの切り替え">
+            <button type="button" class="nemu-btn is-active" data-scarf="red" aria-pressed="true">女の子</button>
+            <button type="button" class="nemu-btn" data-scarf="blue" aria-pressed="false">男の子</button>
+          </div>
+          <div class="cast-extra">
+            <img class="nemu-moon" src="assets/images/characters/nemu_moon_sleep.png" alt="月の上で眠る ねむひつじ" width="320" height="304" loading="lazy">
+          </div>
+        </article>
+
+        <article class="character-card character-card--egg" data-tilt>
+          <!-- 「ピコとくく」の緑のたまご。8段階で育つ。見えている間は自動で育ち、つつくと1段階すすむ -->
+          <button type="button" class="character-visual character-visual--egg" id="eggButton" aria-label="たまごを育てる(つつくと次へ)">
+            <span class="egg-stage" id="eggStage" data-step="0">
+              <img class="egg-frame" data-step="0" width="71" height="89" src="assets/images/characters/egg/egg_green.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="1" width="69" height="89" src="assets/images/characters/egg/egg_green_crack1.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="2" width="70" height="88" src="assets/images/characters/egg/egg_green_crack2.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="3" width="118" height="96" src="assets/images/characters/egg/egg_green_hatch.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="4" width="64" height="68" src="assets/images/characters/egg/char_green_newborn.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="5" width="70" height="59" src="assets/images/characters/egg/char_green_baby.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="6" width="78" height="97" src="assets/images/characters/egg/char_green_child.png" alt="" loading="lazy">
+              <img class="egg-frame" data-step="7" width="126" height="110" src="assets/images/characters/egg/char_green_adult.png" alt="" loading="lazy">
+            </span>
+          </button>
+          <h3>たまご</h3>
+          <p>「ピコとくく」で育てるたまご。取り組む度に少しずつ成長する。</p>
+          <div class="egg-progress">
+            <ol class="egg-dots" aria-hidden="true"><li data-step="0"></li><li data-step="1"></li><li data-step="2"></li><li data-step="3"></li><li data-step="4"></li><li data-step="5"></li><li data-step="6"></li><li data-step="7"></li></ol>
+          </div>
+          <div class="egg-others" aria-label="ほかの色のたまご"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_pink_intact.png" alt="ピンクのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_blue_intact.png" alt="あおのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_purple_intact.png" alt="むらさきのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_orange_intact.png" alt="オレンジのたまご" loading="lazy"><img class="egg-other" width="74" height="92" src="assets/images/characters/egg/egg_silver_intact.png" alt="ぎんのたまご" loading="lazy"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
 
 
   <!-- ============ NOTES ============ -->
@@ -737,7 +730,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
   <!-- ============ CONTACT ============ -->
   <section id="contact" class="section contact" data-label="Contact">
     <div class="section-inner">
-      <p class="section-kicker">06</p>
+      <p class="section-kicker">05</p>
       <h2 class="section-title">Contact</h2>
       <p class="section-lead contact-lead"><span>読んでくださって、ありがとうございます。</span><span>面談や仕事のご相談など、お気軽にご連絡ください。</span></p>
       <div class="contact-links">
@@ -771,7 +764,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
 <footer class="site-footer">
   <a href="#hero" class="to-top" aria-label="ページの先頭へ">
     <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><path d="M10 16V4m0 0-5 5m5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>先頭へ</span>
+    <span>Topへ</span>
   </a>
   <p class="footer-note">最終更新 2026年10月</p>
   <p>&copy; 2026 よしだ</p>
@@ -801,7 +794,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
   <div class="dock-chips" id="dockChips"></div>
 </nav>
 <!-- スマホのみ: 次のセクションへ(下のナビのすぐ上、右端に浮かぶ) -->
-<button type="button" class="dock-top" id="dockTop" aria-label="ページの先頭へ"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M10 16V4m0 0-5 5m5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>先頭へ</span></button>
+<button type="button" class="dock-top" id="dockTop" aria-label="ページの先頭へ"><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M10 16V4m0 0-5 5m5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Topへ</span></button>
 <button type="button" class="dock-next" id="dockNext"><span class="dock-next-label">次へ</span><span class="dock-next-name" id="dockNextName"></span><svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true"><path d="M10 4v12m0 0-5-5m5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 
 <!-- 実績やどんぐりのお知らせ -->
@@ -810,6 +803,5 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
 <script src="script.js"></script>
 <script src="game.js"></script>
 <script src="sound.js"></script>
-<script src="walk.js"></script>
 </body>
 </html>

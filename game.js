@@ -13,7 +13,6 @@ const ACHIEVEMENTS = [
   { id: 'builder',   icon: '🛠️', name: 'つくりかた見学',     desc: 'Focus の3つのアプリを全部見た' },
   { id: 'play',      icon: '🎮', name: 'あそんでみた',       desc: '個人開発のアプリを開いてみた' },
   { id: 'piko',      icon: '🫧', name: 'ピコと仲間達と なかよし', desc: 'ピコと仲間達の3匹を全部つついた' },
-  { id: 'walk',      icon: '🐾', name: 'おさんぽ',           desc: 'だんごむしを歩かせて、看板まで行った' },
   { id: 'dango',     icon: '🌀', name: 'ころころ',           desc: 'だんごむしを丸めて、転がした' },
   { id: 'nemu',      icon: '🧣', name: 'おきがえ',           desc: 'ねむひつじのスカーフを切り替えた' },
   { id: 'egg',       icon: '🥚', name: 'たまごを育てた',     desc: '自分でつついて、たまごを おとなまで育てた' },
@@ -349,3 +348,43 @@ console.log(
 
 renderQuest();
 requestTick(); // はじめの現在地(Top)も記録する
+
+// ---------------------------------------------------------
+// ヒーローのだんごむし: スクロールすると小道を歩き、先のどんぐりを拾う(だんごむしのぼうけんと同じ2コマ歩き)
+// 1つ目のどんぐりがここで自然に入るので「1/5」と表示され、集められることが伝わる
+// ---------------------------------------------------------
+{
+  const track = document.getElementById('heroWalk');
+  const walker = track && track.querySelector('.hw-dango');
+  const trailAcorn = track && track.querySelector('.acorn');
+  if (track && walker && trailAcorn) {
+    const STEP_PX = 16;      // この距離ごとに足を入れかえる
+    const CURL_MS = 900;     // 止まってから丸まるまで
+    let lastP = 0, travelled = 0, frameB = false, idle = 0;
+    let picked = quest.acorns.includes('hero');
+    track.classList.toggle('is-done', picked);
+    const walk = (y, vh) => {
+      const len = Math.max(0, track.clientHeight - walker.offsetHeight - 36);
+      const p = Math.min(1, Math.max(0, y / (vh * 0.4)));
+      const d = (p - lastP) * len;
+      if (!reduceMotion && Math.abs(d) > 0.3) {
+        travelled += Math.abs(d);
+        if (travelled > STEP_PX) { travelled = 0; frameB = !frameB; walker.classList.toggle('is-b', frameB); }
+        walker.classList.toggle('is-up', d < 0);
+        walker.classList.remove('is-curled');
+        clearTimeout(idle);
+        idle = setTimeout(() => walker.classList.add('is-curled'), CURL_MS);
+      }
+      lastP = p;
+      walker.style.setProperty('--hw-y', `${(p * len).toFixed(1)}px`);
+      track.classList.toggle('is-walking', p > 0.02);
+      if (p >= 0.97 && !picked) {
+        picked = true;
+        trailAcorn.click();
+        track.classList.add('is-done');
+      }
+    };
+    scrollHooks.push(walk);
+    walk(window.scrollY, window.innerHeight);
+  }
+}

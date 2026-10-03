@@ -136,11 +136,7 @@ window.addEventListener('resize', requestTick);
 // =========================================================
 // スクロールのヒント: 何もしないで3秒たったら出す
 // =========================================================
-const scrollHint = document.getElementById('scrollHint');
-let hintTimer = setTimeout(() => { if (window.scrollY < 40) scrollHint.classList.add('is-shown'); }, 3000);
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 40) { scrollHint.classList.remove('is-shown'); clearTimeout(hintTimer); }
-}, { passive: true });
+// (下へのスクロールの合図は、ヒーローのだんごむしの小道が兼ねる)
 
 // =========================================================
 // 表示されたらふわっと出す
@@ -483,9 +479,8 @@ function setupCarousel(list, label) {
 // =========================================================
 // ページ内の目印ごとの「時間の進み具合(0〜1)」
 const SKY_ANCHORS = [
-  ['hero', 0], ['about', 0.16], ['skills', 0.30], ['certifications', 0.38],
-  ['projects', 0.56], ['kidsZone', 0.70], ['characters', 0.78], ['craft', 0.88],
-  ['contact', 1],
+  ['hero', 0], ['about', 0.14], ['skills', 0.24], ['certifications', 0.30], ['craft', 0.42],
+  ['projects', 0.58], ['kidsZone', 0.72], ['characters', 0.84], ['contact', 1],
 ];
 // 時間の進み具合ごとの空の色。文字が読めるよう、どれも暗めにしてある
 const SKY_KEYS = [

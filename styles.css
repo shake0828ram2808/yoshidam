@@ -3210,86 +3210,60 @@ p{ text-wrap: pretty; }
 .section-inner > .section-lead{ text-align: center; }
 .section-inner > .section-kicker{ display: flex; justify-content: center; }
 
+
 /* =========================================================
-   だんごむしのお散歩(ヒーロー)
+   ヒーローのだんごむしの小道(スクロールで歩いて、どんぐりを拾う)
 ========================================================= */
-.walk{
+.hero-walk{
   position: relative;
-  width: min(100%, 560px); height: 250px;
-  margin: 8px auto 0;
-  border-radius: 28px;
-  border: 1px dashed var(--line-strong);
-  background:
-    radial-gradient(ellipse at 50% 45%, rgba(201,123,99,.10), transparent 70%),
-    rgba(38,34,30,.35);
-  overflow: hidden;
-  touch-action: none;
-  outline: none;
-  user-select: none; -webkit-user-select: none;
+  width: 80px; height: clamp(170px, 24vh, 230px);
+  margin: 4px auto 0;
 }
-.walk:focus-visible{ border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-/* 看板(ふつうのリンクとしても押せる) */
-.walk-sign{
-  position: absolute; z-index: 2;
-  transform: translate(-50%, -50%);
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: rgba(28,26,23,.85);
-  font-family: var(--font-round); font-size: .8rem; font-weight: 700; letter-spacing: .06em;
-  color: var(--text);
-  text-decoration: none;
-  transition: border-color .25s, color .25s, transform .3s var(--ease-bounce);
-  -webkit-touch-callout: none;
+/* 足あとのような点線の道 */
+.hero-walk::before{
+  content: ""; position: absolute; left: 50%; top: 10px; bottom: 8px; width: 2px; margin-left: -1px;
+  background: repeating-linear-gradient(180deg, rgba(243,237,228,.22) 0 5px, transparent 5px 13px);
+  transition: opacity .6s;
 }
-.walk-sign:hover, .walk-sign.is-near{ border-color: var(--accent); color: var(--accent); }
-.walk-sign.is-near{ transform: translate(-50%, -50%) scale(1.1); }
-.walk-sign.is-go{ transform: translate(-50%, -50%) scale(1.25); }
-/* 乗っている時間を、看板のまわりの輪で見せる */
-.walk-ring{
-  position: absolute; inset: -6px; border-radius: 999px; pointer-events: none;
-  background: conic-gradient(var(--accent) calc(var(--p, 0) * 360deg), transparent 0);
-  -webkit-mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  padding: 2px; opacity: 0; transition: opacity .2s;
+.hero-walk.is-done::before{ opacity: .4; }
+.hw-dango{
+  position: absolute; left: 50%; top: 0;
+  width: 26px; height: 52px; margin-left: -13px;
+  transform: translateY(var(--hw-y, 0px));
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,.35));
 }
-.walk-sign.is-near .walk-ring{ opacity: 1; }
-/* だんごむし(上から見た姿・2コマで歩く／止まると丸まる) */
-.walk-dango{
-  position: absolute; left: 0; top: 0; z-index: 1;
-  width: 34px; height: 68px;
-  pointer-events: none;
-  filter: drop-shadow(0 6px 6px rgba(0,0,0,.35));
+.hw-frame, .hw-curl{
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+  transition: opacity .2s, transform .3s var(--ease-bounce);
+  transform: rotate(180deg);              /* ふだんは下(進む方)を向く */
 }
-.walk-frame, .walk-curl{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity .2s, transform .35s var(--ease-bounce); }
-.walk-frame--b{ opacity: 0; }
-.walk-dango.is-b .walk-frame--a{ opacity: 0; }
-.walk-dango.is-b .walk-frame--b{ opacity: 1; }
-.walk-curl{ opacity: 0; transform: scale(.6); width: 46px; height: 46px; left: -6px; top: 11px; }
-.walk-dango.is-curled .walk-frame{ opacity: 0; }
-.walk-dango.is-curled .walk-curl{ opacity: 1; transform: scale(1); }
-/* スティック(下の中央) */
-.walk-joy{
-  position: absolute; z-index: 3; left: 50%; bottom: 14px;
-  width: 84px; height: 84px; margin-left: -42px;
-  border-radius: 50%;
-  border: 1px solid var(--line-strong);
-  background: radial-gradient(circle, rgba(243,237,228,.08), rgba(243,237,228,.02));
-  display: grid; place-items: center;
-  touch-action: none; cursor: grab;
+.hw-dango.is-up .hw-frame{ transform: rotate(0deg); }
+.hw-frame--b{ opacity: 0; }
+.hw-dango.is-b .hw-frame--a{ opacity: 0; }
+.hw-dango.is-b .hw-frame--b{ opacity: 1; }
+.hw-curl{ opacity: 0; width: 34px; height: 34px; left: -4px; top: 9px; transform: scale(.6); }
+.hw-dango.is-curled .hw-frame{ opacity: 0; }
+.hw-dango.is-curled .hw-curl{ opacity: 1; transform: scale(1); }
+/* 道の先のどんぐり(この1つだけは、はっきり見せる) */
+.acorn.acorn--trail{
+  left: 50%; bottom: 0; top: auto;
+  margin-left: -13px; width: 26px; height: 38px;
+  opacity: 1;
+  transform: none;
+  filter: drop-shadow(0 0 10px rgba(243,210,122,.55));
+  animation: trail-acorn 2.4s ease-in-out infinite;
 }
-.walk-joy.is-active{ border-color: var(--accent); cursor: grabbing; }
-.walk-knob{ width: 44px; height: 44px; pointer-events: none; filter: drop-shadow(0 4px 6px rgba(0,0,0,.4)); transition: transform .12s; }
-.walk-joy.is-active .walk-knob{ transition: none; }
-.walk-hint{
-  position: absolute; left: 0; right: 0; top: 12px; margin: 0;
-  font-size: .74rem; color: var(--text-muted); letter-spacing: .04em; pointer-events: none;
-  transition: opacity .5s;
+@keyframes trail-acorn{ 0%,100%{ transform: rotate(-8deg); } 50%{ transform: rotate(8deg) translateY(-3px); } }
+.hw-hint{
+  position: absolute; left: 50%; top: 50%; margin-left: 22px; transform: translateY(-50%);
+  font-family: var(--font-round); font-size: .68rem; letter-spacing: .2em; color: var(--text-muted);
+  white-space: nowrap; transition: opacity .4s;
 }
-.walk.is-played .walk-hint{ opacity: 0; }
-@media (max-width: 560px){
-  .walk{ height: 240px; }
-}
+.hero-walk.is-walking .hw-hint, .hero-walk.is-done .hw-hint{ opacity: 0; }
 @media (prefers-reduced-motion: reduce){
-  .walk-frame, .walk-curl, .walk-sign{ transition: none; }
+  .acorn.acorn--trail{ animation: none; }
+}
+/* スマホ: ヒーローは中身の高さだけにして、下の大きな空きをなくす */
+@media (max-width: 560px){
+  .hero{ min-height: auto; padding-bottom: 56px; }
 }
