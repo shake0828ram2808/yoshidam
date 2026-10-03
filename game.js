@@ -62,8 +62,8 @@ const resultAcorns = document.getElementById('questResultAcorns');
 // パネルの実績一覧・どんぐりの枠を作る
 achList.innerHTML = ACHIEVEMENTS.map(a => `
   <li class="ach" data-ach="${a.id}">
-    <span class="ach-icon" aria-hidden="true">${a.icon}</span>
-    <span><span class="ach-name"></span><span class="ach-desc"></span></span>
+    <span class="ach-text"><span class="ach-name"></span><span class="ach-desc"></span></span>
+    <span class="ach-medal" aria-hidden="true">🎖️</span>
   </li>`).join('');
 acornSlots.innerHTML = ACORN_IDS.map(id => `<span class="acorn-slot" data-slot="${id}"><img src="${ACORN_IMG}" alt="" width="142" height="207"></span>`).join('');
 resultAcorns.innerHTML = ACORN_IDS.map(id => `<img src="${ACORN_IMG}" alt="" data-slot="${id}" width="142" height="207">`).join('');
@@ -78,6 +78,15 @@ function explorePercent() {
           + (achDone / normal.length) * 30
           + (quest.acorns.length / ACORN_IDS.length) * 20;
   return Math.min(100, Math.round(p));
+}
+
+const SECRET_KEY = 'yoshidam:secret-closed';
+let secretClosed = false;
+try { secretClosed = localStorage.getItem(SECRET_KEY) === '1'; } catch (e) { /* 使えなければ毎回開く */ }
+function setSecretClosed(v) {
+  secretClosed = v;
+  try { localStorage.setItem(SECRET_KEY, v ? '1' : '0'); } catch (e) { /* 保存できなくても動く */ }
+  renderQuest();
 }
 
 function renderQuest() {
@@ -96,7 +105,6 @@ function renderQuest() {
     const hidden = a.secret && !done;
     li.querySelector('.ach-name').textContent = hidden ? '？？？' : a.name;
     li.querySelector('.ach-desc').textContent = hidden ? 'ひみつの実績' : a.desc;
-    li.querySelector('.ach-icon').textContent = hidden ? '？' : a.icon;
   });
   document.querySelectorAll('[data-slot]').forEach(el => {
     el.classList.toggle('is-found', quest.acorns.includes(el.dataset.slot));
@@ -116,7 +124,10 @@ function renderQuest() {
   } else {
     msg.textContent = '全部見つけてくれて、ありがとうございます! お礼に、このサイトの仕掛けを少しだけ。';
   }
-  secret.hidden = n < ACORN_IDS.length;
+  // 仕掛けの説明は、閉じたらそのまま(「このサイトの仕掛け」ボタンで、いつでも開き直せる)
+  const done5 = n >= ACORN_IDS.length;
+  secret.hidden = !done5 || secretClosed;
+  document.getElementById('questSecretOpen').hidden = !done5 || !secretClosed;
   document.getElementById('questResult').classList.toggle('is-complete', n >= ACORN_IDS.length);
 }
 
@@ -398,3 +409,6 @@ function setupWalk(track, progress, onArrive) {
     setupWalk(endTrack, (y, vh) => (vh * 0.92 - endTrack.getBoundingClientRect().top) / (vh * 0.5), () => endTrack.classList.add('is-done'));
   }
 }
+
+document.getElementById('questSecretClose')?.addEventListener('click', () => setSecretClosed(true));
+document.getElementById('questSecretOpen')?.addEventListener('click', () => setSecretClosed(false));

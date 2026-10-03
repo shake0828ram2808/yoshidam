@@ -756,7 +756,9 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
         <p class="quest-result-msg" id="questResultMsg">このページのどこかに、どんぐりが5つ隠れています。</p>
         <button type="button" class="text-link quest-result-open" data-open-quest>冒険の記録を見る <span aria-hidden="true">→</span></button>
         <!-- 5つ全部見つけた人へのお礼: このサイトの仕掛け -->
+        <button type="button" class="text-link quest-secret-open" id="questSecretOpen" hidden>このサイトの仕掛け <span aria-hidden="true">＋</span></button>
         <div class="quest-secret" id="questSecret" hidden>
+          <button type="button" class="quest-secret-close" id="questSecretClose" aria-label="仕掛けの説明を閉じる">&times;</button>
           <h3>このサイトの仕掛け</h3>
           <ul>
             <li><b>外部ライブラリなし。</b>HTML・CSS・JavaScript だけで作っています。</li>

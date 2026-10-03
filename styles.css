@@ -1585,20 +1585,9 @@ button.character-visual:active{ transform: scale(.95); }
   border: 1px solid var(--line);
   background: rgba(0,0,0,.12);
 }
-.ach-icon{
-  flex-shrink: 0;
-  display:grid; place-items:center;
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  background: var(--bg-elevated-2);
-  font-size: 1.05rem;
-  filter: grayscale(1);
-  opacity: .45;
-}
 .ach-name{ display:block; font-size: .88rem; font-weight: 700; color: var(--text-muted); }
 .ach-desc{ display:block; font-size: .74rem; color: var(--text-muted); }
 .ach.is-unlocked{ border-color: rgba(243,210,122,.28); background: rgba(243,210,122,.05); }
-.ach.is-unlocked .ach-icon{ filter: none; opacity: 1; background: rgba(243,210,122,.14); }
 .ach.is-unlocked .ach-name{ color: var(--text); }
 .quest-panel-foot{
   display:flex; align-items:center; justify-content: space-between; gap: 12px;
@@ -3309,3 +3298,28 @@ p{ text-wrap: pretty; }
 /* Contact の上の小道(どんぐりはなし。歩き終わると丸まって休む) */
 .hero-walk--end{ height: clamp(140px, 20vh, 190px); margin: 0 auto 28px; }
 .hero-walk--end::before{ bottom: 20px; }
+
+/* 冒険の記録: 左のアイコンはやめて、右にメダル(ピコとくく と同じ 🎖️)。とる前は薄く、とれたらしっかり */
+.ach{ justify-content: space-between; }
+.ach-text{ min-width: 0; }
+.ach-medal{
+  flex-shrink: 0;
+  font-size: 1.5rem; line-height: 1;
+  filter: grayscale(1);
+  opacity: .22;
+  transition: opacity .4s, filter .4s, transform .5s var(--ease-bounce);
+}
+.ach.is-unlocked .ach-medal{ filter: none; opacity: 1; transform: rotate(-8deg); }
+
+/* このサイトの仕掛け: 閉じるボタンと、開き直すボタン */
+.quest-secret{ position: relative; }
+.quest-secret-close{
+  position: absolute; top: 10px; right: 0;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line-strong); background: transparent;
+  color: var(--text-muted); font-size: 1.1rem; line-height: 1; cursor: pointer;
+}
+.quest-secret-close:hover{ color: var(--text); border-color: var(--accent); }
+.quest-secret h3{ padding-right: 40px; }
+.quest-secret-open{ display: inline-block; margin-top: 10px; margin-left: 14px; }
+.quest-secret-open[hidden]{ display: none; }
