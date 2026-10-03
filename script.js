@@ -607,6 +607,8 @@ function renderSky(ph) {
   if (ph > SUN_FROM && ph < SUN_TO) { // 太陽が左から昇って右へ沈む(弧を描く)
     const u = (ph - SUN_FROM) / (SUN_TO - SUN_FROM);
     placeBody(skySun, lerp(-0.12, 1.12, u) * W, (1.15 - Math.sin(Math.PI * u) * 1.0) * vh, true);
+    // 昼は黄色、沈むにつれて橙→赤みのある夕日に(月と見分けやすく)
+    skySun.style.setProperty('--sun-t', Math.max(0, (u - 0.35) / 0.65).toFixed(3));
   } else {
     placeBody(skySun, 0, 0, false);
   }

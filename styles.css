@@ -3371,3 +3371,41 @@ p{ text-wrap: pretty; }
   .cast-sky-top{ background-size: 760px auto; left: -20%; right: -20%; }
   .characters{ padding-top: 72px; }
 }
+
+/* 太陽: 赤みのある橙にして月と見分けやすく。沈むにつれて(--sun-t)夕日の色に */
+.sky-sun{
+  opacity: .92 !important;
+  background: radial-gradient(circle at 45% 40%, #FFF0B0, #FFC25A 45%, #F2843A 100%);
+  box-shadow: 0 0 50px 16px rgba(245,150,70,.32), 0 0 130px 46px rgba(240,120,60,.14);
+}
+.sky-sun::after{
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle at 45% 40%, #FFD08A, #F47A3A 50%, #D9472B 100%);
+  opacity: var(--sun-t, 0);
+}
+.sky-body--sun{ --sun-t: 0; }
+.sky-sun{ position: absolute; }
+.sky-body--sun .sky-sun{ opacity: .92 !important; }
+
+/* 雲の流れを少し速く(動いていることに気づけるくらい) */
+.kids-sky-band{ animation-duration: 12s; }
+.cast-sky-top{ animation-duration: 7s; }
+
+/* Cast の下 → Contact: 夕焼けをとおって夜へ */
+.cast-sky{
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 260px), transparent calc(100% - 40px));
+          mask-image: linear-gradient(to bottom, #000 calc(100% - 260px), transparent calc(100% - 40px));
+}
+.cast-dusk{
+  position: absolute; left: 0; right: 0; bottom: -200px; height: 560px;
+  z-index: 0; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(255,240,190,0) 0%,
+    rgba(255,226,150,.75) 18%,
+    #F8BE6E 32%,
+    #EE8E55 46%,
+    #C9585A 60%,
+    #6E3B5C 74%,
+    #2E2236 88%,
+    rgba(28,26,23,0) 100%);
+}
