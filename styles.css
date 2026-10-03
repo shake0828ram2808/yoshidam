@@ -2111,7 +2111,7 @@ code{
 }
 .to-top svg{ color: var(--moon); transition: transform .6s var(--ease-bounce); }
 .to-top:hover{ border-color: var(--moon); background: rgba(243,210,122,.06); }
-.to-top:hover svg{ transform: translateY(-4px) rotate(-20deg); }
+.to-top:hover svg{ transform: translateY(-3px); }
 
 /* =========================================================
    折りたたみ(スマホのみ)。zutsurun の ExpandRow と同じ手ざわり
@@ -2924,7 +2924,7 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   margin-bottom: 14px;
 }
 .question-tag i{ font-style: normal; opacity: .5; margin: 0 2px; }
-.question h3{
+.question h4{
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: 900;
   line-height: 1.45;
@@ -3123,4 +3123,28 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .craft .fold-toggle{ margin-bottom: 12px; }
   .focus-block > .craft-note{ margin: 4px 0 18px; }
   .focus-block .questions{ margin-bottom: 24px; }
+}
+
+/* =========================================================
+   仕上げ: 表現のそろえ・読みやすさ
+========================================================= */
+/* 日本語を文節で折り返し(対応ブラウザのみ)、見出しの最後の1文字だけの行を防ぐ */
+h1, h2, h3, h4, p, li, figcaption{ word-break: auto-phrase; }
+h1, h2, h3, h4, .section-lead{ text-wrap: balance; }
+p{ text-wrap: pretty; }
+/* Cast: ハチがはばたいても見出しに重ならないよう、見出しを前に出して少し間をあける */
+.piko-friends-title{ position: relative; z-index: 2; }
+.bee{ margin-top: 16px; }
+/* フッターの「先頭へ」の矢印は文字と同じ色に */
+.to-top svg{ color: var(--accent); }
+/* スマホ: 下のメニューに5つのセクションとどんぐりが収まるよう、少し詰める */
+@media (max-width: 900px){
+  .dock-chip{ padding: 7px 10px; }
+  .section-dock .quest-chip{ padding: 3px 8px 3px 3px; }
+  .section-dock .quest-ring{ width: 24px; height: 24px; }
+}
+/* スマホ: Cast のカードを短く(絵を少し小さく、余白を詰める) */
+@media (max-width: 760px){
+  .character-visual{ width: 108px; height: 108px; margin-bottom: 14px; }
+  .character-card{ padding-top: 22px; padding-bottom: 20px; }
 }
