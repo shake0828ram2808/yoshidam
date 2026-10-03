@@ -3113,17 +3113,14 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .section-dock .quest-chip{ flex-shrink: 0; margin: 0 2px 0 4px; padding: 3px 9px 3px 3px; }
 }
 
-/* Focus: AIに対する考え方(番号つきの3項目) */
-.ai-views{ list-style: none; margin: 0 0 72px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.ai-view{
-  display: flex; gap: 14px; align-items: flex-start;
-  padding: 20px 20px 18px;
-  border-top: 1px solid var(--line-strong);
-}
-.ai-view-no{ font-family: var(--font-round); font-size: .8rem; letter-spacing: .1em; color: var(--accent); padding-top: 3px; }
-.ai-view h4{ margin: 0 0 6px; font-size: 1.02rem; font-weight: 800; letter-spacing: .02em; }
-.ai-view p{ margin: 0; font-size: .86rem; line-height: 1.75; color: var(--text-muted); }
+
+/* Focus: AIに対する考え方も、3つの問いと同じカードで見せる(背景の「?」は付けない) */
+.questions--ai .question::after{ content: none; }
+.focus-block > .craft-note{ margin: -6px 0 22px; }
+/* スマホ: Focus の3つのまとまりは、見出しを兼ねた折りたたみに */
 @media (max-width: 760px){
-  .ai-views{ grid-template-columns: 1fr; gap: 0; margin-bottom: 56px; }
-  .ai-view{ padding: 16px 4px 14px; }
+  .focus-subhead--fold{ display: none; }
+  .craft .fold-toggle{ margin-bottom: 12px; }
+  .focus-block > .craft-note{ margin: 4px 0 18px; }
+  .focus-block .questions{ margin-bottom: 24px; }
 }

@@ -478,7 +478,7 @@
             <img class="dango-img dango-img--curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267" loading="lazy">
           </button>
           <h3>だんごむし</h3>
-          <p>「だんごむしのぼうけん」の主人公。ある日強風でとばされ知らない場所へ。</p>
+          <p>「だんごむしのぼうけん」の主人公。強風に飛ばされて、知らない場所へ。</p>
           <div class="cast-extra">
             <h4 class="piko-friends-title">ぼうけんで出会う ハチ</h4>
             <!-- 2コマを切り替えて はばたく -->
@@ -539,8 +539,10 @@
     <div class="section-inner">
       <p class="section-kicker">04</p>
       <h2 class="section-title">Focus</h2>
+      <button type="button" class="acorn" data-acorn="focus" aria-label="かくれた どんぐり" style="right:18%;top:24px;--rot:16deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
       <!-- その1: 気をつけている考え方(ヒーローの「工夫と効率と持続性」と対応する3つの問い) -->
-      <h3 class="about-subhead focus-subhead"><span>Focus /</span>気をつけている考え方</h3>
+      <h3 class="about-subhead focus-subhead focus-subhead--fold"><span>Focus /</span>気をつけている考え方</h3>
+      <div class="focus-block" data-fold="気をつけている考え方" data-fold-summary="工夫・効率・持続性">
       <ol class="questions">
         <li class="question">
           <span class="question-tag">工夫 <i>/</i> UX</span>
@@ -558,18 +560,34 @@
           <p>将来何が変わりうるか、増えうるか。技術負債に手を入れられないか、依存関係が正しいか。</p>
         </li>
       </ol>
+      </div>
 
       <!-- その2: AIに対する考え方 -->
-      <h3 class="about-subhead focus-subhead"><span>Focus /</span>AIに対する考え方</h3>
+      <h3 class="about-subhead focus-subhead focus-subhead--fold"><span>Focus /</span>AIに対する考え方</h3>
+      <div class="focus-block" data-fold="AIに対する考え方" data-fold-summary="知識・進化・記録">
       <p class="craft-note">使い方次第で、個人のパフォーマンスは何倍にもなりうる。</p>
-      <ol class="ai-views">
-        <li class="ai-view"><span class="ai-view-no" aria-hidden="true">01</span><div><h4>判断用知識を増やす</h4><p>提案させたり選ぶための、視点や知識を身につける。</p></div></li>
-        <li class="ai-view"><span class="ai-view-no" aria-hidden="true">02</span><div><h4>AIの進化を追う</h4><p>今のAIのできること、使い方を常に把握する。</p></div></li>
-        <li class="ai-view"><span class="ai-view-no" aria-hidden="true">03</span><div><h4>判断内容を残す</h4><p>目的・制約・方針は記録し、出力の質を一貫させる。</p></div></li>
+      <ol class="questions questions--ai">
+        <li class="question">
+          <span class="question-tag">01 <i>/</i> 知識</span>
+          <h3>判断用知識を<br>増やす</h3>
+          <p>提案させたり選ぶための、視点や知識を身につける。</p>
+        </li>
+        <li class="question">
+          <span class="question-tag">02 <i>/</i> 進化</span>
+          <h3>AIの進化を<br>追う</h3>
+          <p>今のAIのできること、使い方を常に把握する。</p>
+        </li>
+        <li class="question">
+          <span class="question-tag">03 <i>/</i> 記録</span>
+          <h3>判断内容を<br>残す</h3>
+          <p>目的・制約・方針は記録し、出力の質を一貫させる。</p>
+        </li>
       </ol>
+      </div>
 
       <!-- その3: AI駆動開発の実践(サイクル・設計の工夫・開発ログ) -->
-      <h3 class="about-subhead focus-subhead"><span>Focus /</span>AI駆動開発の実践</h3>
+      <h3 class="about-subhead focus-subhead focus-subhead--fold"><span>Focus /</span>AI駆動開発の実践</h3>
+      <div class="focus-block" data-fold="AI駆動開発の実践" data-fold-summary="サイクル・設計の工夫・開発ログ">
       <p class="craft-note">個人開発は、AIと役割を分けながら進めています。</p>
 
       <!-- AI駆動開発のサイクル。画面に入ると、1つずつ順に光る -->
@@ -638,7 +656,6 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
 
       <!-- 開発ログ: だんごむしのぼうけん v1 → v155 -->
       <div class="devlog">
-        <button type="button" class="acorn" data-acorn="focus" aria-label="かくれた どんぐり" style="right:-6px;top:-40px;--rot:16deg"><img src="assets/images/characters/acorn.png" alt="" width="142" height="207"></button>
         <div class="devlog-head">
           <h4 class="craft-subhead craft-subhead--fold">開発ログ: だんごむしのぼうけん</h4>
           <p class="devlog-level"><span>改善リリース</span><b>v<span data-count="155">155</span></b></p>
@@ -692,6 +709,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
           </li>
         </ol>
         </div>
+      </div>
       </div>
     </div>
   </section>
