@@ -785,7 +785,8 @@ html.nav-open{ overflow: hidden; }
   width: 100%;
   aspect-ratio: 390 / 844;
   border-radius: 28px;
-  padding: 7px;
+  --pad: 7px;
+  padding: var(--pad);
   background: #0E0D0B;
   box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 24px 48px rgba(0,0,0,.45);
   overflow: hidden;
@@ -911,7 +912,7 @@ html.nav-open{ overflow: hidden; }
   width: 58%;
   margin: 0 auto 22px;
   border-radius: 24px;
-  padding: 5px;
+  --pad: 5px; padding: var(--pad);
   box-shadow: 0 0 0 4px var(--kids-yellow), 0 14px 28px rgba(74,58,44,.18);
 }
 .phone--kids img{ border-radius: 19px; }
@@ -2240,7 +2241,7 @@ code{
     align-items: start;
     padding: 18px 16px;
   }
-  .project-card--calm .phone{ max-width: none; margin: 0; border-radius: 16px; padding: 4px; transform: none !important; }
+  .project-card--calm .phone{ max-width: none; margin: 0; border-radius: 16px; --pad: 4px; padding: var(--pad); transform: none !important; }
   .project-card--calm .phone img{ border-radius: 12px; }
   .project-card--calm .phone::after{ height: 6px; top: 8px; }
   .project-card--calm .project-body h4{ font-size: 1.05rem; }
@@ -2255,7 +2256,7 @@ code{
     align-items: start;
   }
   .project-card--kids .phone--kids,
-  .project-card--wide .phone--kids{ width: 100%; margin: 0; border-radius: 16px; padding: 3px; }
+  .project-card--wide .phone--kids{ width: 100%; margin: 0; border-radius: 16px; --pad: 3px; padding: var(--pad); }
   .phone--kids img{ border-radius: 13px; }
   .phone--kids::after{ height: 5px; top: 7px; }
   .project-card--kids h4, .project-card--wide h4{ font-size: 1rem; }
@@ -3272,3 +3273,13 @@ p{ text-wrap: pretty; }
 /* アプリの動画も、画像と同じ角丸・切り抜きで */
 .project-card--calm .phone video{ border-radius: 12px; }
 .phone--kids video{ border-radius: 13px; }
+
+/* スマホ枠の中の画像・動画は、枠の内側にぴったり置く
+   (iPhone の Safari では、縦横比で決めた枠の中で height:100% が効かず、動画が下にはみ出して枠が切れて見えたため) */
+.phone > img, .phone > video{
+  position: absolute;
+  top: var(--pad, 7px); left: var(--pad, 7px);
+  width: calc(100% - var(--pad, 7px) * 2);
+  height: calc(100% - var(--pad, 7px) * 2);
+  object-fit: cover; object-position: top center;
+}

@@ -46,7 +46,7 @@
 - スマホの枠の中は、画像のかわりに短い動画にできる(`<video class="phone-video">`)。画面に見えている間だけ再生し、動きを減らす設定では最初の場面の画像(poster)のまま。
 - 画面収録(.mov)からの作り方: 上のステータスバーを切り落として幅480px・30fps・音なしに。`mp4`(H.264。Safari 用)と `webm`(VP9)の2つを置く。
   例: `ffmpeg -i in.mov -an -vf "crop=1260:2536:0:200,scale=480:-2,fps=30" -c:v libx264 -crf 24 -pix_fmt yuv420p -movflags +faststart out.mp4`
-- いまは ピコとけいさん1年生 のみ(`assets/videos/tasurun.*`)。
+- いまは だんごむしのぼうけん・ピコとけいさん1年生・ピコとめくって(`assets/videos/`)。だんごむしは全画面のゲームなので切り落としなし。
 
 ## 遊びの要素(game.js)
 
