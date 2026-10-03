@@ -1142,3 +1142,16 @@ if (dock) {
 }
 
 onScroll();
+
+// アプリのスマホ画面の動画: 画面に見えている間だけ再生する(動きを減らす設定なら止めたまま=最初の場面の画像)
+if (!reduceMotion && 'IntersectionObserver' in window) {
+  const phoneVideos = [...document.querySelectorAll('.phone-video')];
+  const vio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) { v.play().catch(() => { /* 再生できなければ画像のまま */ }); }
+      else v.pause();
+    });
+  }, { threshold: 0.4 });
+  phoneVideos.forEach(v => vio.observe(v));
+}
