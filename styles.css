@@ -3172,3 +3172,20 @@ p{ text-wrap: pretty; }
 
 /* 文節のまとまり: iPhone の Safari でも、言葉の途中で改行しないように(入りきらないときだけ、まとまりの間で折り返す) */
 .ph{ display: inline-block; }
+
+/* ヒーロー(改): キャッチコピーを1行で中央に、その下にアイコンと名前 */
+.hero-title{
+  white-space: nowrap; text-align: center;
+  font-size: clamp(1.9rem, 6.2vw, 4.4rem); line-height: 1.3; letter-spacing: .03em;
+  margin: 0 0 32px;
+}
+.hero-title .hero-line{ display: inline-block; }
+.hero-head{ justify-content: center; gap: clamp(16px, 2.4vw, 28px); margin-bottom: 28px; }
+.hero-avatar{ width: clamp(84px, 9vw, 120px); }
+.hero-id{ text-align: left; }
+.hero-name{ margin: 0 0 4px; font-family: var(--font-round); font-weight: 700; font-size: clamp(1.4rem, 2.4vw, 1.9rem); letter-spacing: .08em; }
+.hero-intro{ margin: 0; font-size: .92rem; line-height: 1.7; color: var(--text-muted); }
+@media (max-width: 560px){
+  .hero-title{ font-size: min(9vw, 2.4rem); margin-bottom: 26px; }
+  .hero-head{ gap: 16px; margin-bottom: 22px; }
+}
