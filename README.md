@@ -37,7 +37,7 @@
 
 ## 公開先
 
-- Cloudflare Pages(ビルドなし・出力ディレクトリはリポジトリのルート)。ワーカーは使わない
+- Cloudflare Pages: https://yoshidam.pages.dev/ (main ブランチ・ビルドなし・出力ディレクトリはリポジトリのルート)。ワーカーは使わない
 - `index.html` の `og:url` と `og:image` は、公開URLの絶対パスで書く(URLが変わったら差し替える)
 - `404.html` はサイトのルートに置かれる前提で `/assets/...` を参照しています
 
