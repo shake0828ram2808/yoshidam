@@ -1118,6 +1118,19 @@ if (dock) {
   scrollHooks.push(updateDock);
   // 「先頭へ」は、少しスクロールしたら左下に いつも出しておく
   const dockTop = document.getElementById('dockTop');
+  // スマホでは、どんぐりの記録(ヘッダーの丸いチップ)を下のメニューの右端へ移す。PC はヘッダーのまま
+  const questChipEl = document.getElementById('questChip');
+  const sectionDockEl = document.getElementById('sectionDock');
+  if (questChipEl && sectionDockEl) {
+    const chipHome = questChipEl.nextElementSibling;
+    const dockMq = window.matchMedia('(max-width: 900px)');
+    const placeChip = () => {
+      if (dockMq.matches) sectionDockEl.appendChild(questChipEl);
+      else chipHome.before(questChipEl);
+    };
+    placeChip();
+    dockMq.addEventListener('change', placeChip);
+  }
   // 最初の画面(ヒーロー)では、下のメニューと「次へ」を引っこめて、ヒーローのボタンを見せる
   scrollHooks.push((y, vh) => document.documentElement.classList.toggle('at-hero', y < vh * 0.35));
   scrollHooks.push((y, vh) => dockTop?.classList.toggle('is-shown', y > vh * 0.6));

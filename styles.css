@@ -3101,3 +3101,29 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .app-list .project-card .project-body > .text-link,
   .projects-row--kids .project-card .project-body > .kids-actions{ grid-column: 2; grid-row: 4; }
 }
+
+/* キャッチコピー: 少し小さく、行間を広く */
+.hero-head .hero-title{ font-size: clamp(2.3rem, 5.2vw, 4.1rem); line-height: 1.38; }
+@media (max-width: 560px){
+  .hero-head .hero-title{ font-size: clamp(2rem, 9.4vw, 2.5rem); line-height: 1.4; }
+}
+
+/* スマホ: どんぐりの記録は下のメニューの右端に */
+@media (max-width: 900px){
+  .section-dock .quest-chip{ flex-shrink: 0; margin: 0 2px 0 4px; padding: 3px 9px 3px 3px; }
+}
+
+/* Focus: AIに対する考え方(番号つきの3項目) */
+.ai-views{ list-style: none; margin: 0 0 72px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ai-view{
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 20px 20px 18px;
+  border-top: 1px solid var(--line-strong);
+}
+.ai-view-no{ font-family: var(--font-round); font-size: .8rem; letter-spacing: .1em; color: var(--accent); padding-top: 3px; }
+.ai-view h4{ margin: 0 0 6px; font-size: 1.02rem; font-weight: 800; letter-spacing: .02em; }
+.ai-view p{ margin: 0; font-size: .86rem; line-height: 1.75; color: var(--text-muted); }
+@media (max-width: 760px){
+  .ai-views{ grid-template-columns: 1fr; gap: 0; margin-bottom: 56px; }
+  .ai-view{ padding: 16px 4px 14px; }
+}
