@@ -3409,3 +3409,11 @@ p{ text-wrap: pretty; }
     #2E2236 88%,
     rgba(28,26,23,0) 100%);
 }
+
+/* PC: 自分が便利なアプリは3枚を横に並べる */
+@media (min-width: 1000px){
+  .app-list{ grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .app-list .project-card--calm{ grid-template-columns: 92px 1fr; column-gap: 18px; padding: 26px 22px 24px; }
+  .app-list .phone{ width: 92px; }
+  .app-list .project-card h4{ font-size: 1.05rem; line-height: 1.4; }
+}
