@@ -46,7 +46,7 @@
 - スマホの枠の中は、画像のかわりに短い動画にできる(`<video class="phone-video">`)。画面に見えている間だけ再生し、動きを減らす設定では最初の場面の画像(poster)のまま。
 - 画面収録(.mov)からの作り方: 上のステータスバー(0〜184px)を、すぐ下の行の色で塗りつぶす(切り落とすと中身が枠の切り欠きに隠れるため、上の余白は残す)。幅480px・30fps・音なし。`mp4`(H.264。Safari 用)と `webm`(VP9)の2つを置く。
   例: `ffmpeg -i in.mov -an -vf "split[a][b];[b]crop=1260:6:0:184,scale=1260:184[t];[a][t]overlay=0:0,scale=480:-2,fps=30" -c:v libx264 -crf 26 -pix_fmt yuv420p -movflags +faststart out.mp4`
-- 7本すべて動画(`assets/videos/`)。だんごむしは全画面のゲームなので塗りつぶしなし。
+- スクショジェネレーター以外の6本は動画(`assets/videos/`)。だんごむしは全画面のゲームなので塗りつぶしなし。
 
 ## 遊びの要素(game.js)
 
