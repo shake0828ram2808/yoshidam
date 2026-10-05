@@ -18,7 +18,16 @@
     if (ctx) return ctx;
     const AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) return null;
+    // iPhone はマナーモード(消音スイッチ)だと Web の音が鳴らない。オンにした人には鳴るように再生扱いにする(Safari 16.4+)
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) { /* 対応していなければそのまま */ }
     ctx = new AC();
+    // iOS は最初の操作の中で一度音を流さないと鳴らないことがあるので、無音を1つ流しておく
+    try {
+      const src = ctx.createBufferSource();
+      src.buffer = ctx.createBuffer(1, 1, 22050);
+      src.connect(ctx.destination);
+      src.start(0);
+    } catch (e) { /* 鳴らせなくても続ける */ }
     master = ctx.createGain();
     master.gain.value = VOLUME;
     master.connect(ctx.destination);
