@@ -3005,7 +3005,7 @@ h1, h2, h3, h4, .hero-title, .btn, .main-nav a{ font-feature-settings: "palt"; }
   .projects-row--kids .project-body > :not(.status-badge):not(h4){ grid-column: 1 / -1; }
 }
 
-/* Focus: 「気をつけている考え方」「AI駆動開発の実践」の2つのまとまり */
+/* Focus: 「ものづくりの考え」「業務での考え」「AIに対する考え方」「AI駆動開発の実践」のまとまり */
 .focus-subhead{ margin-bottom: 20px; }
 .focus-subhead + .craft-note{ margin: -10px 0 32px; }
 .craft .craft-subhead{ font-size: .95rem; letter-spacing: .04em; }
@@ -3417,3 +3417,8 @@ p{ text-wrap: pretty; }
   .app-list .phone{ width: 92px; }
   .app-list .project-card h4{ font-size: 1.05rem; line-height: 1.4; }
 }
+
+/* Focus: AIに対する考え方は4項目。PCは4列、中くらいの幅は2列 */
+.questions--four{ grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1080px){ .questions--four{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px){ .questions--four{ grid-template-columns: 1fr; } }
