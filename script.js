@@ -649,6 +649,7 @@ const meteorCanvas = document.getElementById('skyMeteor');
 const METEOR_MIN_GAP = 6000;   // 次の流れ星までの間隔(ミリ秒)
 const METEOR_MAX_GAP = 14000;
 const METEOR_NIGHT = 0.45;     // 星の見え方(--stars)がこれ以上のときだけ流す
+const METEOR_TAP_GRACE = 1200; // 消えたあとも、少しの間はタップを「流れている間」とみなす
 let meteorActive = false;
 if (meteorCanvas && !reduceMotion) {
   const ctx2d = meteorCanvas.getContext('2d');
@@ -670,16 +671,16 @@ if (meteorCanvas && !reduceMotion) {
       x0: Math.random() * W * 0.65,
       y0: H * 0.02 + Math.random() * H * 0.28,
       angle,
-      speed: (W * 0.55 + Math.random() * W * 0.25) / 1000,
+      speed: (W * 0.55 + Math.random() * W * 0.25) / 2600, // ゆっくり流す(タップが間に合うように)
       tail: Math.max(70, W * 0.10 + Math.random() * W * 0.07),
-      dur: 650 + Math.random() * 400,
+      dur: 2200 + Math.random() * 800,
       born: performance.now(),
     };
     meteorActive = true;
     const draw = now => {
       const age = now - m.born;
       ctx2d.clearRect(0, 0, W, H);
-      if (age >= m.dur) { meteorActive = false; return schedule(); }
+      if (age >= m.dur) { setTimeout(() => { meteorActive = false; }, METEOR_TAP_GRACE); return schedule(); }
       const alpha = Math.sin((age / m.dur) * Math.PI);
       const dist = m.speed * age;
       const sx = m.x0 + Math.cos(m.angle) * dist;

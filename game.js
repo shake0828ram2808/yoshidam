@@ -21,7 +21,7 @@ const ACHIEVEMENTS = [
   { id: 'acorn1',    icon: '🌰', name: 'はじめての どんぐり', desc: 'かくれた どんぐりを1つ見つけた' },
   { id: 'acorn5',    icon: '👑', name: 'どんぐりマスター',   desc: 'どんぐりを5つ全部見つけた' },
   { id: 'wish',      icon: '🌠', name: 'ねがいごと',         desc: '流れ星が流れている間に、画面をタップした', secret: true },
-  { id: 'konami',    icon: '🕹️', name: 'ひみつのコマンド',   desc: '↑↑↓↓←→←→BA', secret: true },
+  { id: 'konami',    icon: '🕹️', name: 'ひみつのコマンド',   desc: '↑↑↓↓←→←→BA(または、小道を歩くだんごむしにタッチ)', secret: true },
 ];
 const ACORN_IDS = ['hero', 'skills', 'kids', 'focus', 'notes'];
 const ACORN_IMG = 'assets/images/characters/acorn.png';
@@ -318,17 +318,23 @@ document.addEventListener('pointerdown', () => { if (typeof meteorActive !== 'un
 {
   const CODE = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
   let pos = 0;
+  const fire = () => {
+    unlock('konami');
+    // ごほうび: 空がいっきに一日分まわる
+    document.documentElement.classList.add('is-konami');
+    setTimeout(() => document.documentElement.classList.remove('is-konami'), 2400);
+  };
   document.addEventListener('keydown', e => {
     const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
     pos = key === CODE[pos] ? pos + 1 : (key === CODE[0] ? 1 : 0);
-    if (pos === CODE.length) {
-      pos = 0;
-      unlock('konami');
-      // ごほうび: 空がいっきに一日分まわる
-      document.documentElement.classList.add('is-konami');
-      setTimeout(() => document.documentElement.classList.remove('is-konami'), 2400);
-    }
+    if (pos === CODE.length) { pos = 0; fire(); }
   });
+  // キーボードのないスマホでも: 小道を歩くだんごむしにタッチすると、コマンドの代わりになる
+  document.querySelectorAll('.hw-dango').forEach(d => d.addEventListener('click', () => {
+    d.classList.add('is-poked');
+    setTimeout(() => d.classList.remove('is-poked'), 700);
+    fire();
+  }));
 }
 
 // ---------------------------------------------------------

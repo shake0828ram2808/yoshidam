@@ -3422,3 +3422,9 @@ p{ text-wrap: pretty; }
 .questions--four{ grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 1080px){ .questions--four{ grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 760px){ .questions--four{ grid-template-columns: 1fr; } }
+
+/* 小道のだんごむし: タッチできる(ひみつのコマンドの代わり)。小さいので触れる範囲を広げる */
+.hw-dango{ cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.hw-dango::after{ content: ""; position: absolute; inset: -14px -18px; }
+.hw-dango.is-poked .hw-frame{ opacity: 0; }
+.hw-dango.is-poked .hw-curl{ opacity: 1; transform: scale(1) rotate(360deg); transition: transform .6s var(--ease-bounce); }
