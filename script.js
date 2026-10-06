@@ -899,39 +899,49 @@ if (cycleSteps.length) {
   cycleSteps.forEach((el, i) => el.addEventListener('click', () => { step = i - 1; advance(); }));
 }
 
-// 設計の見どころ: タブ(矢印キーでも切り替え)
-const craftTabs = [...document.querySelectorAll('.craft-tabs [role="tab"]')];
-const craftIndicator = document.querySelector('.craft-tab-indicator');
-function moveCraftIndicator(tab) {
-  craftIndicator.style.width = `${tab.offsetWidth}px`;
-  craftIndicator.style.height = `${tab.offsetHeight}px`;
-  craftIndicator.style.transform = `translate(${tab.offsetLeft}px, ${tab.offsetTop}px)`;
-}
-function selectCraftTab(tab, focus) {
-  craftTabs.forEach(t => {
-    const on = t === tab;
-    t.setAttribute('aria-selected', String(on));
-    t.tabIndex = on ? 0 : -1;
-    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+// タブ(矢印キーでも切り替え)。下に敷いた色の板が、選んだタブへ動く
+//  - 設計の見どころ(アプリごと) / AI駆動開発の実践(業務・個人開発)
+function setupTabs(list, eventName) {
+  const tabs = [...list.querySelectorAll('[role="tab"]')];
+  const indicator = list.querySelector('[class$="tab-indicator"]');
+  const current = () => tabs.find(t => t.getAttribute('aria-selected') === 'true');
+  const move = tab => {
+    if (!tab || !tab.offsetWidth) return; // 隠れている間は測れないので、見えたときに動かす
+    indicator.style.width = `${tab.offsetWidth}px`;
+    indicator.style.height = `${tab.offsetHeight}px`;
+    indicator.style.transform = `translate(${tab.offsetLeft}px, ${tab.offsetTop}px)`;
+  };
+  const select = (tab, focus) => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    move(tab);
+    if (focus) tab.focus();
+    if (eventName) tab.dispatchEvent(new CustomEvent(eventName, { bubbles: true }));
+    // 中のタブも、見えるようになったので板の位置を合わせ直す
+    window.dispatchEvent(new Event('tabs:shown'));
+    requestTick();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      select(tabs[(i + d + tabs.length) % tabs.length], true);
+    });
   });
-  moveCraftIndicator(tab);
-  if (focus) tab.focus();
-  tab.dispatchEvent(new CustomEvent('craft-tab', { bubbles: true }));
+  const refresh = () => move(current());
+  refresh();
+  window.addEventListener('resize', refresh);
+  window.addEventListener('tabs:shown', refresh);
+  document.fonts?.ready.then(refresh);
 }
-craftTabs.forEach((tab, i) => {
-  tab.addEventListener('click', () => selectCraftTab(tab));
-  tab.addEventListener('keydown', e => {
-    const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-    if (!d) return;
-    e.preventDefault();
-    selectCraftTab(craftTabs[(i + d + craftTabs.length) % craftTabs.length], true);
-  });
-});
-if (craftTabs.length) {
-  moveCraftIndicator(craftTabs[0]);
-  window.addEventListener('resize', () => moveCraftIndicator(craftTabs.find(t => t.getAttribute('aria-selected') === 'true')));
-  document.fonts?.ready.then(() => moveCraftIndicator(craftTabs.find(t => t.getAttribute('aria-selected') === 'true')));
-}
+document.querySelectorAll('.craft-tabs').forEach(l => setupTabs(l, 'craft-tab'));
+document.querySelectorAll('.practice-tabs').forEach(l => setupTabs(l));
 
 // コードの簡単な色分け(コメント・文字列・数字・キーワード)
 document.querySelectorAll('.code-card code').forEach(code => {
