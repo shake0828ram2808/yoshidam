@@ -78,7 +78,7 @@
 
 ## メニューの構成
 
-About・Focus・Apps・Cast・Notes・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。Notes は `notes/` の技術記事への入口(まだ書いていない記事は「準備中」のカード)。
+About・Focus・Apps・Cast・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。Notes は `notes/` の技術記事が校了するまで `hidden`(外し、メニューに Notes を足し、Contact を 06 にすれば戻る)。
 - About(01)は、ヒーロー・経歴(`#about`)・スキル(`#skills`)・資格(`#certifications`)のまとまり。これらの section には `data-group="hero"` を付け、
   メニューでは About の一部として扱う。
 - Works(業務での工夫)は note の記事を書いてから戻す予定。HTML は git の履歴(コミット 08ff222 まで)に残っている。
