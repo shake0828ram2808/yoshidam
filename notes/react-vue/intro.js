@@ -1,4 +1,4 @@
-// 連載「Vueエンジニアが学ぶReact」はじめに
+// 連載「Vue エンジニアが学ぶ React」はじめに
 article({
   series: 'react-vue',
   slug: 'intro',
@@ -11,7 +11,8 @@ article({
     ] },
 
     { type: 'h', text: 'なぜ比べるのか' },
-    { type: 'p', text: '知っている言葉に置き換えて読むと、似ているのに違う所でつまずきます。並べて見ると「なぜ React ではこう書くのか」が分かります。' },
+    { type: 'p', text: 'React と Vue の違いを聞かれて、うまく説明できなかったことがきっかけです。' },
+    { type: 'p', text: '理解が深い(はずの)Vue と比べることで、腑に落ちながら学習を深め、アウトプットまでできることを目指します。' },
 
     { type: 'h', text: '前提' },
     { type: 'list', items: [

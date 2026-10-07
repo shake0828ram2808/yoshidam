@@ -7,7 +7,7 @@ window.NOTES = {
   series: [
     {
       id: 'react-vue',
-      title: 'Vueエンジニアが学ぶReact',
+      title: 'Vue エンジニアが学ぶ React',
       description: '業務で使っている Vue.js と比べながら、React の考え方を1つずつ整理する連載。小さな ToDo アプリを両方で書き比べます。',
     },
   ],

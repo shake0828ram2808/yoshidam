@@ -1,4 +1,4 @@
-// 連載「Vueエンジニアが学ぶReact」第2回(Vue とは比べず、React だけで ToDo アプリの土台を作る)
+// 連載「Vue エンジニアが学ぶ React」第2回(Vue とは比べず、React だけで ToDo アプリの土台を作る)
 article({
   series: 'react-vue',
   slug: 'react-basics',

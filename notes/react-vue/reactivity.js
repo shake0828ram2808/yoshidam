@@ -1,4 +1,4 @@
-// 連載「Vueエンジニアが学ぶReact」第3回
+// 連載「Vue エンジニアが学ぶ React」第3回
 article({
   series: 'react-vue',
   slug: 'reactivity',
