@@ -71,7 +71,7 @@ export function TodoApp() {
     ] },
     { type: 'p', text: 'React で `remaining` に `computed` が要らないのは、関数が毎回実行されるので、ふつうの式でも常に最新になるからです。配列を入れ替える書き方は第5回で詳しく扱います。' },
 
-    { type: 'h', text: 'ハマりどころ' },
+    { type: 'h', text: '注意点' },
     { type: 'pitfall', label: '① 2件続けて足すと、1件しか増えない', text: '`todos` はその回のスナップショットなので、2回目も追加前の配列から作り直してしまいます。前の値をもとにするときは、関数で渡します。',
       code: { lang: 'tsx', file: 'React', code: `
 function addSamples() {

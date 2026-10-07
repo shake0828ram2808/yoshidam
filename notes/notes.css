@@ -99,7 +99,7 @@ code{ font-family: var(--font-code); }
 .n-lead-label{ display: block; margin-bottom: 6px; font-size: .78rem; font-weight: 700; letter-spacing: .1em; color: var(--accent); }
 .n-lead ul{ margin: 0; }
 
-/* ポイント・ハマりどころ・自分のアプリでは */
+/* ポイント・注意点・自分のアプリでは */
 .n-box{ padding: 16px 20px; border-radius: 12px; border-left: 4px solid; background: var(--bg-elevated); }
 .n-box-label{ display: block; margin-bottom: 4px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; }
 .n-box p{ margin: 0; }

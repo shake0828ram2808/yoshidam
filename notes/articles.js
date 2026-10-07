@@ -12,7 +12,7 @@ window.NOTES = {
     },
   ],
   articles: [
-    { series: 'react-vue', no: 0, slug: 'intro', title: 'はじめに：比べて学ぶ理由と、8つの観点', date: '2026-10-07' },
+    { series: 'react-vue', no: 0, slug: 'intro', title: '比べる理由、8個の観点', date: '2026-10-07' },
     { series: 'react-vue', no: 1, slug: 'overview', title: 'Vue と React の概要：生まれ・バージョン・使われ方', date: '2026-10-07' },
     { series: 'react-vue', no: 2, slug: 'react-basics', title: 'React の基礎：最低限の構成と、必要に応じて足すもの', date: '2026-10-07' },
     { series: 'react-vue', no: 3, slug: 'reactivity', title: '画面の更新の仕組み：リアクティブと再実行', date: '2026-10-07' },

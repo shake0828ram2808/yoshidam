@@ -2,7 +2,7 @@
 article({
   series: 'react-vue',
   slug: 'intro',
-  title: 'はじめに：比べて学ぶ理由と、8つの観点',
+  title: '比べる理由、8個の観点',
   topics: ['react', 'vue', 'typescript'],
   blocks: [
     { type: 'lead', label: 'この連載について', items: [
@@ -21,7 +21,7 @@ article({
       'どちらも TypeScript',
     ] },
 
-    { type: 'h', text: '比べる8つの観点' },
+    { type: 'h', text: '比べる8個の観点' },
     { type: 'table', head: ['観点', 'Vue', 'React'], rows: [
       ['1. 画面の更新', '値の書き換えを検知して更新', '部品の関数をもう一度実行'],
       ['2. 部品の書き方', 'テンプレート(`v-if` / `v-for`)', 'JSX(`&&` / `map`)'],
@@ -38,9 +38,8 @@ article({
     { type: 'list', items: [
       '**第1回**：Vue と React の概要(生まれ・バージョン・使われ方)',
       '**第2回**：React だけの基礎。ToDo アプリの土台を作る',
-      '**第3回から**：観点ごとに、ToDo アプリを Vue と React で書き比べる',
+      '**第3回から**：観点ごとに、ToDo アプリを Vue と React で書き比べる。「結論 → コード(Vue / React) → 違いのポイント → 注意点」の流れにする',
     ] },
-    { type: 'p', text: '比べる回は「結論 → コード(Vue / React) → 違いのポイント → ハマりどころ」の順です。コードは PC では左右に並び、スマホではタブで切り替えます。' },
 
     { type: 'h', text: '連載の目次' },
     { type: 'toc' },

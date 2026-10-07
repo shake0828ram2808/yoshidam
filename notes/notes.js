@@ -13,7 +13,7 @@
   const LABELS = {
     lead: 'この回の結論',
     point: 'ポイント',
-    pitfall: 'ハマりどころ',
+    pitfall: '注意点',
     mine: '自分のアプリでは',
   };
   const LANG_NAMES = { vue: 'Vue', tsx: 'React(TSX)', jsx: 'React(JSX)', ts: 'TypeScript', js: 'JavaScript', html: 'HTML', css: 'CSS', sh: 'ターミナル' };
