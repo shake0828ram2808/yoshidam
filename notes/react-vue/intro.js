@@ -1,7 +1,7 @@
 // 連載「Vueエンジニアが学ぶReact」はじめに
 article({
   series: 'react-vue',
-  slug: '00-intro',
+  slug: 'intro',
   title: 'はじめに：比べて学ぶ理由と、8つの観点',
   topics: ['react', 'vue', 'typescript'],
   blocks: [
@@ -36,8 +36,15 @@ article({
       ['8. 周辺の道具', 'Vue Router、Nuxt', 'React Router、Next.js'],
     ] },
 
-    { type: 'h', text: '各回の読み方' },
-    { type: 'p', text: '毎回、同じ順番で書きます。' },
+    { type: 'h', text: '連載の進め方' },
+    { type: 'p', text: 'いきなり比べる前に、2回の下準備をします。' },
+    { type: 'list', items: [
+      '**第1回**：Vue と React の生まれ・バージョン・使われ方。2つの立ち位置を知る。',
+      '**第2回**：Vue と比べずに、React だけの基礎を整理する。最低限の構成と、必要に応じて足すもの。',
+      '**第3回から**：観点ごとに、同じことを Vue と React で書き比べる。',
+    ] },
+    { type: 'h3', text: '比べる回の読み方' },
+    { type: 'p', text: '第3回からは、毎回同じ順番で書きます。' },
     { type: 'list', ordered: true, items: [
       '**この回の結論**：何が違うかを3行で',
       '**Vue のコード**：見慣れた書き方から入る',
@@ -48,7 +55,7 @@ article({
     ] },
     { type: 'p', text: 'コードは、PC では Vue と React を左右に並べ、スマホでは上のタブで切り替えて読めます。' },
 
-    { type: 'point', text: 'Vue を知っている人ほどつまずきやすいのが、React の「部品の関数が、描画のたびにもう一度実行される」という感覚です。第1回はここから始めます。' },
+    { type: 'point', text: 'Vue を知っている人ほどつまずきやすいのが、React の「部品の関数が、描画のたびにもう一度実行される」という感覚です。比べる最初の回(第3回)は、ここから始めます。' },
 
     { type: 'mine', text: '個人開発の「ひつじの頭痛手帳」と「AWS学習カレンダー」は React で作っています。業務では Vue.js を使っているので、両方を行き来しながら書いていきます。' },
 

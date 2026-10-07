@@ -96,7 +96,7 @@ About・Focus・Apps・Cast・Notes・Contact(ヘッダー・右端のドット�
 | `notes/<連載>/<slug>.html` | 記事の入れ物(タイトル・説明・OGP だけ書く) |
 | `notes/<連載>/<slug>.js` | 記事の中身(`article({ blocks: [...] })`) |
 
-- 記事を足すとき: `articles.js` に1件足し、既存の `.html` を写してタイトル・説明・ファイル名を直し、`.js` に中身を書く。
+- 記事を足すとき: `articles.js` に1件足し、既存の `.html` を写してタイトル・説明・ファイル名を直し、`.js` に中身を書く。slug に回の番号は入れない(順番は `no` で決めるので、回を差し込んでも URL が変わらない)。
 - ブロックの種類: `lead`(結論)・`h` / `h3`(見出し)・`p`・`list`・`table`・`code`・`compare`(Vue と React を並べる。スマホはタブ)・`point`・`pitfall`(ハマりどころ)・`mine`(自分のアプリでは)・`toc`(連載の目次)。
   文中は `` `コード` `` と `**太字**` だけ使える(Markdown と同じ)。
 - 記事ページの「Markdown で書き出す」で、Zenn にそのまま置ける `.md` を保存できる(note には見ながら貼る)。

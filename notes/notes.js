@@ -92,7 +92,7 @@
     mine: b => box('mine', b),
     code: b => codeBlock(b),
     table: b => `<div class="n-table-wrap"><table class="n-table"><thead><tr>${b.head.map(h => `<th scope="col">${inline(h)}</th>`).join('')}</tr></thead>`
-      + `<tbody>${b.rows.map(r => `<tr>${r.map((c, i) => (i === 0 ? `<th scope="row">${inline(c)}</th>` : `<td>${inline(c)}</td>`)).join('')}</tr>`).join('')}</tbody></table></div>`,
+      + `<tbody>${b.rows.map(r => `<tr>${r.map((c, i) => (i === 0 ? `<th scope="row">${inline(c)}</th>` : `<td data-label="${esc(String(b.head[i]).replace(/`/g, ''))}">${inline(c)}</td>`)).join('')}</tr>`).join('')}</tbody></table></div>`,
     compare: b => {
       const id = `cmp${++compareCount}`;
       return `<div class="n-compare" data-compare>`

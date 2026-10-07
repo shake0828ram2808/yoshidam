@@ -1,7 +1,7 @@
-// 連載「Vueエンジニアが学ぶReact」第1回
+// 連載「Vueエンジニアが学ぶReact」第3回
 article({
   series: 'react-vue',
-  slug: '01-reactivity',
+  slug: 'reactivity',
   title: '画面の更新の仕組み：リアクティブと再実行',
   topics: ['react', 'vue', 'typescript'],
   blocks: [
@@ -64,7 +64,7 @@ export function Counter() {
       '`setCount(count + 1)` は「次の描画では、この値にして」という予約。予約されると、React が `Counter` をもう一度呼ぶ。',
       'できあがった画面と前回の画面を比べて、変わった所だけを実際の画面に反映する。',
     ] },
-    { type: 'p', text: 'React で `double` に `computed` のようなものが要らないのは、関数が毎回実行されるので、ふつうの式でも常に最新の値になるからです。重い計算だけは `useMemo` で結果を使い回しますが、それは第4回で扱います。' },
+    { type: 'p', text: 'React で `double` に `computed` のようなものが要らないのは、関数が毎回実行されるので、ふつうの式でも常に最新の値になるからです。重い計算だけは `useMemo` で結果を使い回しますが、それは第6回で扱います。' },
 
     { type: 'table', head: ['', 'Vue', 'React'], rows: [
       ['部品のコードが実行される回数', '最初の1回(`<script setup>`)', '描画のたびに毎回'],

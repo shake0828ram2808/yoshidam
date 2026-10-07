@@ -220,4 +220,12 @@ code{ font-family: var(--font-code); }
   .n-series-card{ padding: 18px 14px; }
   .n-toc a, .n-toc span{ gap: 10px; padding: 12px 14px; }
   .n-toc .n-no{ width: 5em; }
+  /* 表は1行ずつのカードに(見出しの列名を、各セルの頭に小さく出す) */
+  .n-table thead{ display: none; }
+  .n-table, .n-table tbody, .n-table tr, .n-table th, .n-table td{ display: block; width: auto; }
+  .n-table tr{ padding: 12px 14px; border-top: 1px solid var(--line); }
+  .n-table tr:first-child{ border-top: none; }
+  .n-table th, .n-table td{ padding: 2px 0; border: none; white-space: normal; }
+  .n-table tbody th{ white-space: normal; margin-bottom: 2px; }
+  .n-table td[data-label]:not([data-label=""])::before{ content: attr(data-label) "：" ; color: var(--accent); font-size: .78rem; }
 }
