@@ -32,7 +32,7 @@
   const CODE_RE = new RegExp([
     /(\/\/[^\n]*|\/\*[\s\S]*?\*\/|<!--[\s\S]*?-->)/.source,
     /('(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*"|`(?:\\.|[^`\\])*`)/.source,
-    /(<\/?[A-Za-z][\w.:-]*)/.source,
+    /((?<![\w$])<\/?[A-Za-z][\w.:-]*)/.source, // 型引数(useState<Todo[]> など)はタグにしない
     /\b(import|from|export|default|const|let|var|function|return|if|else|for|of|in|new|true|false|null|undefined|type|interface|as|async|await|lang|setup)\b/.source,
     /\b(ref|reactive|computed|watch|watchEffect|onMounted|onUnmounted|defineProps|defineEmits|defineModel|provide|inject|defineStore|useState|useEffect|useMemo|useCallback|useRef|useContext|createContext|memo)\b/.source,
     /\b(\d+(?:\.\d+)?)\b/.source,
