@@ -63,6 +63,7 @@
     <a href="#craft">Focus</a>
     <a href="#projects">Apps</a>
     <a href="#characters">Cast</a>
+    <a href="#notes">Notes</a>
     <a href="#contact">Contact</a>
     <span class="nav-indicator" aria-hidden="true"></span>
   </nav>
@@ -829,22 +830,27 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
 
   <!-- ============ NOTES ============ -->
   <!-- Notes は note の記事を公開するまで非表示(hidden を外せば戻る) -->
-  <section id="notes" class="section notes" data-label="Notes" hidden>
+  <section id="notes" class="section notes" data-label="Notes">
     <div class="section-inner">
       <p class="section-kicker">05</p>
       <h2 class="section-title">Notes</h2>
-      <p class="section-lead">業務や個人開発での工夫を、noteで書いていく予定です。公開したら、ここから読めるようにします。</p>
-      <!-- ▼ 記事を公開したら、各カードを <a href="記事のURL" class="note-card"> に置き換えてください -->
-      <div class="notes-list" data-todo="note記事のURL・タイトル">
-        <div class="note-card is-upcoming">
+      <p class="section-lead"><span class="ph">学んだことや、</span><span class="ph">開発で工夫したことを書いています。</span></p>
+      <div class="notes-list">
+        <!-- 連載(notes/ にある技術記事)。記事の一覧は notes/articles.js -->
+        <a href="notes/" class="note-card">
+          <div><h3>Vueエンジニアが学ぶReact</h3><p>業務で使う Vue.js と比べながら、React の考え方を整理する連載</p></div>
+          <span class="note-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <!-- ▼ まだ書いていない記事。公開したら <a href="記事のURL" class="note-card"> に置き換える -->
+        <div class="note-card is-upcoming" data-todo="記事のURL・タイトル">
           <div><h3>レガシーシステムを統合する、マイグレーションの進め方</h3><p>乱立したサービスを1つにまとめてきた手順と判断</p></div>
           <span class="note-soon">準備中</span>
         </div>
-        <div class="note-card is-upcoming">
+        <div class="note-card is-upcoming" data-todo="記事のURL・タイトル">
           <div><h3>AI駆動開発を、再現できる手順にする</h3><p>Claude Code / GitHub Copilot を使った開発フロー</p></div>
           <span class="note-soon">準備中</span>
         </div>
-        <div class="note-card is-upcoming">
+        <div class="note-card is-upcoming" data-todo="記事のURL・タイトル">
           <div><h3>子どもと一緒に、アプリをつくる</h3><p>個人開発で iOS アプリを配信するまで</p></div>
           <span class="note-soon">準備中</span>
         </div>
@@ -863,7 +869,7 @@ playPikoBikkuri(&#x27;home&#x27;);     // ？→！</code></pre></figure>
           <img class="hw-curl" src="assets/images/characters/dango_curl_new.png" alt="" width="261" height="267" loading="lazy">
         </div>
       </div>
-      <p class="section-kicker">05</p>
+      <p class="section-kicker">06</p>
       <h2 class="section-title">Contact</h2>
       <p class="section-lead contact-lead"><span>読んでくださって、ありがとうございます。</span><span>面談や仕事のご相談など、お気軽にご連絡ください。</span></p>
       <div class="contact-links">

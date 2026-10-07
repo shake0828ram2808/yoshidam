@@ -12,6 +12,7 @@
 | `game.js` | 遊びの要素(実績・かくれた どんぐり5個・探索度・冒険の記録パネル) |
 | `sound.js` | 効果音(はじめはオフ。WebAudio で合成し、音声ファイルは使わない) |
 | `404.html` | ページが見つからないとき(迷子のだんごむし) |
+| `notes/` | 技術記事(下の「技術記事(notes/)」) |
 | `assets/images/characters/` | キャラクター素材(だんごむしは nigerun リポジトリから流用。`piko/` はピコ3色のふつう顔・にっこり顔) |
 | `assets/images/projects/` | 各アプリの画面(スマホ枠の中に表示) |
 | `assets/images/og-image.png` | SNSで共有したときのカード画像(1200×630) |
@@ -77,7 +78,26 @@
 
 ## メニューの構成
 
-About・Focus・Apps・Cast・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。Notes は note の記事を公開するまで `hidden`(外せば戻る)。
+About・Focus・Apps・Cast・Notes・Contact(ヘッダー・右端のドット・スマホの下のナビで共通)。Notes は `notes/` の技術記事への入口(まだ書いていない記事は「準備中」のカード)。
 - About(01)は、ヒーロー・経歴(`#about`)・スキル(`#skills`)・資格(`#certifications`)のまとまり。これらの section には `data-group="hero"` を付け、
   メニューでは About の一部として扱う。
 - Works(業務での工夫)は note の記事を書いてから戻す予定。HTML は git の履歴(コミット 08ff222 まで)に残っている。
+
+## 技術記事(notes/)
+
+ビルド不要のまま、記事の中身だけを別ファイルに書く。外部ライブラリは使わない。
+
+| ファイル | 役割 |
+|---|---|
+| `notes/articles.js` | 記事の一覧(連載・回・タイトル・公開日)。`planned: true` は目次に「準備中」で出る |
+| `notes/notes.js` | ブロックの並びから記事ページを組み立てる。同じブロックから Markdown(Zenn 形式)も書き出せる |
+| `notes/notes.css` | 記事の見た目(色・フォントは `styles.css` の `:root` と同じ値) |
+| `notes/index.html` | 記事一覧 |
+| `notes/<連載>/<slug>.html` | 記事の入れ物(タイトル・説明・OGP だけ書く) |
+| `notes/<連載>/<slug>.js` | 記事の中身(`article({ blocks: [...] })`) |
+
+- 記事を足すとき: `articles.js` に1件足し、既存の `.html` を写してタイトル・説明・ファイル名を直し、`.js` に中身を書く。
+- ブロックの種類: `lead`(結論)・`h` / `h3`(見出し)・`p`・`list`・`table`・`code`・`compare`(Vue と React を並べる。スマホはタブ)・`point`・`pitfall`(ハマりどころ)・`mine`(自分のアプリでは)・`toc`(連載の目次)。
+  文中は `` `コード` `` と `**太字**` だけ使える(Markdown と同じ)。
+- 記事ページの「Markdown で書き出す」で、Zenn にそのまま置ける `.md` を保存できる(note には見ながら貼る)。
+- `fetch` を使わず `<script>` で読み込むので、`file://` で開いても確認できる。
