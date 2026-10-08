@@ -59,19 +59,38 @@ export type DailyRecord = {
       ['きょうの記録(`DailyRecord`)', '`okaeri:record`'],
     ] },
 
-    { type: 'h', text: '部品の分け方' },
-    { type: 'code', lang: 'text', file: 'src/components', code: `
-App.vue                … 画面の切り替え(きょう / へんしゅう)
-├─ TodayView.vue       … きょうのやること
-│  ├─ ProgressBar.vue  … 進み具合
-│  ├─ TaskItem.vue     … 1件(タップでチェック)
-│  └─ DoneMessage.vue  … 全部できたら
-└─ EditView.vue        … やることの編集
-   └─ TaskEditRow.vue  … 1件(名前・絵文字・削除・並べ替え)` },
+    { type: 'h', text: 'フォルダと部品の分け方' },
+    { type: 'p', text: '画面(`views/`)と部品(`components/`)を分け、部品はさらに「どこでも使える小さな UI 部品」と「この機能の部品」の2つに分けます。' },
+    { type: 'code', lang: 'text', file: 'src', code: `
+src/
+├─ App.vue                … 画面の切り替え(きょう / へんしゅう)
+├─ views/                 … 画面
+│  ├─ TodayView.vue       … きょうのやること(子ども)
+│  └─ EditView.vue        … やることの編集(親)
+├─ components/
+│  ├─ ui/                 … どこでも使える小さな部品(見た目だけ)
+│  │  ├─ BaseButton.vue
+│  │  ├─ BaseCheck.vue    … 大きなチェック
+│  │  └─ ProgressBar.vue  … バーと「3 / 5」
+│  └─ checklist/          … この機能の部品
+│     ├─ TaskList.vue
+│     ├─ TaskItem.vue     … 1件(絵文字・名前・チェック)
+│     ├─ TaskEditRow.vue  … 1件の編集(名前・絵文字・削除・並べ替え)
+│     └─ DoneMessage.vue  … 全部できたら
+├─ composables/
+│  └─ useChecklist.ts     … 状態と操作
+└─ types.ts` },
+    { type: 'table', head: ['フォルダ', '入れるもの', '決まりごと'], rows: [
+      ['`views/`', '画面', '状態を受け取り、部品を並べる。あとでルーターを入れても、そのまま使える'],
+      ['`components/ui/`', '小さな UI 部品', '見た目だけ。ToDo のことは知らない。名前は `Base` で始める(Vue 公式スタイルガイド)'],
+      ['`components/checklist/`', '機能の部品', 'やること(`Task`)を扱う。`ui/` の部品を組み合わせて作る'],
+      ['`composables/`', '状態と操作', 'App で1回だけ呼び、画面には props とイベントでつなぐ'],
+    ] },
+    { type: 'point', text: 'アトミックデザイン(atoms → molecules → organisms → templates → pages)の考え方を、軽くしたものです。小さなアプリで5層に分けると「どの層か」で迷いやすいので、`ui/`(atoms に近い)と機能の部品の2層にしています。' },
 
     { type: 'h', text: '状態の置き場所' },
     { type: 'p', text: '状態と操作は、コンポーザブル `useChecklist()` に1つにまとめます。**App で1回だけ呼び**、各画面には props で渡し、操作はイベントで受け取ります。' },
-    { type: 'code', lang: 'ts', file: 'src/useChecklist.ts(形だけ。中身は次回)', code: `
+    { type: 'code', lang: 'ts', file: 'src/composables/useChecklist.ts(形だけ。中身は次回)', code: `
 export function useChecklist() {
   const tasks = ref<Task[]>(load('okaeri:tasks', DEFAULT_TASKS))
   const record = ref<DailyRecord>(load('okaeri:record', newRecord()))
