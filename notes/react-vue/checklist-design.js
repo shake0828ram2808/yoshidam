@@ -86,7 +86,8 @@ src/
       ['`components/checklist/`', '機能の部品', 'やること(`Task`)を扱う。`ui/` の部品を組み合わせて作る'],
       ['`composables/`', '状態と操作', 'App で1回だけ呼び、画面には props とイベントでつなぐ'],
     ] },
-    { type: 'point', text: 'アトミックデザイン(atoms → molecules → organisms → templates → pages)の考え方を、軽くしたものです。小さなアプリで5層に分けると「どの層か」で迷いやすいので、`ui/`(atoms に近い)と機能の部品の2層にしています。' },
+    { type: 'point', text: 'アトミックデザイン(atoms → molecules → organisms → templates → pages)の考え方を、軽くしたものです。' },
+    { type: 'p', text: 'アトミックデザインに寄せたほうが勉強になるかも、とは考えました。ただ、このくらいの小さなアプリで5層に分けると、「この部品はどの層か」で迷う時間のほうが長くなりそうです。まずは `ui/`(atoms に近い)と機能の部品の2層で作り、部品が増えて分けにくくなったら、層を足すことにします。' },
 
     { type: 'h', text: '状態の置き場所' },
     { type: 'p', text: '状態と操作は、コンポーザブル `useChecklist()` に1つにまとめます。**App で1回だけ呼び**、各画面には props で渡し、操作はイベントで受け取ります。' },
