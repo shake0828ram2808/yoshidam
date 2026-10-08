@@ -26,7 +26,6 @@ article({
     { type: 'pitfall', label: '調べるときの注意', text: 'どちらも数年前に書き方が大きく変わっています(Vue は Options API → Composition API、React はクラス → 関数とフック)。古い記事に注意。' },
 
     { type: 'h', text: '何ができるか' },
-    { type: 'p', text: 'できることは、ほぼ同じです。違うのは、周りの道具の選び方です。' },
     { type: 'table', head: ['作りたいもの', 'Vue.js', 'React'], rows: [
       ['画面の部品・SPA', '本体', '本体'],
       ['URL で画面を切り替える', 'Vue Router(公式)', 'React Router など'],
@@ -51,8 +50,5 @@ article({
       'React 19 の関数コンポーネントとフック',
       'どちらも TypeScript',
     ] },
-
-    { type: 'h', text: '連載の目次' },
-    { type: 'toc' },
   ],
 });
