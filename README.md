@@ -101,3 +101,4 @@ About・Focus・Apps・Cast・Contact(ヘッダー・右端のドット・スマ
   文中は `` `コード` `` と `**太字**` だけ使える(Markdown と同じ)。
 - 記事ページの「Markdown で書き出す」で、Zenn にそのまま置ける `.md` を保存できる(note には見ながら貼る)。
 - `fetch` を使わず `<script>` で読み込むので、`file://` で開いても確認できる。
+- 方針を変えて外した下書きは `notes/_archive/` に退避している(どこからもリンクしない。中身は `notes/_archive/README.md`)。
